@@ -150,18 +150,18 @@
     <h2>why this exists</h2>
     <p class="lead">Locking down VPC egress is a solved problem right up until the first
     third-party dependency. Vendor IP ranges live in a dozen inconsistent formats and
-    churn without notice — so most teams punch <strong><code>0.0.0.0/0:443</code></strong>
+    churn without notice. So most teams punch <strong><code>0.0.0.0/0:443</code></strong>
     into the egress rules and quietly give up the entire posture. An attacker with a
     foothold can exfiltrate to anywhere on port 443. PCI DSS 4.0 (req. 1.3.2) and your
     SOC 2 auditor both have opinions about that.</p>
     <div class="cols">
       <div class="card"><h3>precise</h3><p>Every range comes from the vendor's official
-      publication, with a provenance chain. Never widened, never summarized across gaps —
-      the covered address set is preserved exactly.</p></div>
+      publication, with a provenance chain. Never widened, never summarized across gaps.
+      The covered address set is preserved exactly.</p></div>
       <div class="card"><h3>current</h3><p>Vendor rotations propagate to every consumer's
-      security groups within minutes — with grace windows keeping old + new ranges live
+      security groups within minutes, with grace windows keeping old + new ranges live
       through the transition, so rotations are non-events.</p></div>
-      <div class="card"><h3>boring</h3><p>Security groups are free, add zero latency, and
+      <div class="card"><h3>simple</h3><p>Security groups are free, add zero latency, and
       your auditor already understands them. No gateway to operate, no vendor in your
       traffic path, nothing new to fail.</p></div>
     </div>
@@ -182,12 +182,17 @@
         one list per service, purpose, and address family.</p></div></div>
       <div class="step"><div><b>That's it</b>
         <p>When the vendor's ranges change, the list updates and every referencing rule
-        follows. Staged rollouts hit our own canary account first; suspicious changes are
-        quarantined before they ever publish; updates are signed end-to-end.</p></div></div>
+        follows; typically inside the hour of the vendor publishing, and within a minute
+        of the change landing in our feed. Staged rollouts hit our own canary account
+        first; suspicious changes are quarantined before they ever publish; updates are
+        signed end-to-end with an ed25519 signature over the feed index, every service
+        document hash-chained to it, verified before anything is applied.</p></div></div>
     </div>
-    <p class="note">Honesty clause: IP pinning only works for services with dedicated,
-    published ranges. The catalog classifies every service — and tells you plainly when a
-    CDN-fronted service can't be pinned safely, instead of pretending otherwise.</p>
+    <p class="note">Note: IP pinning only works for services with dedicated,
+    published ranges. The catalog classifies every service and tells you plainly when a
+    CDN-fronted service can't be pinned safely. Those services aren't out of reach;
+    a later phase adds hostname-aware egress enforcement that runs entirely in your
+    VPC, built on this same catalog.</p>
   </div>
 </section>
 
@@ -195,8 +200,8 @@
   <div class="wrap">
     <h2>free today</h2>
     <p class="lead">The data layer is open and free: a signed, versioned feed of official
-    vendor IP ranges — 45+ services, rebuilt continuously, with per-purpose scoping and
-    change history — plus a Terraform provider for plan-time use.</p>
+    vendor IP ranges. 45+ services, rebuilt continuously, with per-purpose scoping and
+    change history, plus a Terraform provider for plan-time use.</p>
     <div class="cols">
       <div class="card"><h3>terraform provider</h3><p><code>source = "slash0-io/egress"</code>
       — data sources for every service and purpose in the catalog.
