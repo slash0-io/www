@@ -1,0 +1,127 @@
+  :root {
+    --bg: #0b0f14;
+    --panel: #111823;
+    --line: #1e2936;
+    --text: #d7e0ea;
+    --dim: #8398ac;
+    --accent: #58d68d;
+    --accent-dim: #2e7d54;
+    --danger: #e07a5f;
+    --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code, .mono { font-family: var(--mono); }
+
+  header { padding: 28px 0; border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: baseline; justify-content: space-between; }
+  .logo { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--text); }
+  .logo b { color: var(--accent); font-weight: 700; }
+  nav a { color: var(--dim); margin-left: 22px; font-size: 14px; }
+  nav a:hover { color: var(--text); text-decoration: none; }
+
+  .hero { padding: 88px 0 64px; }
+  .hero h1 {
+    font-family: var(--mono);
+    font-size: clamp(30px, 5.5vw, 52px);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 .strike { color: var(--danger); text-decoration: line-through; text-decoration-thickness: 3px; }
+  .hero p.sub { margin-top: 22px; font-size: 19px; color: var(--dim); max-width: 620px; }
+  .hero p.sub strong { color: var(--text); font-weight: 600; }
+  .cta-row { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 8px;
+    font-size: 15px; font-weight: 600; font-family: var(--mono);
+  }
+  .btn.primary { background: var(--accent); color: #06130c; }
+  .btn.primary:hover { background: #6fe3a2; text-decoration: none; }
+  .btn.ghost { border: 1px solid var(--line); color: var(--text); }
+  .btn.ghost:hover { border-color: var(--dim); text-decoration: none; }
+
+  .term {
+    margin-top: 56px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 22px 24px; font-family: var(--mono);
+    font-size: 13.5px; line-height: 1.9; overflow-x: auto; white-space: pre;
+    color: var(--dim);
+  }
+  .term .c { color: #4e6378; }
+  .term .g { color: var(--accent); }
+  .term .t { color: var(--text); }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 { font-family: var(--mono); font-size: 20px; margin-bottom: 18px; color: var(--text); }
+  h2::before { content: "// "; color: var(--accent-dim); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; margin-top: 26px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; }
+  .card h3 { font-size: 15px; font-family: var(--mono); color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .card p { font-size: 14.5px; color: var(--dim); }
+  .card p code { color: var(--text); font-size: 13px; }
+  p.lead { color: var(--dim); font-size: 16.5px; max-width: 680px; }
+  p.lead strong { color: var(--text); }
+
+  .steps { counter-reset: step; margin-top: 26px; }
+  .step { display: flex; gap: 18px; padding: 16px 0; border-bottom: 1px dashed var(--line); }
+  .step:last-child { border-bottom: none; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    font-family: var(--mono); font-weight: 700; color: var(--accent);
+    border: 1px solid var(--accent-dim); border-radius: 6px;
+    min-width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  }
+  .step div { flex: 1; }
+  .step b { display: block; font-size: 15.5px; margin-bottom: 3px; }
+  .step p { font-size: 14.5px; color: var(--dim); }
+  .step p code { color: var(--text); font-size: 13px; }
+
+  .note {
+    margin-top: 30px; border-left: 3px solid var(--accent-dim);
+    padding: 4px 0 4px 18px; color: var(--dim); font-size: 14.5px; max-width: 640px;
+  }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--dim); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer a { color: var(--dim); margin-right: 18px; }
+  footer a:hover { color: var(--text); }
+
+/* ── docs pages ─────────────────────────────────────────────── */
+.doc { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+.doc h1 { font-family: var(--mono); font-size: 30px; margin-bottom: 6px; }
+.doc p.tagline { color: var(--dim); margin-bottom: 36px; }
+.doc article h2 { font-family: var(--mono); font-size: 19px; margin: 40px 0 12px; }
+.doc article h2::before { content: "// "; color: var(--accent-dim); }
+.doc article h3 { font-size: 16px; margin: 26px 0 8px; }
+.doc article p, .doc article li { color: var(--dim); font-size: 15.5px; }
+.doc article p strong, .doc article li strong { color: var(--text); }
+.doc article ul, .doc article ol { padding-left: 22px; margin: 10px 0; }
+.doc article li { margin: 6px 0; }
+.doc article code { color: var(--text); font-size: 13.5px; background: var(--panel); padding: 1px 5px; border-radius: 4px; }
+.doc pre {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 18px 20px; font-family: var(--mono); font-size: 13px; line-height: 1.75;
+  overflow-x: auto; margin: 14px 0; color: var(--text);
+}
+.doc pre .c { color: #4e6378; }
+.doc table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px; }
+.doc th, .doc td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; color: var(--dim); }
+.doc th { color: var(--text); font-family: var(--mono); font-size: 13px; }
+.doc .crumb { font-family: var(--mono); font-size: 13px; color: var(--dim); margin-bottom: 26px; display: block; }
+.doc .crumb a { color: var(--dim); }
+.doc .crumb a:hover { color: var(--text); }
+.cardlink { display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px; margin: 14px 0; }
+.cardlink:hover { border-color: var(--accent-dim); text-decoration: none; }
+.cardlink b { font-family: var(--mono); color: var(--accent); display: block; margin-bottom: 4px; }
+.cardlink span { color: var(--dim); font-size: 14.5px; }

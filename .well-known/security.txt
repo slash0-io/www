@@ -1,0 +1,5 @@
+Contact: https://github.com/slash0-io/feed/security/advisories/new
+Expires: 2027-07-01T00:00:00.000Z
+Canonical: https://slash0.io/.well-known/security.txt
+Preferred-Languages: en
+Policy: https://slash0.io/docs/security/

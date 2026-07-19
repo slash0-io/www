@@ -3,109 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>slash0 — delete your 0.0.0.0/0</title>
+<title>slash0 | delete your 0.0.0.0/0</title>
 <meta name="description" content="Managed AWS prefix lists for the third-party services your workloads depend on. Reference pl-… in a security group rule; the ranges stay current. No agent, no proxy, nothing in your data path.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
-<style>
-  :root {
-    --bg: #0b0f14;
-    --panel: #111823;
-    --line: #1e2936;
-    --text: #d7e0ea;
-    --dim: #8398ac;
-    --accent: #58d68d;
-    --accent-dim: #2e7d54;
-    --danger: #e07a5f;
-    --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-    --sans: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  code, .mono { font-family: var(--mono); }
-
-  header { padding: 28px 0; border-bottom: 1px solid var(--line); }
-  header .wrap { display: flex; align-items: baseline; justify-content: space-between; }
-  .logo { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--text); }
-  .logo b { color: var(--accent); font-weight: 700; }
-  nav a { color: var(--dim); margin-left: 22px; font-size: 14px; }
-  nav a:hover { color: var(--text); text-decoration: none; }
-
-  .hero { padding: 88px 0 64px; }
-  .hero h1 {
-    font-family: var(--mono);
-    font-size: clamp(30px, 5.5vw, 52px);
-    line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-  .hero h1 .strike { color: var(--danger); text-decoration: line-through; text-decoration-thickness: 3px; }
-  .hero p.sub { margin-top: 22px; font-size: 19px; color: var(--dim); max-width: 620px; }
-  .hero p.sub strong { color: var(--text); font-weight: 600; }
-  .cta-row { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; padding: 12px 22px; border-radius: 8px;
-    font-size: 15px; font-weight: 600; font-family: var(--mono);
-  }
-  .btn.primary { background: var(--accent); color: #06130c; }
-  .btn.primary:hover { background: #6fe3a2; text-decoration: none; }
-  .btn.ghost { border: 1px solid var(--line); color: var(--text); }
-  .btn.ghost:hover { border-color: var(--dim); text-decoration: none; }
-
-  .term {
-    margin-top: 56px; background: var(--panel); border: 1px solid var(--line);
-    border-radius: 10px; padding: 22px 24px; font-family: var(--mono);
-    font-size: 13.5px; line-height: 1.9; overflow-x: auto; white-space: pre;
-    color: var(--dim);
-  }
-  .term .c { color: #4e6378; }
-  .term .g { color: var(--accent); }
-  .term .t { color: var(--text); }
-
-  section { padding: 56px 0; border-top: 1px solid var(--line); }
-  h2 { font-family: var(--mono); font-size: 20px; margin-bottom: 18px; color: var(--text); }
-  h2::before { content: "// "; color: var(--accent-dim); }
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; margin-top: 26px; }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; }
-  .card h3 { font-size: 15px; font-family: var(--mono); color: var(--accent); margin-bottom: 8px; font-weight: 600; }
-  .card p { font-size: 14.5px; color: var(--dim); }
-  .card p code { color: var(--text); font-size: 13px; }
-  p.lead { color: var(--dim); font-size: 16.5px; max-width: 680px; }
-  p.lead strong { color: var(--text); }
-
-  .steps { counter-reset: step; margin-top: 26px; }
-  .step { display: flex; gap: 18px; padding: 16px 0; border-bottom: 1px dashed var(--line); }
-  .step:last-child { border-bottom: none; }
-  .step::before {
-    counter-increment: step; content: counter(step);
-    font-family: var(--mono); font-weight: 700; color: var(--accent);
-    border: 1px solid var(--accent-dim); border-radius: 6px;
-    min-width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
-  }
-  .step div { flex: 1; }
-  .step b { display: block; font-size: 15.5px; margin-bottom: 3px; }
-  .step p { font-size: 14.5px; color: var(--dim); }
-  .step p code { color: var(--text); font-size: 13px; }
-
-  .note {
-    margin-top: 30px; border-left: 3px solid var(--accent-dim);
-    padding: 4px 0 4px 18px; color: var(--dim); font-size: 14.5px; max-width: 640px;
-  }
-
-  footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--dim); font-size: 14px; }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  footer a { color: var(--dim); margin-right: 18px; }
-  footer a:hover { color: var(--text); }
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 
@@ -113,6 +14,7 @@
   <div class="wrap">
     <div class="logo"><b>/0</b> slash0</div>
     <nav>
+      <a href="/docs/">docs</a>
       <a href="#how">how it works</a>
       <a href="#free">free tier</a>
       <a href="https://feed.slash0.io/">catalog</a>
@@ -125,7 +27,7 @@
   <div class="wrap">
     <h1>Delete your <span class="strike">0.0.0.0/0</span><br>egress rule.</h1>
     <p class="sub">Managed AWS prefix lists for the third-party services your workloads
-    depend on — Stripe, Datadog, GitHub, and dozens more — <strong>kept current in your
+    depend on - Stripe, Datadog, GitHub, and dozens more, <strong>kept current in your
     account</strong>. Reference <code>pl-…</code> in a security group rule and you're done.
     No agent, no proxy, nothing of ours in your data path.</p>
     <div class="cta-row">
@@ -139,7 +41,7 @@
   from_port         = <span class="t">443</span>
   to_port           = <span class="t">443</span>
   protocol          = <span class="g">"tcp"</span>
-  <span class="t">prefix_list_ids   = [</span><span class="g">"pl-0f47b5ca566486dec"</span><span class="t">]</span>  <span class="c"># Stripe API — managed by slash0</span>
+  <span class="t">prefix_list_ids   = [</span><span class="g">"pl-0f47b5ca566486dec"</span><span class="t">]</span>  <span class="c"># Stripe API - managed by slash0</span>
   security_group_id = aws_security_group.app.id
 }</div>
   </div>
@@ -178,7 +80,7 @@
         files the security-group quota increase your subscriptions need.</p></div></div>
       <div class="step"><div><b>Reference the list</b>
         <p>Use <code>pl-…</code> in security group rules exactly like an AWS-managed
-        prefix list — <code>egress.stripe.api.v4</code>, <code>egress.datadog.agents.v4</code>,
+        prefix list - <code>egress.stripe.api.v4</code>, <code>egress.datadog.agents.v4</code>,
         one list per service, purpose, and address family.</p></div></div>
       <div class="step"><div><b>That's it</b>
         <p>When the vendor's ranges change, the list updates and every referencing rule
@@ -204,12 +106,12 @@
     change history, plus a Terraform provider for plan-time use.</p>
     <div class="cols">
       <div class="card"><h3>terraform provider</h3><p><code>source = "slash0-io/egress"</code>
-      — data sources for every service and purpose in the catalog.
+      - data sources for every service and purpose in the catalog.
       <a href="https://registry.terraform.io/providers/slash0-io/egress/latest">registry ↗</a></p></div>
       <div class="card"><h3>public feed</h3><p>Signed JSON at
-      <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1</a> — sync tokens,
+      <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1</a> - sync tokens,
       provenance, changelog. <a href="https://feed.slash0.io/">browse the catalog ↗</a></p></div>
-      <div class="card"><h3>source</h3><p>The feed pipeline is open source — every parser
+      <div class="card"><h3>source</h3><p>The feed pipeline is open source - every parser
       tested against archived vendor fixtures.
       <a href="https://github.com/slash0-io/feed">github.com/slash0-io/feed ↗</a></p></div>
     </div>
@@ -219,8 +121,8 @@
 <section id="access">
   <div class="wrap">
     <h2>early access</h2>
-    <p class="lead">The hosted tier — these ranges as managed prefix lists, kept current
-    in your account — is live and onboarding <strong>design partners</strong> now. Tell us
+    <p class="lead">The hosted tier - these ranges as managed prefix lists, kept current
+    in your account - is live and onboarding <strong>design partners</strong> now. Tell us
     which services you allowlist (or wish you could) and we'll reach out as slots open.</p>
     <div class="cta-row">
       <a class="btn primary" href="https://github.com/slash0-io/terraform-provider-egress/issues/new?template=early-access.yml">request early access</a>
