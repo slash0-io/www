@@ -27,7 +27,7 @@
   <div class="wrap">
     <h1>Delete your <span class="strike">0.0.0.0/0</span><br>egress rule.</h1>
     <p class="sub">Managed AWS prefix lists for the third-party services your workloads
-    depend on - Stripe, Datadog, GitHub, and dozens more, <strong>kept current in your
+    depend on: Stripe, Datadog, GitHub, and dozens more, <strong>kept current in your
     account</strong>. Reference <code>pl-…</code> in a security group rule and you're done.
     No agent, no proxy, nothing of ours in your data path.</p>
     <div class="cta-row">
@@ -41,7 +41,7 @@
   from_port         = <span class="t">443</span>
   to_port           = <span class="t">443</span>
   protocol          = <span class="g">"tcp"</span>
-  <span class="t">prefix_list_ids   = [</span><span class="g">"pl-0f47b5ca566486dec"</span><span class="t">]</span>  <span class="c"># Stripe API - managed by slash0</span>
+  <span class="t">prefix_list_ids   = [</span><span class="g">"pl-0f47b5ca566486dec"</span><span class="t">]</span>  <span class="c"># Stripe API, managed by slash0</span>
   security_group_id = aws_security_group.app.id
 }</div>
   </div>
@@ -80,7 +80,7 @@
         files the security-group quota increase your subscriptions need.</p></div></div>
       <div class="step"><div><b>Reference the list</b>
         <p>Use <code>pl-…</code> in security group rules exactly like an AWS-managed
-        prefix list - <code>egress.stripe.api.v4</code>, <code>egress.datadog.agents.v4</code>,
+        prefix list: <code>egress.stripe.api.v4</code>, <code>egress.datadog.agents.v4</code>,
         one list per service, purpose, and address family.</p></div></div>
       <div class="step"><div><b>That's it</b>
         <p>When the vendor's ranges change, the list updates and every referencing rule
@@ -105,13 +105,13 @@
     vendor IP ranges. 45+ services, rebuilt continuously, with per-purpose scoping and
     change history, plus a Terraform provider for plan-time use.</p>
     <div class="cols">
-      <div class="card"><h3>terraform provider</h3><p><code>source = "slash0-io/egress"</code>
-      - data sources for every service and purpose in the catalog.
+      <div class="card"><h3>terraform provider</h3><p><code>source = "slash0-io/egress"</code>.
+      Data sources for every service and purpose in the catalog.
       <a href="https://registry.terraform.io/providers/slash0-io/egress/latest">registry ↗</a></p></div>
       <div class="card"><h3>public feed</h3><p>Signed JSON at
-      <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1</a> - sync tokens,
-      provenance, changelog. <a href="https://feed.slash0.io/">browse the catalog ↗</a></p></div>
-      <div class="card"><h3>source</h3><p>The feed pipeline is open source - every parser
+      <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1</a>, with sync tokens,
+      provenance, and a changelog. <a href="https://feed.slash0.io/">browse the catalog ↗</a></p></div>
+      <div class="card"><h3>source</h3><p>The feed pipeline is open source, with every parser
       tested against archived vendor fixtures.
       <a href="https://github.com/slash0-io/feed">github.com/slash0-io/feed ↗</a></p></div>
     </div>
@@ -121,8 +121,8 @@
 <section id="access">
   <div class="wrap">
     <h2>early access</h2>
-    <p class="lead">The hosted tier - these ranges as managed prefix lists, kept current
-    in your account - is live and onboarding <strong>design partners</strong> now. Tell us
+    <p class="lead">The hosted tier delivers these ranges as managed prefix lists, kept
+    current in your account. It is live and onboarding <strong>design partners</strong> now. Tell us
     which services you allowlist (or wish you could) and we'll reach out as slots open.</p>
     <div class="cta-row">
       <a class="btn primary" href="https://github.com/slash0-io/terraform-provider-egress/issues/new?template=early-access.yml">request early access</a>

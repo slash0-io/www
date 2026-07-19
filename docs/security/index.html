@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>security · slash0 docs</title>
-<meta name="description" content="slash0's threat model, what we can and cannot see, and how to verify the feed signature yourself with stock openssl.">
+<meta name="description" content="slash0 threat model, data access, and feed signature verification.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
@@ -17,36 +17,37 @@
 <div class="doc">
   <span class="crumb"><a href="/docs/">docs</a> / security</span>
   <h1>security</h1>
-  <p class="tagline">Trust artifacts, not claims. Everything on this page is checkable.</p>
+  <p class="tagline">Threat model, data access, and signature verification.</p>
 
   <article>
-    <h2>what slash0 can and cannot see</h2>
+    <h2>data access</h2>
     <ul>
-      <li><strong>No data path.</strong> Your traffic never transits anything we operate.
-      We publish lists; your security groups do the enforcing.</li>
-      <li><strong>No credentials in your account.</strong> The hosted tier works through an
-      AWS RAM share you accept - we hold no role, no keys, no access to your resources.</li>
-      <li><strong>What we do see</strong>, because AWS shows it to any prefix-list owner:
-      the account IDs that accepted our shares, and which of your security groups
-      reference our lists (resource IDs, not their contents). We use that for exactly one
-      thing: refusing to revoke a share while anything of yours still references it.</li>
+      <li><strong>Traffic.</strong> slash0 has no component in the traffic path. Packets
+      flow from your security groups to the vendor directly.</li>
+      <li><strong>Credentials.</strong> The hosted tier works through an AWS RAM share
+      that you accept. slash0 holds no role, no keys, and no access to your resources.</li>
+      <li><strong>Consumer metadata.</strong> AWS shows a prefix-list owner two things
+      about consumers: the account IDs that accepted the share, and the security group
+      IDs that reference each list. Rule contents are not visible. This metadata is used
+      for one purpose: a share is not revoked while any consumer security group still
+      references a shared list.</li>
     </ul>
 
-    <h2>the trust surface</h2>
-    <p>What you're actually trusting is the <em>contents of the lists</em>. That surface is
-    kept small and auditable: the pipeline is
-    <a href="https://github.com/slash0-io/feed">open source</a>, every range traces to the
-    vendor's official publication with a recorded URL, timestamp, and content hash, ranges
-    are never widened beyond what the vendor published, and every publish is signed.</p>
+    <h2>what you are trusting</h2>
+    <p>The trusted artifact is the contents of the lists. The controls around it:
+    the pipeline that builds them is <a href="https://github.com/slash0-io/feed">open
+    source</a>. Every range traces to the vendor's official publication with a recorded
+    URL, timestamp, and content hash. Ranges are never widened beyond what the vendor
+    published. Every publish is signed.</p>
 
-    <h2>verify the signature yourself</h2>
-    <p>The feed index carries a detached ed25519 signature
-    (<code>index.json.sig</code>, format <code>keyid:base64</code>). The pinned public key
-    is <code>ec91decd19bce7b9eb1d99748aaf7e99e9a1d702b845c9dc65fecc0425189763</code>
-    (keyid <code>96b1d6e2</code>) - published here, in the
-    <a href="https://github.com/slash0-io/feed#why-trust-it">feed README</a>, and pinned in
-    the hosted tier's own verifier. With stock OpenSSL 3:</p>
-<pre><span class="c"># build a PEM for the pinned public key</span>
+    <h2>verify the signature</h2>
+    <p>The feed index carries a detached ed25519 signature in
+    <code>index.json.sig</code>, format <code>keyid:base64</code>. The public key is
+    <code>ec91decd19bce7b9eb1d99748aaf7e99e9a1d702b845c9dc65fecc0425189763</code>
+    (keyid <code>96b1d6e2</code>). It is published here, in the
+    <a href="https://github.com/slash0-io/feed#why-trust-it">feed README</a>, and pinned
+    in the hosted tier's verifier. With OpenSSL 3:</p>
+<pre><span class="c"># build a PEM for the public key</span>
 PUB=ec91decd19bce7b9eb1d99748aaf7e99e9a1d702b845c9dc65fecc0425189763
 printf '302a300506032b6570032100%s' "$PUB" | xxd -r -p | openssl base64 \
   | (echo '-----BEGIN PUBLIC KEY-----'; cat; echo '-----END PUBLIC KEY-----') > slash0.pem
@@ -59,37 +60,36 @@ curl -s https://feed.slash0.io/v1/index.json.sig | cut -d: -f2 \
 <span class="c"># verify</span>
 openssl pkeyutl -verify -pubin -inkey slash0.pem -rawin \
   -in index.json -sigfile index.sig
-<span class="c"># → Signature Verified Successfully</span></pre>
+<span class="c"># prints: Signature Verified Successfully</span></pre>
 
-    <p>Service documents are covered transitively - the signed index records each
-    document's SHA-256:</p>
-<pre><span class="c"># the index's recorded hash for stripe…</span>
+    <p>Service documents are covered through the index, which records each document's
+    SHA-256:</p>
+<pre><span class="c"># the hash recorded in the signed index</span>
 grep -A2 '"slug": "stripe"' index.json | grep sha256
 
-<span class="c"># …must match the served document</span>
+<span class="c"># the hash of the served document; the two must match</span>
 curl -s https://feed.slash0.io/v1/services/stripe.json | shasum -a 256</pre>
 
-    <h2>threat model, stated plainly</h2>
+    <h2>threat model</h2>
     <ul>
-      <li><strong>Covered:</strong> tampering anywhere between our build and your systems -
-      CDN, mirror, cache, or network path. The signature and hash chain fail closed: the
-      hosted tier's reconciler refuses unverified data and keeps serving the last-good
+      <li><strong>Covered:</strong> tampering between the build and the consumer (CDN,
+      cache, or network path). The signature and hash chain fail closed. The hosted
+      tier's reconciler rejects unverified data and keeps serving the last-good
       lists.</li>
-      <li><strong>Covered:</strong> bad vendor data and bad publishes - five independent
-      refusal layers, described in <a href="/docs/how-it-works/">how it works</a>.</li>
+      <li><strong>Covered:</strong> malformed vendor data and bad publishes. See the
+      safeguards section of <a href="/docs/how-it-works/">how it works</a>.</li>
       <li><strong>Not covered by signing:</strong> a compromise of the build pipeline
-      itself, which holds the signing key. Mitigations today are the pipeline being fully
-      open source with reviewable history and fixture-tested parsers; moving signing out
-      of CI is on the roadmap as the product matures.</li>
+      itself, since it holds the signing key. Current mitigations: the pipeline is open
+      source with reviewable history and fixture-tested parsers. Moving signing out of CI
+      is on the roadmap.</li>
     </ul>
 
     <h2>reporting</h2>
-    <p>Found something? Please report it privately via
+    <p>Report vulnerabilities privately through
     <a href="https://github.com/slash0-io/feed/security/advisories/new">GitHub security
-    advisories</a> - also listed in our
-    <a href="/.well-known/security.txt">security.txt</a>. We take list-correctness reports
-    as seriously as vulnerability reports: a wrong range in an allowlist is the failure
-    mode that matters.</p>
+    advisories</a>, also listed in
+    <a href="/.well-known/security.txt">security.txt</a>. Reports of incorrect list
+    contents are treated with the same severity as vulnerability reports.</p>
   </article>
 </div>
 

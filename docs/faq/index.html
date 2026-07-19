@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>faq · slash0 docs</title>
-<meta name="description" content="slash0 FAQ: what happens if slash0 disappears, pricing, regions, IPv6, quota math, and CDN-fronted services.">
+<meta name="description" content="slash0 FAQ: continuity, pricing, regions, IPv6, quota mechanics, and CDN-fronted services.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
@@ -17,73 +17,70 @@
 <div class="doc">
   <span class="crumb"><a href="/docs/">docs</a> / faq</span>
   <h1>faq</h1>
-  <p class="tagline">The questions a careful platform team should ask.</p>
+  <p class="tagline">Continuity, pricing, regions, IPv6, and quota mechanics.</p>
 
   <article>
-    <h2>what happens if slash0 disappears tomorrow?</h2>
-    <p><strong>Nothing breaks.</strong> This is the question to ask any vendor in your
-    security path, so here are the actual mechanics: the prefix lists live in AWS and your
-    rules reference them directly - if every slash0 system went dark, your security groups
-    keep enforcing the last-published ranges indefinitely. Nothing expires, nothing fails
-    closed, no traffic stops. Ranges would gradually go stale, exactly as if you'd
-    hand-maintained them and stopped. And ejecting is trivial: copy the list's entries
-    (they're plainly visible in your console) into a prefix list you own, repoint your
-    rules, done. No lock-in mechanism exists to remove.</p>
+    <h2>what happens if slash0 disappears?</h2>
+    <p>Nothing stops working. The prefix lists live in AWS and your rules reference them
+    directly. If slash0's systems stop, security groups keep enforcing the last-published
+    ranges indefinitely. Nothing expires and no traffic is interrupted. Ranges would go
+    stale over time, the same as hand-maintained rules that stop being maintained.
+    Migrating off is also simple: list entries are visible in your console, so they can
+    be copied into a prefix list you own and your rules repointed. There is no lock-in
+    mechanism.</p>
 
     <h2>what does slash0 see about my environment?</h2>
-    <p>No traffic, no data, no credentials - we hold no access to your account. AWS shows
-    a prefix-list owner two things about consumers: which account IDs accepted the share,
-    and which security-group IDs reference each list. We use that solely to refuse
-    revoking a share you still depend on. Details on the
+    <p>No traffic, no data, no credentials. AWS shows a prefix-list owner two things
+    about consumers: which account IDs accepted the share, and which security group IDs
+    reference each list. That metadata is used to block share revocation while your
+    rules still depend on a list. Details are on the
     <a href="/docs/security/">security page</a>.</p>
 
     <h2>what does it cost?</h2>
-    <p>The feed and Terraform provider are free, permanently. That's the point of them.
-    The hosted tier is free for design partners during early access; paid plans arrive at
-    general availability, priced per account-region well under the cost of running a
-    single managed-firewall endpoint. (For scale: AWS Network Firewall starts around
-    $288/month per AZ before you've written a rule or processed a byte.)</p>
+    <p>The feed and Terraform provider are free. The hosted tier is free for design
+    partners during early access. Paid plans arrive at general availability, priced per
+    account and region. For comparison, AWS Network Firewall costs roughly $288 per
+    month per AZ before rule management.</p>
 
     <h2>which regions?</h2>
-    <p>Prefix lists are regional, so we publish per region. Early access starts in
-    <code>us-east-1</code>; additional regions are enabled per design-partner need.
-    Tell us yours in the <a href="/#access">early-access request</a>.</p>
+    <p>Prefix lists are regional, so publication is per region. Early access starts in
+    <code>us-east-1</code>. Additional regions are enabled per design-partner need;
+    state yours in the <a href="/#access">early-access request</a>.</p>
 
     <h2>IPv6?</h2>
     <p>Yes. Prefix lists are per-address-family in AWS, so every purpose ships as up to
-    two lists - <code>egress.stripe.api.v4</code> and, where the vendor publishes v6
-    ranges, <code>.v6</code>. Your v4 and v6 rules reference them separately, matching how
-    security groups treat the families.</p>
+    two lists: <code>egress.stripe.api.v4</code>, and <code>.v6</code> where the vendor
+    publishes IPv6 ranges. IPv4 and IPv6 rules reference them separately, matching how
+    security groups treat the two families.</p>
 
     <h2>how fast do updates propagate?</h2>
-    <p>Typically inside the hour of a vendor publishing, and within a minute of the change
-    landing in our feed. Removals are slower <em>on purpose</em>. A range the vendor drops
-    stays in the list through a grace window, so old and new ranges overlap during vendor
-    rotations and your traffic never gets caught between them.</p>
+    <p>Typically inside the hour of a vendor publishing, and within a minute of the
+    change landing in the feed. Removals are intentionally slower: a range the vendor
+    drops stays in the list through a grace window, so old and new ranges overlap during
+    vendor rotations and traffic is not interrupted between them.</p>
 
     <h2>how does the quota math work?</h2>
-    <p>Referencing a prefix list consumes the list's <code>max_entries</code> against your
-    rules-per-security-group quota (default 60). That is an AWS mechanic, not ours. We do
-    three things about it: size <code>max_entries</code> tightly (you pay quota for the
-    max, not the actual), compute the exact quota your subscriptions need at onboarding
-    and file the Service Quotas request in the same CloudFormation stack, and publish
-    every purpose's rule cost in the <a href="https://feed.slash0.io/">catalog</a> so
-    there are no surprises.</p>
+    <p>Referencing a prefix list consumes the list's <code>max_entries</code> against
+    the rules-per-security-group quota (default 60). This is an AWS mechanic that
+    applies to any prefix list. slash0 handles it three ways:
+    <code>max_entries</code> is sized close to the actual entry count, since consumers
+    pay quota for the max rather than the actual; the onboarding stack computes the
+    quota a subscription set needs and files the Service Quotas request; and the
+    <a href="https://feed.slash0.io/">catalog</a> lists every purpose's rule cost.</p>
 
     <h2>what about services behind Cloudflare or CloudFront?</h2>
-    <p>IP pinning is the wrong tool for them, and we say so: pinning a shared CDN range
-    allowlists the whole CDN, including every attacker-controlled site behind it. The
-    catalog classifies every service (<code>dedicated</code> / <code>mixed</code> /
-    <code>cdn-shared</code>) so you know before you build. A later phase adds
-    hostname-aware enforcement, in your VPC, for exactly these services.</p>
+    <p>IP pinning does not work for them. Pinning a shared CDN range allowlists the
+    entire CDN, including unrelated sites behind it. The catalog classifies every
+    service (<code>dedicated</code>, <code>mixed</code>, <code>cdn-shared</code>) so
+    this is visible before you build. A later phase addresses these services with
+    hostname-aware enforcement running in your VPC.</p>
 
     <h2>who runs slash0?</h2>
-    <p>An independent engineer who got tired of the Lambda-updates-a-prefix-list
-    contraption every serious team rebuilds from scratch. Small on purpose: the entire
-    delivery mechanism is AWS primitives, the pipeline is
-    <a href="https://github.com/slash0-io">open source</a>, and the design goal throughout
-    is that you shouldn't have to trust us more than you can
-    <a href="/docs/security/">verify</a>.</p>
+    <p>slash0 is independently built and operated. The delivery mechanism is AWS
+    primitives end to end, the feed pipeline is
+    <a href="https://github.com/slash0-io">open source</a>, and the design goal
+    throughout is that claims should be <a href="/docs/security/">verifiable</a> rather
+    than taken on trust.</p>
   </article>
 </div>
 

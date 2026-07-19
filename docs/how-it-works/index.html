@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>how it works · slash0 docs</title>
-<meta name="description" content="How slash0 turns official vendor IP publications into managed AWS prefix lists - and the five layers between a vendor's mistake and your production traffic.">
+<meta name="description" content="How slash0 turns official vendor IP publications into managed AWS prefix lists, and the safeguards between a vendor publication and a security group.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
@@ -17,73 +17,74 @@
 <div class="doc">
   <span class="crumb"><a href="/docs/">docs</a> / how it works</span>
   <h1>how it works</h1>
-  <p class="tagline">From a vendor's publication to your security group, and everything that can refuse along the way.</p>
+  <p class="tagline">The path from a vendor publication to a security group rule.</p>
 
   <article>
     <h2>the feed</h2>
-    <p>Everything starts with the <a href="https://github.com/slash0-io/feed">open-source
-    feed pipeline</a>. For every service in the catalog we track the vendor's
-    <strong>official publication</strong> - their JSON endpoint, their documented ranges
-    page - never a third-party aggregator. Each rebuild:</p>
+    <p>The <a href="https://github.com/slash0-io/feed">feed pipeline</a> is open source.
+    For every service in the catalog it tracks the vendor's official publication: the
+    vendor's JSON endpoint or documented ranges page. Third-party aggregators are not
+    used. Each rebuild does the following:</p>
     <ul>
       <li><strong>Records provenance.</strong> Every service document carries the upstream
       URL, retrieval timestamp, and SHA-256 of the exact body it was derived from.</li>
-      <li><strong>Aggregates losslessly, never widens.</strong> Duplicate and subsumed
-      ranges are removed; adjacent exact halves are merged. The covered address set is
-      preserved <em>exactly</em> - CI proves it. We never summarize across gaps, because
-      overshoot space inside shared cloud ranges is rentable by any attacker.</li>
-      <li><strong>Refuses suspicious data.</strong> A purpose that parses to zero ranges
+      <li><strong>Aggregates losslessly.</strong> Duplicate and subsumed ranges are
+      removed. Adjacent exact halves are merged. The covered address set is preserved
+      exactly, and CI verifies this on every build. Ranges are never summarized across
+      gaps, because address space between a vendor's ranges can belong to anyone.</li>
+      <li><strong>Rejects suspicious data.</strong> A purpose that parses to zero ranges
       fails the build. A change that removes most of a service's previously published
-      ranges is quarantined: the last-good version keeps serving while a human reviews.</li>
-      <li><strong>Publishes signed.</strong> The feed index carries an ed25519 signature;
-      every service document is hash-chained to it.
-      <a href="/docs/security/">Verify it yourself.</a></li>
+      ranges is quarantined: the last-good version keeps serving until a human reviews
+      the change.</li>
+      <li><strong>Publishes signed.</strong> The feed index carries an ed25519 signature,
+      and every service document is hash-chained to the index. Verification commands are
+      on the <a href="/docs/security/">security page</a>.</li>
     </ul>
-    <p>The result is a versioned, signed JSON feed at
+    <p>The output is a versioned JSON feed at
     <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1</a> with sync tokens
-    and a public <a href="https://feed.slash0.io/v1/changelog.json">changelog</a> of every
-    real change. The free Terraform provider and the hosted tier both consume this same
-    artifact - there is no privileged data path.</p>
+    and a <a href="https://feed.slash0.io/v1/changelog.json">changelog</a> of every
+    change. The Terraform provider and the hosted tier consume the same artifact. There
+    is no separate private feed.</p>
 
     <h2>delivery</h2>
-    <p>The hosted tier publishes each purpose as an <strong>AWS customer-managed prefix
-    list</strong> in a slash0-operated publisher account - one list per service, purpose,
-    and address family (<code>egress.stripe.api.v4</code>,
-    <code>egress.datadog.agents.v6</code>) - and shares them to your accounts via
-    <strong>AWS RAM</strong>. Shared lists are read-only to consumers and referenced in
-    security group rules exactly like AWS's own managed lists.</p>
-    <p>Onboarding is one CloudFormation stack in your account: it accepts the RAM share
-    invitation and files the rules-per-SG quota increase your subscriptions need
-    (a referenced list draws its <code>max_entries</code> against that quota - we compute
-    the number, you approve the stack). From then on, a reconciler compares the signed
-    feed against every published list, every minute, and converges them.</p>
-    <p><strong>Nothing of ours is in your data path.</strong> Your traffic flows through
-    your security groups to the vendor, as before. If every slash0 system went dark, your
-    rules would keep working exactly as-is - see
-    <a href="/docs/faq/">"what if slash0 disappears?"</a></p>
+    <p>The hosted tier publishes each purpose as an AWS customer-managed prefix list in a
+    slash0-operated publisher account. There is one list per service, purpose, and
+    address family: <code>egress.stripe.api.v4</code>,
+    <code>egress.datadog.agents.v6</code>, and so on. Lists are shared to consumer
+    accounts through AWS RAM. Shared lists are read-only to consumers and are referenced
+    in security group rules the same way as AWS-managed lists.</p>
+    <p>Onboarding is one CloudFormation stack in the consumer account. It accepts the RAM
+    share invitation and files the rules-per-security-group quota increase the
+    subscriptions require. A referenced list counts its <code>max_entries</code> against
+    that quota; the stack computes the required value from the subscription set.</p>
+    <p>A reconciler compares the signed feed against every published list once per minute
+    and converges them. slash0 has no component in the traffic path: packets flow from
+    the consumer's security groups to the vendor directly. If slash0's systems stop,
+    existing rules continue to work unchanged. The <a href="/docs/faq/">FAQ</a> covers
+    this in detail.</p>
 
-    <h2>five refusals between a mistake and your traffic</h2>
-    <p>The dangerous moment for any managed-list product is a bad update propagating
-    everywhere at once. Five independent layers each get a chance to refuse:</p>
+    <h2>safeguards</h2>
+    <p>The primary operational risk in a managed-list system is a bad update propagating
+    to every consumer at once. Five independent layers can each stop one:</p>
     <table>
       <tr><th>layer</th><th>what it catches</th></tr>
-      <tr><td>1 · feed guardrails</td><td>Truncated or erroneous vendor publishes - zero-range builds fail; mass removals are quarantined while last-good keeps serving</td></tr>
-      <tr><td>2 · signature verification</td><td>Tampered or unsigned feed data - the publisher verifies ed25519 + hash chain before applying anything</td></tr>
-      <tr><td>3 · publisher guardrail</td><td>An update that would start removing most of a serving list freezes that list and pages a human - independently of layer 1</td></tr>
-      <tr><td>4 · canary-first rollout</td><td>Our own consumer account references every published list and takes every change first</td></tr>
-      <tr><td>5 · grace windows</td><td>Removed ranges keep serving for a grace period - old and new coexist, so vendor rotations are non-events; ranges a vendor re-publishes mid-grace are restored, not churned</td></tr>
+      <tr><td>1 · feed guardrails</td><td>Truncated or malformed vendor publishes. Zero-range builds fail. Mass removals are quarantined while the last-good version keeps serving.</td></tr>
+      <tr><td>2 · signature verification</td><td>Tampered or unsigned feed data. The reconciler verifies the ed25519 signature and hash chain before applying anything.</td></tr>
+      <tr><td>3 · publisher guardrail</td><td>An update that would remove most of a serving list. The list is frozen and an alarm is raised, independently of layer 1.</td></tr>
+      <tr><td>4 · canary-first rollout</td><td>A slash0-owned consumer account references every published list and takes every change first.</td></tr>
+      <tr><td>5 · grace windows</td><td>Ranges removed by a vendor keep serving for a grace period, so old and new ranges overlap during rotations. A range the vendor re-publishes mid-grace is restored rather than removed and re-added.</td></tr>
     </table>
-    <p>And beneath all five: prefix lists version natively in AWS, so rollback is a
-    one-call restore - not custom machinery.</p>
+    <p>Prefix lists also version natively in AWS. Rollback is a
+    <code>RestoreManagedPrefixListVersion</code> call, not custom machinery.</p>
 
     <h2>where pinning stops</h2>
     <p>IP pinning only works for services with dedicated, published ranges. The catalog
-    classifies every service - <code>dedicated</code>, <code>mixed</code>, or
-    <code>cdn-shared</code> - and when a CDN-fronted service can't be pinned safely, it
-    says so instead of selling you a leaky allowlist. (Pinning a shared CDN range
-    allowlists the entire CDN, including every attacker-controlled site behind it.)
-    Those services are the target of a later phase: hostname-aware egress enforcement
-    that runs entirely in your VPC, built on this same catalog.</p>
+    classifies every service as <code>dedicated</code>, <code>mixed</code>, or
+    <code>cdn-shared</code>. When a service is fronted by a shared CDN, pinning its
+    ranges would allowlist the entire CDN, including unrelated sites behind it, so the
+    catalog marks the service <code>cdn-shared</code> instead of publishing a pinnable
+    list. A later phase addresses these services with hostname-aware enforcement running
+    in the consumer's VPC, built on the same catalog.</p>
   </article>
 </div>
 

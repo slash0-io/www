@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>quickstart · slash0 docs</title>
-<meta name="description" content="Precise egress security group rules from official vendor IP ranges, in five minutes, free - with the slash0 Terraform provider.">
+<meta name="description" content="Build egress security group rules from official vendor IP ranges with the slash0 Terraform provider.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
@@ -17,10 +17,10 @@
 <div class="doc">
   <span class="crumb"><a href="/docs/">docs</a> / quickstart</span>
   <h1>quickstart</h1>
-  <p class="tagline">Free tier: precise egress rules from official vendor ranges, at plan time.</p>
+  <p class="tagline">Build egress rules from official vendor ranges with the free Terraform provider.</p>
 
   <article>
-    <h2>1 - add the provider</h2>
+    <h2>1. add the provider</h2>
 <pre>terraform {
   required_providers {
     egress = {
@@ -31,8 +31,8 @@
 
 provider "egress" {}</pre>
 
-    <h2>2 - pull the ranges you need</h2>
-    <p>One data source per service and purpose. Browse every slug and purpose in the
+    <h2>2. pull the ranges you need</h2>
+    <p>One data source per service and purpose. Every slug and purpose is listed in the
     <a href="https://feed.slash0.io/">catalog</a>.</p>
 <pre><span class="c"># ranges your workloads connect out to (egress direction)</span>
 data "egress_ranges" "stripe_api" {
@@ -40,14 +40,14 @@ data "egress_ranges" "stripe_api" {
   purpose = "api"
 }
 
-<span class="c"># ranges a service connects to you from (ingress direction -</span>
+<span class="c"># ranges a service connects to you from (ingress direction:</span>
 <span class="c"># webhook and agent sources belong in ingress rules)</span>
 data "egress_ranges" "github_hooks" {
   service = "github"
   purpose = "hooks"
 }</pre>
 
-    <h2>3 - feed them into a security group rule</h2>
+    <h2>3. reference them in a security group rule</h2>
 <pre>resource "aws_security_group_rule" "stripe_egress" {
   type              = "egress"
   from_port         = 443
@@ -57,30 +57,28 @@ data "egress_ranges" "github_hooks" {
   security_group_id = aws_security_group.app.id
   description       = "Stripe API (feed ${data.egress_ranges.stripe_api.sync_token})"
 }</pre>
-    <p><code>terraform plan</code>, review, apply. Your egress rule now allows exactly
-    Stripe's published API ranges - nothing else.</p>
+    <p>After apply, the egress rule allows only Stripe's published API ranges.</p>
 
-    <h2>what you should know</h2>
+    <h2>notes</h2>
     <ul>
-      <li><strong>Every range is official.</strong> The provider reads the
+      <li><strong>Source of the data.</strong> The provider reads the
       <a href="https://feed.slash0.io/v1/index.json">signed public feed</a>, which is built
-      exclusively from each vendor's own publication - never third-party aggregators. Each
-      service document carries the upstream URL, retrieval time, and content hash.</li>
-      <li><strong>Direction matters.</strong> <code>egress</code> purposes are destinations
-      for your outbound rules; <code>ingress</code> purposes (webhooks, agents, synthetic
-      probes) are sources for your inbound rules. The catalog labels every purpose.</li>
-      <li><strong>Data sources refresh at plan time.</strong> Ranges drift between applies -
-      that is the free tier's known limitation. The <a href="/#access">hosted tier</a>
-      closes it: the same ranges as managed prefix lists, updated continuously in your
-      account, no <code>terraform apply</code> required.</li>
-      <li><strong>Mind your quota.</strong> Every CIDR consumes one security-group rule
-      (default 60 per SG). The catalog shows each purpose's rule cost up front.</li>
+      from each vendor's own publication. Third-party aggregators are not used. Each
+      service document records the upstream URL, retrieval time, and content hash.</li>
+      <li><strong>Direction.</strong> Purposes marked <code>egress</code> are destinations
+      for outbound rules. Purposes marked <code>ingress</code> (webhooks, agents, synthetic
+      probes) are sources for inbound rules. The catalog labels every purpose.</li>
+      <li><strong>Refresh timing.</strong> Data sources refresh at plan time, so ranges
+      drift between applies. The <a href="/#access">hosted tier</a> exists to remove that
+      gap: the same ranges as managed prefix lists, updated continuously without an
+      apply.</li>
+      <li><strong>Quota.</strong> Every CIDR consumes one security group rule (default 60
+      per group). The catalog shows each purpose's rule count.</li>
     </ul>
 
     <h2>next</h2>
-    <p>Read <a href="/docs/how-it-works/">how it works</a> for the full pipeline, or
-    <a href="/docs/security/">verify the feed's signature</a> yourself before trusting any
-    of this.</p>
+    <p><a href="/docs/how-it-works/">How it works</a> describes the full pipeline.
+    <a href="/docs/security/">Security</a> includes commands to verify the feed signature.</p>
   </article>
 </div>
 
