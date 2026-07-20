@@ -41,16 +41,20 @@
     published. Every publish is signed.</p>
 
     <h2>verify the signature</h2>
-    <p>The feed index carries a detached ed25519 signature in
-    <code>index.json.sig</code>, format <code>keyid:base64</code>. The public key is
-    <code>ec91decd19bce7b9eb1d99748aaf7e99e9a1d702b845c9dc65fecc0425189763</code>
-    (keyid <code>96b1d6e2</code>). It is published here, in the
+    <p>The feed index carries a detached ECDSA P-256 signature in
+    <code>index.json.sig</code>, format <code>keyid:base64</code>. The signing key is
+    held in AWS KMS and cannot be exported. The public key (keyid
+    <code>9823e091</code>) is published here, in the
     <a href="https://github.com/slash0-io/feed#why-trust-it">feed README</a>, and pinned
-    in the hosted tier's verifier. With OpenSSL 3:</p>
-<pre><span class="c"># build a PEM for the public key</span>
-PUB=ec91decd19bce7b9eb1d99748aaf7e99e9a1d702b845c9dc65fecc0425189763
-printf '302a300506032b6570032100%s' "$PUB" | xxd -r -p | openssl base64 \
-  | (echo '-----BEGIN PUBLIC KEY-----'; cat; echo '-----END PUBLIC KEY-----') > slash0.pem
+    in the hosted tier's verifier. The format carries a key id and consumers pin a key
+    set, so keys rotate without breaking verification.</p>
+<pre><span class="c"># the public key</span>
+cat &gt; slash0.pem &lt;&lt;'EOF'
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEqevHf1FrgbrKV5zzV+C1yjoOvi11
+k2+y5sDFwSpNqhuS1yeJaBFSVUFYCc39pqlNST+vR/Jd4DMwfjjkVWovTQ==
+-----END PUBLIC KEY-----
+EOF
 
 <span class="c"># fetch the index and its signature</span>
 curl -s https://feed.slash0.io/v1/index.json -o index.json
@@ -58,9 +62,8 @@ curl -s https://feed.slash0.io/v1/index.json.sig | cut -d: -f2 \
   | openssl base64 -d -A > index.sig
 
 <span class="c"># verify</span>
-openssl pkeyutl -verify -pubin -inkey slash0.pem -rawin \
-  -in index.json -sigfile index.sig
-<span class="c"># prints: Signature Verified Successfully</span></pre>
+openssl dgst -sha256 -verify slash0.pem -signature index.sig index.json
+<span class="c"># prints: Verified OK</span></pre>
 
     <p>Service documents are covered through the index, which records each document's
     SHA-256:</p>
