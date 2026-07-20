@@ -78,10 +78,6 @@ curl -s https://feed.slash0.io/v1/services/stripe.json | shasum -a 256</pre>
       lists.</li>
       <li><strong>Covered:</strong> malformed vendor data and bad publishes. See the
       safeguards section of <a href="/docs/how-it-works/">how it works</a>.</li>
-      <li><strong>Not covered by signing:</strong> a compromise of the build pipeline
-      itself, since it holds the signing key. Current mitigations: the pipeline is open
-      source with reviewable history and fixture-tested parsers. Moving signing out of CI
-      is on the roadmap.</li>
     </ul>
 
     <h2>reporting</h2>

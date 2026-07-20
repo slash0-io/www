@@ -17,18 +17,9 @@
 <div class="doc">
   <span class="crumb"><a href="/docs/">docs</a> / faq</span>
   <h1>faq</h1>
-  <p class="tagline">Continuity, pricing, regions, IPv6, and quota mechanics.</p>
+  <p class="tagline">Pricing, regions, IPv6, quota mechanics, and continuity.</p>
 
   <article>
-    <h2>what happens if slash0 disappears?</h2>
-    <p>Nothing stops working. The prefix lists live in AWS and your rules reference them
-    directly. If slash0's systems stop, security groups keep enforcing the last-published
-    ranges indefinitely. Nothing expires and no traffic is interrupted. Ranges would go
-    stale over time, the same as hand-maintained rules that stop being maintained.
-    Migrating off is also simple: list entries are visible in your console, so they can
-    be copied into a prefix list you own and your rules repointed. There is no lock-in
-    mechanism.</p>
-
     <h2>what does slash0 see about my environment?</h2>
     <p>No traffic, no data, no credentials. AWS shows a prefix-list owner two things
     about consumers: which account IDs accepted the share, and which security group IDs
@@ -81,6 +72,16 @@
     <a href="https://github.com/slash0-io">open source</a>, and the design goal
     throughout is that claims should be <a href="/docs/security/">verifiable</a> rather
     than taken on trust.</p>
+
+    <h2>what happens if slash0 disappears?</h2>
+    <p>Nothing stops working. The prefix lists live in AWS and your rules reference them
+    directly. If slash0's systems stop, security groups keep enforcing the last-published
+    ranges indefinitely. Nothing expires and no traffic is interrupted. Ranges would go
+    stale over time, the same as hand-maintained rules that stop being maintained.
+    Migrating off is also simple: list entries are visible in your console, so they can
+    be copied into a prefix list you own and your rules repointed. There is no lock-in
+    mechanism.</p>
+
   </article>
 </div>
 

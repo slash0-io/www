@@ -100,10 +100,11 @@
 
 <section id="free">
   <div class="wrap">
-    <h2>free today</h2>
-    <p class="lead">The data layer is open and free: a signed, versioned feed of official
-    vendor IP ranges. 45+ services, rebuilt continuously, with per-purpose scoping and
-    change history, plus a Terraform provider for plan-time use.</p>
+    <h2>free tier</h2>
+    <p class="lead">All of the data is free, permanently. The signed feed and the
+    Terraform provider expose every service and purpose in the catalog: 45+ services,
+    rebuilt continuously, with per-purpose scoping and change history. If you never pay
+    slash0 anything, all of this is yours to use.</p>
     <div class="cols">
       <div class="card"><h3>terraform provider</h3><p><code>source = "slash0-io/egress"</code>.
       Data sources for every service and purpose in the catalog.
@@ -120,10 +121,25 @@
 
 <section id="access">
   <div class="wrap">
-    <h2>early access</h2>
-    <p class="lead">The hosted tier delivers these ranges as managed prefix lists, kept
-    current in your account. It is live and onboarding <strong>design partners</strong> now. Tell us
-    which services you allowlist (or wish you could) and we'll reach out as slots open.</p>
+    <h2>hosted tier</h2>
+    <p class="lead">Same data, plus the part worth paying for: <strong>we manage it in
+    your account</strong>. Terraform data sources refresh only when you run an apply;
+    the hosted tier removes that gap and everything else you would otherwise build
+    around it.</p>
+    <div class="cols">
+      <div class="card"><h3>always current</h3><p>Prefix lists update within a minute of
+      a feed change. No applies, no Lambda updater to build, no drift between
+      deploys.</p></div>
+      <div class="card"><h3>safe rollouts</h3><p>Staged rollouts through a canary
+      account, quarantine of suspicious changes, and grace windows that keep old and new
+      ranges live through vendor rotations.</p></div>
+      <div class="card"><h3>quota handled</h3><p>Onboarding computes the
+      rules-per-group quota your subscriptions need and files the increase for you.
+      List sizes are tuned so you spend as little quota as possible.</p></div>
+    </div>
+    <p class="lead" style="margin-top:26px">It is live and onboarding
+    <strong>design partners</strong> now. Tell us which services you allowlist, or wish
+    you could, and we'll reach out as slots open.</p>
     <div class="cta-row">
       <a class="btn primary" href="https://github.com/slash0-io/terraform-provider-egress/issues/new?template=early-access.yml">request early access</a>
     </div>

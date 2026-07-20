@@ -75,7 +75,7 @@
       <tr><td>5 · grace windows</td><td>Ranges removed by a vendor keep serving for a grace period, so old and new ranges overlap during rotations. A range the vendor re-publishes mid-grace is restored rather than removed and re-added.</td></tr>
     </table>
     <p>Prefix lists also version natively in AWS. Rollback is a
-    <code>RestoreManagedPrefixListVersion</code> call, not custom machinery.</p>
+    <code>RestoreManagedPrefixListVersion</code> call.</p>
 
     <h2>where pinning stops</h2>
     <p>IP pinning only works for services with dedicated, published ranges. The catalog
