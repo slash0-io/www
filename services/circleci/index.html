@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CircleCI IP ranges (core, jobs) · slash0</title>
+<meta name="description" content="Official CircleCI IP ranges for allowlisting: core, jobs, IPv4 and IPv6, from the vendor&#x27;s own publication. Live data, Terraform examples, AWS managed prefix lists.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/live.js" defer></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+<div class="doc" id="service-page" data-slug="circleci">
+<span class="crumb"><a href="/services/">services</a> / circleci</span>
+<h1>CircleCI IP ranges</h1>
+<p class="tagline">Official CircleCI ranges from the vendor's publication, split by purpose: core, jobs. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/circleci.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<article>
+<table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
+<tr><td><a href="#core"><code>circleci/core</code></a></td><td>egress</td><td id="count4-core">·</td><td id="count6-core">·</td></tr>
+<tr><td><a href="#jobs"><code>circleci/jobs</code></a></td><td>ingress</td><td id="count4-jobs">·</td><td id="count6-jobs">·</td></tr>
+</table>
+<h2 id="core">circleci/core</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-core">loading ranges from the feed…</pre>
+<p class="note" id="quota-core" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;circleci_core&quot; {
+  service = &quot;circleci&quot;
+  purpose = &quot;core&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;circleci_core&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.circleci_core.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="jobs">circleci/jobs</h2>
+<p>Direction: ingress. Ranges CircleCI connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-jobs">loading ranges from the feed…</pre>
+<p class="note" id="quota-jobs" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;circleci_jobs&quot; {
+  service = &quot;circleci&quot;
+  purpose = &quot;jobs&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;circleci_jobs&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.circleci_jobs.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2>keep rules current automatically</h2>
+<p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data as AWS managed prefix lists (<code>egress.circleci.core.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
+<h2>provenance</h2>
+<p>Ranges come from CircleCI's official publication: <a href="https://circleci.com/docs/guides/security/ip-ranges/">https://circleci.com/docs/guides/security/ip-ranges/</a>. Fetched sources:</p>
+<ul>
+<li><code><a href="https://circleci.com/docs/ip-ranges-list.json">https://circleci.com/docs/ip-ranges-list.json</a></code></li>
+</ul>
+<p>Every publish is signed (ECDSA P-256 over the feed index, each service document hash-chained to it) and every range change is recorded in the <a href="/changelog/">changelog</a>. Verification steps: <a href="/docs/security/">security</a>. Provider setup: <a href="/docs/quickstart/">quickstart</a>.</p>
+</article>
+</div>
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/changelog/">changelog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>

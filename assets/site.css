@@ -147,6 +147,7 @@
   padding: 18px 20px; font-family: var(--mono); font-size: 13px; line-height: 1.75;
   overflow-x: auto; margin: 14px 0; color: var(--text);
 }
+.doc pre.ranges { max-height: 320px; overflow-y: auto; }
 .doc pre .c { color: #4e6378; }
 .doc table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px; }
 .doc th, .doc td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; color: var(--dim); }

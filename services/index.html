@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SaaS and cloud service IP ranges · slash0</title>
+<meta name="description" content="Official IP ranges for 45 SaaS and cloud services, per purpose, IPv4 and IPv6, rebuilt continuously from each vendor&#x27;s own publication. Signed feed, Terraform provider, AWS managed prefix lists.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+<div class="doc">
+<h1>service IP ranges</h1>
+<p class="tagline">Official IP ranges for 45 services, one page per service, straight from each vendor's own publication. Ranges render live from the <a href="https://feed.slash0.io/v1/index.json">signed feed</a>; changes land in the <a href="/changelog/">changelog</a>. Services that do not publish ranges are listed in the <a href="https://feed.slash0.io/">catalog</a>.</p>
+<article>
+<h2>AI</h2>
+<a class="cardlink" href="/services/anthropic/"><b>Anthropic (Claude API)</b><span>api, outbound</span></a>
+<a class="cardlink" href="/services/openai/"><b>OpenAI (ChatGPT egress)</b><span>agents, connectors</span></a>
+<h2>Business SaaS</h2>
+<a class="cardlink" href="/services/atlassian/"><b>Atlassian Cloud</b><span>all, bitbucket, egress</span></a>
+<a class="cardlink" href="/services/docusign/"><b>DocuSign</b><span>connect-webhooks, email</span></a>
+<a class="cardlink" href="/services/microsoft-365/"><b>Microsoft 365</b><span>common, exchange, sharepoint, teams</span></a>
+<a class="cardlink" href="/services/salesforce/"><b>Salesforce</b><span>all</span></a>
+<a class="cardlink" href="/services/zendesk/"><b>Zendesk</b><span>api, webhooks</span></a>
+<h2>CDN</h2>
+<a class="cardlink" href="/services/cloudflare/"><b>Cloudflare</b><span>edge</span></a>
+<a class="cardlink" href="/services/fastly/"><b>Fastly</b><span>edge</span></a>
+<h2>Cloud</h2>
+<a class="cardlink" href="/services/aws/"><b>Amazon Web Services</b><span>all, cloudfront, dynamodb, route53-healthchecks, s3</span></a>
+<a class="cardlink" href="/services/azure/"><b>Microsoft Azure (Service Tags)</b><span>all, sql, storage</span></a>
+<a class="cardlink" href="/services/digitalocean/"><b>DigitalOcean</b><span>all</span></a>
+<a class="cardlink" href="/services/google/"><b>Google (all services)</b><span>all</span></a>
+<a class="cardlink" href="/services/google-cloud/"><b>Google Cloud Platform</b><span>all</span></a>
+<a class="cardlink" href="/services/ibm-cloud/"><b>IBM Cloud (Classic infrastructure)</b><span>frontend, load-balancers</span></a>
+<a class="cardlink" href="/services/linode/"><b>Akamai Connected Cloud (Linode)</b><span>all</span></a>
+<a class="cardlink" href="/services/oracle-cloud/"><b>Oracle Cloud Infrastructure</b><span>all, object-storage</span></a>
+<a class="cardlink" href="/services/vultr/"><b>Vultr (Constant, AS20473)</b><span>all</span></a>
+<h2>Communications</h2>
+<a class="cardlink" href="/services/intercom/"><b>Intercom</b><span>all, all-eu, outbound-webhooks</span></a>
+<a class="cardlink" href="/services/klaviyo/"><b>Klaviyo</b><span>integrations</span></a>
+<a class="cardlink" href="/services/pagerduty/"><b>PagerDuty</b><span>webhooks, webhooks-eu</span></a>
+<a class="cardlink" href="/services/postmark/"><b>Postmark</b><span>smtp, webhooks</span></a>
+<a class="cardlink" href="/services/twilio-sip/"><b>Twilio Elastic SIP Trunking</b><span>sip-media, sip-signaling</span></a>
+<a class="cardlink" href="/services/zoom/"><b>Zoom</b><span>all</span></a>
+<h2>Data platforms</h2>
+<a class="cardlink" href="/services/databricks/"><b>Databricks</b><span>all</span></a>
+<a class="cardlink" href="/services/elastic-cloud/"><b>Elastic Cloud</b><span>api, outbound</span></a>
+<a class="cardlink" href="/services/neon/"><b>Neon (Serverless Postgres)</b><span>outbound</span></a>
+<h2>Developer tools</h2>
+<a class="cardlink" href="/services/buildkite/"><b>Buildkite</b><span>webhooks</span></a>
+<a class="cardlink" href="/services/circleci/"><b>CircleCI</b><span>core, jobs</span></a>
+<a class="cardlink" href="/services/github/"><b>GitHub</b><span>actions, api, git, hooks, packages, pages, web</span></a>
+<a class="cardlink" href="/services/gitlab/"><b>GitLab.com</b><span>web-api, webhooks</span></a>
+<h2>Identity</h2>
+<a class="cardlink" href="/services/auth0/"><b>Auth0 (Okta CIC)</b><span>all</span></a>
+<a class="cardlink" href="/services/okta/"><b>Okta</b><span>all</span></a>
+<h2>Observability</h2>
+<a class="cardlink" href="/services/datadog/"><b>Datadog</b><span>agents, agents-eu, api, api-eu, apm, logs, synthetics, webhooks</span></a>
+<a class="cardlink" href="/services/grafana-cloud/"><b>Grafana Cloud</b><span>alerts, logs, metrics</span></a>
+<a class="cardlink" href="/services/new-relic/"><b>New Relic</b><span>agents, synthetics</span></a>
+<a class="cardlink" href="/services/sentry/"><b>Sentry (hosted)</b><span>ingest, uptime, webhooks</span></a>
+<h2>Payments</h2>
+<a class="cardlink" href="/services/braintree/"><b>Braintree (PayPal)</b><span>api, sandbox</span></a>
+<a class="cardlink" href="/services/paypal/"><b>PayPal</b><span>all</span></a>
+<a class="cardlink" href="/services/plaid/"><b>Plaid</b><span>webhooks</span></a>
+<a class="cardlink" href="/services/stripe/"><b>Stripe</b><span>api, terminal, webhooks</span></a>
+<h2>Security</h2>
+<a class="cardlink" href="/services/netskope/"><b>Netskope (NewEdge)</b><span>dataplane</span></a>
+<a class="cardlink" href="/services/rapid7/"><b>Rapid7 (InsightAppSec cloud engines)</b><span>appsec-engines</span></a>
+<a class="cardlink" href="/services/tenable/"><b>Tenable (Vulnerability Management)</b><span>scanners</span></a>
+<a class="cardlink" href="/services/zscaler/"><b>Zscaler (zscaler.net cloud)</b><span>enforcement-nodes</span></a>
+</article>
+</div>
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/changelog/">changelog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>

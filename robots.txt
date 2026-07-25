@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://slash0.io/sitemap.xml

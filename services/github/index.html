@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub IP ranges (actions, api, git, hooks, packages, pages, web) · slash0</title>
+<meta name="description" content="Official GitHub IP ranges for allowlisting: actions, api, git, hooks, packages, pages, web, IPv4 and IPv6, from the vendor&#x27;s own publication. Live data, Terraform examples, AWS managed prefix lists.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/live.js" defer></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+<div class="doc" id="service-page" data-slug="github">
+<span class="crumb"><a href="/services/">services</a> / github</span>
+<h1>GitHub IP ranges</h1>
+<p class="tagline">Official GitHub ranges from the vendor's publication, split by purpose: actions, api, git, hooks, packages, pages, web. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/github.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<article>
+<table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
+<tr><td><a href="#actions"><code>github/actions</code></a></td><td>ingress</td><td id="count4-actions">·</td><td id="count6-actions">·</td></tr>
+<tr><td><a href="#api"><code>github/api</code></a></td><td>egress</td><td id="count4-api">·</td><td id="count6-api">·</td></tr>
+<tr><td><a href="#git"><code>github/git</code></a></td><td>egress</td><td id="count4-git">·</td><td id="count6-git">·</td></tr>
+<tr><td><a href="#hooks"><code>github/hooks</code></a></td><td>ingress</td><td id="count4-hooks">·</td><td id="count6-hooks">·</td></tr>
+<tr><td><a href="#packages"><code>github/packages</code></a></td><td>egress</td><td id="count4-packages">·</td><td id="count6-packages">·</td></tr>
+<tr><td><a href="#pages"><code>github/pages</code></a></td><td>egress</td><td id="count4-pages">·</td><td id="count6-pages">·</td></tr>
+<tr><td><a href="#web"><code>github/web</code></a></td><td>egress</td><td id="count4-web">·</td><td id="count6-web">·</td></tr>
+</table>
+<h2 id="actions">github/actions</h2>
+<p>Direction: ingress. Ranges GitHub connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-actions">loading ranges from the feed…</pre>
+<p class="note" id="quota-actions" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;github_actions&quot; {
+  service = &quot;github&quot;
+  purpose = &quot;actions&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;github_actions&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.github_actions.ipv4_cidrs
+  ipv6_cidr_blocks  = data.egress_ranges.github_actions.ipv6_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="api">github/api</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-api">loading ranges from the feed…</pre>
+<p class="note" id="quota-api" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;github_api&quot; {
+  service = &quot;github&quot;
+  purpose = &quot;api&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;github_api&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.github_api.ipv4_cidrs
+  ipv6_cidr_blocks  = data.egress_ranges.github_api.ipv6_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="git">github/git</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-git">loading ranges from the feed…</pre>
+<p class="note" id="quota-git" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;github_git&quot; {
+  service = &quot;github&quot;
+  purpose = &quot;git&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;github_git&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.github_git.ipv4_cidrs
+  ipv6_cidr_blocks  = data.egress_ranges.github_git.ipv6_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="hooks">github/hooks</h2>
+<p>Direction: ingress. Ranges GitHub connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-hooks">loading ranges from the feed…</pre>
+<p class="note" id="quota-hooks" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;github_hooks&quot; {
+  service = &quot;github&quot;
+  purpose = &quot;hooks&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;github_hooks&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.github_hooks.ipv4_cidrs
+  ipv6_cidr_blocks  = data.egress_ranges.github_hooks.ipv6_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="packages">github/packages</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-packages">loading ranges from the feed…</pre>
+<p class="note" id="quota-packages" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;github_packages&quot; {
+  service = &quot;github&quot;
+  purpose = &quot;packages&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;github_packages&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.github_packages.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="pages">github/pages</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-pages">loading ranges from the feed…</pre>
+<p class="note" id="quota-pages" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;github_pages&quot; {
+  service = &quot;github&quot;
+  purpose = &quot;pages&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;github_pages&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.github_pages.ipv4_cidrs
+  ipv6_cidr_blocks  = data.egress_ranges.github_pages.ipv6_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="web">github/web</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-web">loading ranges from the feed…</pre>
+<p class="note" id="quota-web" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;github_web&quot; {
+  service = &quot;github&quot;
+  purpose = &quot;web&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;github_web&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.github_web.ipv4_cidrs
+  ipv6_cidr_blocks  = data.egress_ranges.github_web.ipv6_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2>keep rules current automatically</h2>
+<p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data as AWS managed prefix lists (<code>egress.github.actions.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
+<h2>provenance</h2>
+<p>Ranges come from GitHub's official publication: <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-githubs-ip-addresses">https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-githubs-ip-addresses</a>. Fetched sources:</p>
+<ul>
+<li><code><a href="https://api.github.com/meta">https://api.github.com/meta</a></code></li>
+</ul>
+<p>Every publish is signed (ECDSA P-256 over the feed index, each service document hash-chained to it) and every range change is recorded in the <a href="/changelog/">changelog</a>. Verification steps: <a href="/docs/security/">security</a>. Provider setup: <a href="/docs/quickstart/">quickstart</a>.</p>
+</article>
+</div>
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/changelog/">changelog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>

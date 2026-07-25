@@ -49,6 +49,46 @@
       .catch(function () {});
   }
 
+  // Service pages: live ranges, counts, and last-changed per purpose.
+  var svc = document.getElementById("service-page");
+  if (svc) {
+    var slug = svc.getAttribute("data-slug");
+    Promise.all([
+      getJSON("services/" + slug + ".json"),
+      getJSON("changelog.json")
+    ]).then(function (res) {
+      var doc = res[0], changelog = res[1];
+      Object.keys(doc.purposes).forEach(function (key) {
+        var p = doc.purposes[key];
+        var v4 = p.ipv4 || [], v6 = p.ipv6 || [];
+        var pre = document.getElementById("ranges-" + key);
+        if (pre) pre.textContent = v4.concat(v6).join("\n");
+        var c4 = document.getElementById("count4-" + key);
+        if (c4) c4.textContent = v4.length;
+        var c6 = document.getElementById("count6-" + key);
+        if (c6) c6.textContent = v6.length;
+        var quota = document.getElementById("quota-" + key);
+        if (quota && v4.length > 60) quota.hidden = false;
+      });
+      for (var i = 0; i < changelog.length; i++) {
+        var hit = changelog[i].changes.some(function (c) { return c.slug === slug; });
+        if (hit) {
+          var rel = document.getElementById("svc-updated-rel");
+          rel.textContent = relTime(changelog[i].publishedAt);
+          rel.title = utcStamp(changelog[i].publishedAt);
+          document.getElementById("svc-updated").hidden = false;
+          break;
+        }
+      }
+    }).catch(function () {
+      var pres = svc.querySelectorAll("pre.ranges");
+      for (var i = 0; i < pres.length; i++) {
+        pres[i].textContent = "Could not load ranges. The raw data is at " +
+          FEED + "services/" + slug + ".json";
+      }
+    });
+  }
+
   // Changelog page: full history, newest first.
   var root = document.getElementById("changelog");
   if (root) {
@@ -89,8 +129,9 @@
             row.className = "cl-row";
             var code = document.createElement("code");
             code.textContent = c.slug + "/" + c.purpose;
-            var name = document.createElement("span");
+            var name = document.createElement("a");
             name.className = "cl-name";
+            name.href = "/services/" + c.slug + "/";
             name.textContent = names[c.slug] || c.slug;
             var delta = document.createElement("span");
             delta.className = "cl-delta";
