@@ -98,7 +98,7 @@
         follows; typically inside the hour of the vendor publishing, and within a minute
         of the change landing in our feed. Staged rollouts hit our own canary account
         first; suspicious changes are quarantined before they ever publish; updates are
-        signed end-to-end with an ed25519 signature over the feed index, every service
+        signed end-to-end with an ECDSA P-256 signature over the feed index, every service
         document hash-chained to it, verified before anything is applied.</p></div></div>
     </div>
     <p class="note">Note: IP pinning only works for services with dedicated,
