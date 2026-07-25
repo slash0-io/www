@@ -67,7 +67,7 @@ def head(title, description, extra=""):
 
 
 FOOTER = """<footer><div class="wrap">
-  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/changelog/">changelog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/changelog/">changelog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
   <div>© 2026 slash0</div>
 </div></footer>
 </body>
@@ -229,6 +229,7 @@ def directory_page(services):
 
 def sitemap(services):
     urls = ["/", "/changelog/", "/services/", "/calculator/",
+            "/vendor-ip-allowlists/",
             "/docs/", "/docs/quickstart/", "/docs/how-it-works/",
             "/docs/security/", "/docs/faq/", "/docs/contact/"]
     urls += [f"/services/{s['slug']}/" for s in sorted(services, key=lambda x: x["slug"])]

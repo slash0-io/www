@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which SaaS vendors let you allowlist them · slash0</title>
+<meta name="description" content="A scored survey of how SaaS and cloud vendors publish their IP ranges: machine-readable or scraped, advance notice, change signals, purpose separation, IPv6. Measured from a feed that parses all of them continuously.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+
+<div class="doc">
+  <h1>which vendors let you allowlist them</h1>
+  <p class="tagline">Replacing <code>0.0.0.0/0</code> with something specific depends
+  on the vendor at the other end publishing their IP ranges, and on publishing them
+  in a form you can actually follow. This page scores how well each one does that.</p>
+
+  <article>
+
+  <p>slash0 fetches and parses the official range publications of every service in
+  its catalog, continuously, and republishes them as a signed feed. Doing that means
+  writing a parser per vendor and then living with the result: the pages that get
+  restyled, the files with no cache headers, the ranges that appear one morning with
+  no warning. This page is the byproduct of that work. It is not a survey of vendor
+  documentation, it is a record of what it takes to track each one in production.</p>
+
+  <p>Nothing here is a judgement about the services themselves. A vendor can be
+  excellent and still publish its ranges badly. What is being measured is narrow:
+  whether an automated consumer can follow your ranges without heroics.</p>
+
+  <h2>what the score measures</h2>
+
+  <p>Five points, one for each thing that separates a range list you can automate
+  from one you have to babysit.</p>
+
+  <ol>
+    <li><strong>Machine-readable source.</strong> The ranges come from an endpoint
+    that returns structured data. The alternative is a documentation page, which
+    means every consumer writes a scraper and every scraper breaks on a redesign.</li>
+    <li><strong>Cheap change detection.</strong> The server honors conditional
+    requests, so checking for a change costs a 304 rather than a full download.
+    Without it, following a vendor closely means refetching the entire list on a
+    timer.</li>
+    <li><strong>Purposes separated.</strong> The publication distinguishes what the
+    ranges are for, so allowlisting the API does not also allowlist every other
+    thing the vendor operates. The common failure is one flat list covering an
+    entire company.</li>
+    <li><strong>Advance notice.</strong> The vendor documents how long a newly
+    published range sits unused before it starts carrying traffic. This is the
+    single most useful thing a vendor can offer, and it is the rarest.</li>
+    <li><strong>A change signal.</strong> Something the vendor operates that tells
+    you a change happened: a notification topic, a status page subscription, a
+    version endpoint. Polling is the fallback when this does not exist.</li>
+  </ol>
+
+  <h2>findings</h2>
+
+  <!-- GEN:findings -->
+  <ul>
+    <li><strong>45 services publish official ranges. 16 state that you should not pin them at all.</strong> Between them the 45 publish 27,637 CIDRs, rebuilt continuously and republished as a signed feed.</li>
+    <li><strong>1 of 45 scores five out of five.</strong> Only Elastic Cloud does everything on this list.</li>
+    <li><strong>5 of 45 commit to any advance notice</strong> before newly published ranges start carrying traffic: Auth0 (Okta CIC), Buildkite, Databricks, Elastic Cloud, Microsoft Azure (Service Tags). For everyone else, a range can go live the moment it appears.</li>
+    <li><strong>4 of 45 operate a change signal you can subscribe to</strong> (Amazon Web Services, Elastic Cloud, Fastly, Microsoft 365). Another 4 are trackable only because their documentation happens to live in a public git repository, so the commit feed stands in for a notification the vendor never built.</li>
+    <li><strong>14 of 45 have no machine-readable endpoint at all.</strong> Their ranges exist only inside a documentation page, so every consumer writes a scraper and every consumer breaks when the page is restyled.</li>
+    <li><strong>19 of 45 honor conditional requests.</strong> The rest have no cache validators, so checking for a change means downloading the whole list again.</li>
+    <li><strong>11 of 45 publish one undifferentiated set.</strong> Allowlisting the API also allowlists everything else the vendor runs, including infrastructure that has nothing to do with your integration.</li>
+    <li><strong>26 of 45 publish no IPv6 ranges.</strong> Reported in the table but left out of the score, since a vendor with no IPv6 footprint has nothing to publish.</li>
+  </ul>
+  <!-- /GEN:findings -->
+
+  <h2>the table</h2>
+
+  <p>Sorted by score, then alphabetically. Every cell is read from the feed, and
+  every service name links to its page, where the current ranges render live.</p>
+
+  <!-- GEN:table -->
+  <div class="lt-scroll">
+    <table>
+      <thead><tr><th>Service</th><th>Score</th><th>Source</th><th>Change detection</th><th>Purposes</th><th>Advance notice</th><th>Change signal</th><th>IPv6</th></tr></thead>
+      <tbody>
+      <tr><td><a href="/services/elastic-cloud/">Elastic Cloud</a></td><td class="lt-n">5</td><td>JSON</td><td>conditional GET</td><td>2</td><td>8 weeks before static IPs change</td><td>vendor</td><td>no</td></tr>
+      <tr><td><a href="/services/aws/">Amazon Web Services</a></td><td class="lt-n">4</td><td>JSON</td><td>conditional GET</td><td>5</td><td>none</td><td>vendor</td><td>yes</td></tr>
+      <tr><td><a href="/services/buildkite/">Buildkite</a></td><td class="lt-n">4</td><td>JSON</td><td>conditional GET</td><td>1</td><td>7 days before new addresses are used</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/atlassian/">Atlassian Cloud</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>3</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/auth0/">Auth0 (Okta CIC)</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>several months, vendor wording, by email</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/cloudflare/">Cloudflare</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/datadog/">Datadog</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>8</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/fastly/">Fastly</a></td><td class="lt-n">3</td><td>JSON</td><td>full refetch</td><td>1</td><td>none</td><td>vendor</td><td>yes</td></tr>
+      <tr><td><a href="/services/github/">GitHub</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>7</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/intercom/">Intercom</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>3</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/microsoft-365/">Microsoft 365</a></td><td class="lt-n">3</td><td>JSON</td><td>full refetch</td><td>4</td><td>none</td><td>vendor</td><td>yes</td></tr>
+      <tr><td><a href="/services/azure/">Microsoft Azure (Service Tags)</a></td><td class="lt-n">3</td><td>JSON</td><td>scrape page</td><td>3</td><td>1 week before newly published IPs are used</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/oracle-cloud/">Oracle Cloud Infrastructure</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/pagerduty/">PagerDuty</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/tenable/">Tenable (Vulnerability Management)</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/zscaler/">Zscaler (zscaler.net cloud)</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/linode/">Akamai Connected Cloud (Linode)</a></td><td class="lt-n">2</td><td>CSV</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/braintree/">Braintree (PayPal)</a></td><td class="lt-n">2</td><td>JSON</td><td>full refetch</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/circleci/">CircleCI</a></td><td class="lt-n">2</td><td>JSON</td><td>full refetch</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/databricks/">Databricks</a></td><td class="lt-n">2</td><td>JSON</td><td>full refetch</td><td>one set</td><td>60 days before updated IPs become active</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/google/">Google (all services)</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/google-cloud/">Google Cloud Platform</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/grafana-cloud/">Grafana Cloud</a></td><td class="lt-n">2</td><td>text</td><td>full refetch</td><td>3</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/okta/">Okta</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/openai/">OpenAI (ChatGPT egress)</a></td><td class="lt-n">2</td><td>JSON</td><td>full refetch</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/salesforce/">Salesforce</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/stripe/">Stripe</a></td><td class="lt-n">2</td><td>JSON</td><td>full refetch</td><td>3</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/zendesk/">Zendesk</a></td><td class="lt-n">2</td><td>JSON</td><td>full refetch</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/zoom/">Zoom</a></td><td class="lt-n">2</td><td>text</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/anthropic/">Anthropic (Claude API)</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>2</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/digitalocean/">DigitalOcean</a></td><td class="lt-n">1</td><td>CSV</td><td>full refetch</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/docusign/">DocuSign</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/gitlab/">GitLab.com</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>2</td><td>none</td><td>docs repo</td><td>no</td></tr>
+      <tr><td><a href="/services/ibm-cloud/">IBM Cloud (Classic infrastructure)</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/klaviyo/">Klaviyo</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/neon/">Neon (Serverless Postgres)</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>1</td><td>none</td><td>docs repo</td><td>no</td></tr>
+      <tr><td><a href="/services/netskope/">Netskope (NewEdge)</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/new-relic/">New Relic</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>2</td><td>none</td><td>docs repo</td><td>yes</td></tr>
+      <tr><td><a href="/services/plaid/">Plaid</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/postmark/">Postmark</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/rapid7/">Rapid7 (InsightAppSec cloud engines)</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/sentry/">Sentry (hosted)</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>3</td><td>none</td><td>docs repo</td><td>yes</td></tr>
+      <tr><td><a href="/services/twilio-sip/">Twilio Elastic SIP Trunking</a></td><td class="lt-n">1</td><td>docs page</td><td>scrape page</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/vultr/">Vultr (Constant, AS20473)</a></td><td class="lt-n">1</td><td>CSV</td><td>full refetch</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/paypal/">PayPal</a></td><td class="lt-n">0</td><td>docs page</td><td>scrape page</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /GEN:table -->
+
+  <p class="note">IPv6 is reported but not scored. A vendor with no IPv6 footprint
+  has nothing to publish, and penalising that would measure their network, not
+  their publication practice. The same reasoning keeps range count out of the
+  score: a large list is a fact about a vendor's size.</p>
+
+  <h2>the vendors who decline</h2>
+
+  <p>These services state that IP allowlisting is unsupported or unreliable for
+  them, and most name what to do instead: verify webhook signatures, allow a
+  hostname, use a private endpoint. That is a legitimate answer, and it is more
+  useful than a list that quietly goes stale. They are published in the feed under
+  <code>nonPublishers</code> so that tooling can tell "no ranges exist" apart from
+  "no ranges found".</p>
+
+  <!-- GEN:nonpublishers -->
+  <div class="lt-scroll">
+    <table>
+      <thead><tr><th>Service</th><th>Stated position</th></tr></thead>
+      <tbody>
+      <tr><td>Adyen</td><td>No IP list; allowlist out.adyen.com or resolve it via DNS hourly (their words).</td></tr>
+      <tr><td>Akamai (CDN)</td><td>Customer-specific maps behind login; no public global ranges.</td></tr>
+      <tr><td>Box</td><td>Use domain names; &#x27;IP addresses can change frequently and without notice&#x27; (their wording). No webhook source ranges published.</td></tr>
+      <tr><td>Duo Security</td><td>Explicitly discourages IP-based egress rules; may change to maintain availability.</td></tr>
+      <tr><td>HubSpot</td><td>No static publication (&#x27;change too frequently&#x27;); an API returning the current ranges is available to authenticated callers.</td></tr>
+      <tr><td>MongoDB Atlas (data plane)</td><td>Cluster IPs are per-project/dynamic; control-plane IPs only via authenticated Admin API. Vendor directs users to private endpoints (PrivateLink).</td></tr>
+      <tr><td>Netlify (function egress)</td><td>No published IPs; any circulating list &#x27;is a guess or outdated&#x27;.</td></tr>
+      <tr><td>OpenAI API (api.openai.com)</td><td>Egress to api.openai.com resolves to shared Cloudflare ranges; pinning would allowlist the whole CDN.</td></tr>
+      <tr><td>SendGrid (webhooks/parse)</td><td>Dynamic cloud infra; use signed webhooks, not IP allowlists.</td></tr>
+      <tr><td>Shopify (webhooks)</td><td>Webhook source IPs not published; verify HMAC signatures instead.</td></tr>
+      <tr><td>Slack</td><td>No published egress IPs; their allowlisting feature restricts YOUR IPs calling THEM.</td></tr>
+      <tr><td>Snowflake</td><td>Deployment-specific hostnames/IPs per account; no global list.</td></tr>
+      <tr><td>Square (webhooks)</td><td>No webhook source-IP list published; validate notifications via the documented HMAC-SHA256 signature flow.</td></tr>
+      <tr><td>Sumo Logic</td><td>No own ranges; officially delegates to AWS ip-ranges.json (&#x27;Amazon&#x27;/&#x27;EC2&#x27; services for your deployment region), covered by the aws service.</td></tr>
+      <tr><td>Twilio (REST API + webhooks)</td><td>IPs &#x27;highly dynamic, span a large range&#x27;; allow *.twilio.com instead. SIP trunking IS pinnable, see the twilio-sip service.</td></tr>
+      <tr><td>Vercel (function egress)</td><td>Dynamic by default; static IPs are a paid per-customer feature, not a public range.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /GEN:nonpublishers -->
+
+  <h2>method</h2>
+
+  <p>Every row comes from the published feed at
+  <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1</a>, which is
+  rebuilt from each vendor's own publication and carries the source URL and a hash
+  of the upstream body it was derived from. The registry behind it, including the
+  evidence link for every non-publisher, is public in
+  <a href="https://github.com/slash0-io/feed/blob/main/sources.yaml">sources.yaml</a>.
+  Advance-notice entries record only periods the vendor documents; a vendor that
+  announces changes without committing to a lead time scores nothing on that
+  criterion, which is a deliberately strict reading.</p>
+
+  <p>Corrections are welcome, particularly from vendors. If a range publication
+  changed, or this page has something wrong,
+  <a href="/docs/contact/">get in touch</a> and the registry gets updated.</p>
+
+  <p>The feed and the
+  <a href="https://registry.terraform.io/providers/slash0-io/egress/latest">Terraform
+  provider</a> that reads it are free. The
+  <a href="/docs/quickstart/">quickstart</a> is two data sources and a security
+  group rule.</p>
+
+  </article>
+</div>
+
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/changelog/">changelog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>

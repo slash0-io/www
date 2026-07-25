@@ -171,6 +171,21 @@
 .doc table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14px; }
 .doc th, .doc td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; color: var(--dim); }
 .doc th { color: var(--text); font-family: var(--mono); font-size: 13px; }
+.doc article p + p { margin-top: 12px; }
+/* Vendor allowlist report: a wide table that scrolls inside itself rather
+   than forcing the page sideways on a phone. On a wide viewport it breaks
+   out past the 760px prose column so the whole row is readable. */
+.lt-scroll { overflow-x: auto; margin: 14px 0; }
+@media (min-width: 880px) {
+  .lt-scroll {
+    position: relative; left: 50%; transform: translateX(-50%);
+    width: min(1180px, calc(100vw - 64px));
+  }
+}
+.lt-scroll table { margin: 0; font-size: 13.5px; }
+.lt-scroll th, .lt-scroll td { white-space: nowrap; padding: 7px 11px; }
+.lt-scroll td.lt-n { font-family: var(--mono); color: var(--text); text-align: center; }
+.lt-scroll td:last-child, .lt-scroll th:last-child { white-space: normal; }
 .doc .crumb { font-family: var(--mono); font-size: 13px; color: var(--dim); margin-bottom: 26px; display: block; }
 .doc .crumb a { color: var(--dim); }
 .doc .crumb a:hover { color: var(--text); }
