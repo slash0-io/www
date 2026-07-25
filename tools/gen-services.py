@@ -90,7 +90,7 @@ def tf_ident(slug, key):
 
 def tf_snippet(slug, key, direction, has_v6):
     ident = tf_ident(slug, key)
-    rule_type = "egress" if direction == "egress" else "ingress"
+    rule_type = "ingress" if direction == "ingress" else "egress"
     v6line = ""
     if has_v6:
         v6line = f"\n  ipv6_cidr_blocks  = data.egress_ranges.{ident}.ipv6_cidrs"
@@ -113,9 +113,13 @@ def direction_line(direction, name):
     if direction == "egress":
         return (f"Direction: egress. Ranges your workloads connect out to; "
                 f"use them in security group egress rules.")
-    return (f"Direction: ingress. Ranges {name} connects from (webhook "
-            f"delivery); use them in security group ingress rules on your "
-            f"receiving endpoints.")
+    if direction == "ingress":
+        return (f"Direction: ingress. Ranges {name} connects from (webhook "
+                f"delivery); use them in security group ingress rules on your "
+                f"receiving endpoints.")
+    return (f"Direction: both. {name} publishes these ranges for traffic in "
+            f"either direction; use them in the rule direction your "
+            f"integration needs. The example below shows egress.")
 
 
 def service_page(entry, doc):
@@ -224,7 +228,7 @@ def directory_page(services):
 
 
 def sitemap(services):
-    urls = ["/", "/changelog/", "/services/",
+    urls = ["/", "/changelog/", "/services/", "/calculator/",
             "/docs/", "/docs/quickstart/", "/docs/how-it-works/",
             "/docs/security/", "/docs/faq/", "/docs/contact/"]
     urls += [f"/services/{s['slug']}/" for s in sorted(services, key=lambda x: x["slug"])]

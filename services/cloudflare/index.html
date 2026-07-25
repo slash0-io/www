@@ -25,7 +25,7 @@
 <tr><td><a href="#edge"><code>cloudflare/edge</code></a></td><td>both</td><td id="count4-edge">·</td><td id="count6-edge">·</td></tr>
 </table>
 <h2 id="edge">cloudflare/edge</h2>
-<p>Direction: ingress. Ranges Cloudflare connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<p>Direction: both. Cloudflare publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
 <pre class="ranges" id="ranges-edge">loading ranges from the feed…</pre>
 <p class="note" id="quota-edge" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
@@ -35,7 +35,7 @@
 }
 
 resource &quot;aws_security_group_rule&quot; &quot;cloudflare_edge&quot; {
-  type              = &quot;ingress&quot;
+  type              = &quot;egress&quot;
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quota calculator · slash0</title>
+<meta name="description" content="Pick the services you allowlist and get the AWS rules-per-security-group quota they need, computed from live feed counts, with a prefilled onboarding stack.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/calculator.js" defer></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+
+<div class="doc">
+  <h1>quota calculator</h1>
+  <p class="tagline">Pick the purposes you want to allowlist. The calculator computes
+  the rules-per-security-group quota those prefix lists need in your account, from
+  live feed counts, and prefills the onboarding stack.</p>
+
+  <p class="note">How the math works: a referenced prefix list consumes its
+  <code>max_entries</code> against the SG quota (default 60), per address family.
+  slash0 sizes <code>max_entries</code> as the current range count plus headroom of
+  at least 20 percent, rounded up to a multiple of ten, so vendor growth does not
+  force resizes. The recommendation below is the larger family total plus an
+  allowance of 20 for your own rules, rounded up to ten. AWS constrains
+  rules-per-SG times SGs-per-network-interface to at most 1000, so request the
+  minimum you need.</p>
+
+  <div class="calc-summary" id="calc-summary">
+    <div class="calc-stats">
+      <span><b id="sum-lists">0</b> lists</span>
+      <span>IPv4 rules <b id="sum-v4">0</b></span>
+      <span>IPv6 rules <b id="sum-v6">0</b></span>
+      <span>request rules-per-SG <b id="sum-quota">0</b></span>
+    </div>
+    <div class="calc-actions">
+      <a class="btn primary" id="quick-create" href="#" target="_blank" rel="noopener" aria-disabled="true">launch onboarding stack</a>
+      <a class="btn ghost" href="https://slash0-templates.s3.amazonaws.com/egress-onboard.yaml">read the template</a>
+    </div>
+    <p class="calc-note" id="quota-note" hidden>The default quota (60) already fits
+    this selection; the stack skips the quota request.</p>
+  </div>
+
+  <div id="picker"><p class="cl-status">Loading the catalog…</p></div>
+  <noscript><p class="cl-status">The calculator needs JavaScript. The raw counts are
+  at <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1/index.json</a>.</p></noscript>
+
+  <p class="note" style="margin-top:34px">The onboarding stack accepts the RAM share
+  invitation for your account and files the quota request; it creates nothing else
+  and deleting it changes nothing. Hosted lists are shared after
+  <a href="/#access">early access onboarding</a>; the free tier
+  (<a href="/docs/quickstart/">Terraform provider</a>) needs no onboarding at all.</p>
+</div>
+
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/changelog/">changelog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>
