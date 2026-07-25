@@ -62,7 +62,7 @@ resource &quot;aws_security_group_rule&quot; &quot;anthropic_outbound&quot; {
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
-<p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data as AWS managed prefix lists (<code>egress.anthropic.api.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
+<p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data via AWS managed prefix lists (<code>egress.anthropic.api.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
 <h2>provenance</h2>
 <p>Ranges come from Anthropic (Claude API)'s official publication: <a href="https://platform.claude.com/docs/en/api/ip-addresses">https://platform.claude.com/docs/en/api/ip-addresses</a>. Fetched sources:</p>
 <ul>
