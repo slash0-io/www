@@ -36,7 +36,7 @@
       fails the build. A change that removes most of a service's previously published
       ranges is quarantined: the last-good version keeps serving until a human reviews
       the change.</li>
-      <li><strong>Publishes signed.</strong> The feed index carries an ed25519 signature,
+      <li><strong>Publishes signed.</strong> The feed index carries an ECDSA P-256 signature,
       and every service document is hash-chained to the index. Verification commands are
       on the <a href="/docs/security/">security page</a>.</li>
     </ul>
@@ -69,7 +69,7 @@
     <table>
       <tr><th>layer</th><th>what it catches</th></tr>
       <tr><td>1 · feed guardrails</td><td>Truncated or malformed vendor publishes. Zero-range builds fail. Mass removals are quarantined while the last-good version keeps serving.</td></tr>
-      <tr><td>2 · signature verification</td><td>Tampered or unsigned feed data. The reconciler verifies the ed25519 signature and hash chain before applying anything.</td></tr>
+      <tr><td>2 · signature verification</td><td>Tampered or unsigned feed data. The reconciler verifies the ECDSA P-256 signature and hash chain before applying anything.</td></tr>
       <tr><td>3 · publisher guardrail</td><td>An update that would remove most of a serving list. The list is frozen and an alarm is raised, independently of layer 1.</td></tr>
       <tr><td>4 · canary-first rollout</td><td>A slash0-owned consumer account references every published list and takes every change first.</td></tr>
       <tr><td>5 · grace windows</td><td>Ranges removed by a vendor keep serving for a grace period, so old and new ranges overlap during rotations. A range the vendor re-publishes mid-grace is restored rather than removed and re-added.</td></tr>
