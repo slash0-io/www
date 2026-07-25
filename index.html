@@ -7,6 +7,7 @@
 <meta name="description" content="Managed AWS prefix lists for the third-party services your workloads depend on. Reference pl-… in a security group rule; the ranges stay current. No agent, no proxy, nothing in your data path.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/live.js" defer></script>
 </head>
 <body>
 
@@ -44,6 +45,16 @@
   <span class="t">prefix_list_ids   = [</span><span class="g">"pl-0f47b5ca566486dec"</span><span class="t">]</span>  <span class="c"># Stripe API, managed by slash0</span>
   security_group_id = aws_security_group.app.id
 }</div>
+
+    <div class="live" id="live-stats" hidden>
+      <span class="dot" aria-hidden="true"></span>
+      <span><b id="live-services">·</b> services</span>
+      <span>·</span>
+      <span><b id="live-purposes">·</b> purposes</span>
+      <span>·</span>
+      <span id="live-changed-wrap">last vendor change: <b id="live-changed">·</b></span>
+      <a href="/changelog/">changelog →</a>
+    </div>
   </div>
 </div>
 
@@ -111,7 +122,7 @@
       <a href="https://registry.terraform.io/providers/slash0-io/egress/latest">registry ↗</a></p></div>
       <div class="card"><h3>public feed</h3><p>Signed JSON at
       <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1</a>, with sync tokens,
-      provenance, and a changelog. <a href="https://feed.slash0.io/">browse the catalog ↗</a></p></div>
+      provenance, and a <a href="/changelog/">changelog</a>. <a href="https://feed.slash0.io/">browse the catalog ↗</a></p></div>
       <div class="card"><h3>source</h3><p>The feed pipeline is open source, with every parser
       tested against archived vendor fixtures.
       <a href="https://github.com/slash0-io/feed">github.com/slash0-io/feed ↗</a></p></div>
@@ -151,6 +162,7 @@
     <div>
       <a href="https://github.com/slash0-io">github</a>
       <a href="https://feed.slash0.io/">catalog</a>
+      <a href="/changelog/">changelog</a>
       <a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a>
     </div>
     <div>© 2026 slash0</div>
