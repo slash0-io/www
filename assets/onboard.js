@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var TEMPLATE_URL = "https://slash0-templates.s3.amazonaws.com/egress-onboard.yaml";
+  var TEMPLATE_URL = "https://slash0-templates.s3.amazonaws.com/slash0-onboard.yaml";
   var PUBLISHER_ACCOUNT = "762528398113";
 
   var btn = document.getElementById("quick-create");
@@ -23,7 +23,7 @@
 
   btn.href = "https://console.aws.amazon.com/cloudformation/home#/stacks/create/review" +
     "?templateURL=" + encodeURIComponent(TEMPLATE_URL) +
-    "&stackName=egress-onboard" +
+    "&stackName=slash0-onboard" +
     "&param_PublisherAccountIds=" + PUBLISHER_ACCOUNT +
     "&param_DesiredRulesPerSG=" + rules;
 })();

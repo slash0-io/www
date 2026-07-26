@@ -49,8 +49,8 @@
     <h2>delivery</h2>
     <p>The hosted tier publishes each purpose as an AWS customer-managed prefix list in a
     slash0-operated publisher account. There is one list per service, purpose, and
-    address family: <code>egress.stripe.api.v4</code>,
-    <code>egress.datadog.agents.v6</code>, and so on. Lists are shared to consumer
+    address family: <code>slash0.stripe.api.v4</code>,
+    <code>slash0.datadog.agents.v6</code>, and so on. Lists are shared to consumer
     accounts through AWS RAM. Shared lists are read-only to consumers and are referenced
     in security group rules the same way as AWS-managed lists.</p>
     <p>Onboarding is one CloudFormation stack in the consumer account. It accepts the RAM

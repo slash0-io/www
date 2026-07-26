@@ -171,7 +171,7 @@ def service_page(entry, doc):
     out.append("<h2>keep rules current automatically</h2>\n")
     out.append(f'<p>Terraform data sources refresh only when you run an apply. '
                f"The hosted tier publishes the same data via AWS managed prefix "
-               f"lists (<code>egress.{html.escape(slug)}.{html.escape(keys[0])}.v4</code> and so on), "
+               f"lists (<code>slash0.{html.escape(slug)}.{html.escape(keys[0])}.v4</code> and so on), "
                f"shared into your account via AWS RAM: rules reference one "
                f"<code>pl-…</code> id and update within a minute of a vendor "
                f'change, with removals held through a 72 hour grace window. '
