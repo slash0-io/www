@@ -20,7 +20,7 @@
   <h1>quota calculator</h1>
   <p class="tagline">Pick the purposes you want to allowlist. The calculator computes
   the rules-per-security-group quota those prefix lists need in your account, from
-  live feed counts, and prefills the onboarding stack.</p>
+  live feed counts, so you know the number before you ask for anything.</p>
 
   <p class="note">How the math works: a referenced prefix list consumes its
   <code>max_entries</code> against the SG quota (default 60), per address family.
@@ -39,22 +39,28 @@
       <span>request rules-per-SG <b id="sum-quota">0</b></span>
     </div>
     <div class="calc-actions">
-      <a class="btn primary" id="quick-create" href="#" target="_blank" rel="noopener" aria-disabled="true">launch onboarding stack</a>
+      <a class="btn primary" href="/#access">request early access</a>
       <a class="btn ghost" href="https://slash0-templates.s3.amazonaws.com/egress-onboard.yaml">read the template</a>
     </div>
     <p class="calc-note" id="quota-note" hidden>The default quota (60) already fits
-    this selection; the stack skips the quota request.</p>
+    this selection; no quota increase is needed.</p>
+    <p class="calc-note">Already onboarded, with the lists shared to your account?
+    <a id="onboard-link" href="/docs/onboarding/">Go to the onboarding stack</a>.</p>
   </div>
 
   <div id="picker"><p class="cl-status">Loading the catalog…</p></div>
   <noscript><p class="cl-status">The calculator needs JavaScript. The raw counts are
   at <a href="https://feed.slash0.io/v1/index.json">feed.slash0.io/v1/index.json</a>.</p></noscript>
 
-  <p class="note" style="margin-top:34px">The onboarding stack accepts the RAM share
-  invitation for your account and files the quota request; it creates nothing else
-  and deleting it changes nothing. Hosted lists are shared after
-  <a href="/#access">early access onboarding</a>; the free tier
-  (<a href="/docs/quickstart/">Terraform provider</a>) needs no onboarding at all.</p>
+  <p class="note" style="margin-top:34px">This number matters only for the hosted
+  lists, which are shared to your account by arrangement through
+  <a href="/#access">early access</a>. Once a share exists, the
+  <a href="/docs/onboarding/">onboarding stack</a> accepts it and files this quota
+  request for you; the <a href="https://slash0-templates.s3.amazonaws.com/egress-onboard.yaml">template</a>
+  is public and worth reading first. The free tier
+  (<a href="/docs/quickstart/">Terraform provider</a>) needs no onboarding and no
+  quota increase: Terraform writes the CIDRs into your rules directly, so the
+  count above is what those rules will consume.</p>
 </div>
 
 <footer><div class="wrap">

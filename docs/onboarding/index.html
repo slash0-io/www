@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>onboarding stack · slash0 docs</title>
+<meta name="description" content="What the slash0 onboarding CloudFormation stack does, when to run it, and what it needs. It accepts the RAM share for your account and files the rules-per-security-group quota request.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/onboard.js" defer></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+<div class="doc">
+<span class="crumb"><a href="/docs/">docs</a> / onboarding</span>
+<h1>onboarding stack</h1>
+<p class="tagline">A CloudFormation stack that accepts the AWS RAM share for your
+account and files the rules-per-security-group quota increase the shared lists
+need. It is the last step of hosted onboarding, not the first.</p>
+
+<article>
+
+<h2>run this only after your share exists</h2>
+
+<p>The stack accepts a <strong>pending RAM share invitation</strong> sent to your
+account. If no invitation is waiting, it accepts nothing, and the quota request it
+files will be a request your account does not yet need. Run it only once slash0
+has confirmed the lists are shared with your account ID.</p>
+
+<p>If you have not been onboarded yet, this page is not your next step:</p>
+
+<ul>
+  <li><strong>Want the hosted lists?</strong> Onboarding is currently by
+  arrangement. <a href="/#access">Request early access</a> and slash0 will confirm
+  your account ID and create the share. Marketplace self-serve purchasing is
+  planned and is not available yet.</li>
+  <li><strong>Want the data only?</strong> The
+  <a href="https://registry.terraform.io/providers/slash0-io/egress/latest">Terraform
+  provider</a> and the <a href="https://feed.slash0.io/v1/index.json">signed feed</a>
+  are free and need no onboarding at all. Start with the
+  <a href="/docs/quickstart/">quickstart</a>.</li>
+</ul>
+
+<h2>what it does</h2>
+
+<p>Two things, both scoped to your account, and nothing else:</p>
+
+<ul>
+  <li><strong>Accepts pending RAM invitations</strong> whose sender is a slash0
+  publisher account you name in the <code>PublisherAccountIds</code> parameter.
+  Invitations from any other account are ignored. RAM invitations expire in about
+  12 hours; the publisher reissues expired ones, so a late run is safe.</li>
+  <li><strong>Requests the rules-per-security-group quota</strong>
+  (<code>L-0EA8095F</code>) at the value you pass in
+  <code>DesiredRulesPerSG</code>, skipping the request when the account already
+  has that much or when you pass <code>0</code>. Approval is asynchronous and
+  large increases can need a support case.</li>
+</ul>
+
+<p>It creates an IAM role and a Lambda-backed custom resource to do that work.
+It does not create security groups, VPC resources, or anything that carries
+traffic. Deleting the stack removes the role and the function and changes
+nothing else: accepted shares stay accepted and the quota stays raised.</p>
+
+<h2>launch it</h2>
+
+<p class="note" id="rules-note" hidden>Prefilled from the
+<a href="/calculator/">quota calculator</a> with
+<code>DesiredRulesPerSG=<b id="rules-value"></b></code>. You can edit it in the
+console before creating the stack.</p>
+
+<div class="calc-actions">
+  <a class="btn primary" id="quick-create" href="#" target="_blank" rel="noopener">launch in CloudFormation</a>
+  <a class="btn ghost" href="https://slash0-templates.s3.amazonaws.com/egress-onboard.yaml">read the template</a>
+</div>
+
+<p>The link opens the CloudFormation quick-create form in your own console with
+the template and parameters filled in. Nothing is created until you review the
+parameters and confirm. Use the
+<a href="/calculator/">quota calculator</a> to work out the
+<code>DesiredRulesPerSG</code> value for the services you plan to reference.</p>
+
+<h2>parameters</h2>
+
+<table>
+  <tr><th>parameter</th><th>meaning</th></tr>
+  <tr><td><code>PublisherAccountIds</code></td><td>Comma-separated slash0 publisher
+  account IDs whose invitations may be accepted. Invitations from anyone else are
+  ignored.</td></tr>
+  <tr><td><code>DesiredRulesPerSG</code></td><td>Quota to request. <code>0</code>
+  skips the request entirely.</td></tr>
+  <tr><td><code>Nonce</code></td><td>Change it and update the stack to re-run
+  acceptance and the quota request, for example after a new subscription adds
+  lists.</td></tr>
+</table>
+
+<h2>after it runs</h2>
+
+<p>The shared prefix lists appear in your account as
+<code>egress.&lt;service&gt;.&lt;purpose&gt;.v4</code> and <code>.v6</code>, ready
+to reference by <code>pl-…</code> id in security group rules exactly like an
+AWS-managed prefix list. The <a href="/docs/how-it-works/">how it works</a> page
+covers how updates reach those rules. If a list later cannot grow because the
+quota request was not approved, the publisher alarms rather than failing quietly.</p>
+
+</article>
+</div>
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>

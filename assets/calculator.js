@@ -1,8 +1,6 @@
 (function () {
   "use strict";
   var FEED = "https://feed.slash0.io/v1/";
-  var TEMPLATE_URL = "https://slash0-templates.s3.amazonaws.com/egress-onboard.yaml";
-  var PUBLISHER_ACCOUNT = "762528398113";
   // Mirrors the publisher's viability policy: firewall-scale purposes are
   // not deliverable as referenced prefix lists, and neither is anything
   // over the per-family cap.
@@ -91,17 +89,14 @@
       document.getElementById("sum-quota").textContent = quota || DEFAULT_QUOTA;
       document.getElementById("quota-note").hidden = !(lists && !quota);
 
-      var btn = document.getElementById("quick-create");
-      if (lists) {
-        btn.removeAttribute("aria-disabled");
-        btn.href = "https://console.aws.amazon.com/cloudformation/home#/stacks/create/review" +
-          "?templateURL=" + encodeURIComponent(TEMPLATE_URL) +
-          "&stackName=egress-onboard" +
-          "&param_PublisherAccountIds=" + PUBLISHER_ACCOUNT +
-          "&param_DesiredRulesPerSG=" + quota;
-      } else {
-        btn.setAttribute("aria-disabled", "true");
-        btn.href = "#";
+      // The stack itself lives on the onboarding page, which states the
+      // prerequisite that a RAM share already exists. Launching it without
+      // one accepts nothing and files a quota request the account does not
+      // need, so this page hands the number over rather than launching.
+      var onboard = document.getElementById("onboard-link");
+      if (onboard) {
+        onboard.href = quota > 0 ? "/docs/onboarding/?rules=" + quota
+                                 : "/docs/onboarding/";
       }
     }
     recompute();
