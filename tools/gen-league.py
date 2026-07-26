@@ -41,6 +41,14 @@ def e(s):
     return html.escape(str(s), quote=True)
 
 
+def cite(label, url, title):
+    """Link a claim to the vendor page that states it. A claim with no
+    evidence URL is a bug in the feed, not something to render bare."""
+    if not url:
+        raise SystemExit(f"claim {label!r} has no evidence URL in the feed")
+    return f'<a href="{e(url)}" title="{e(title or "")}">{e(label)}</a>'
+
+
 def score(svc):
     """Points out of five, plus the individual criteria, for one service."""
     pub = svc.get("publication")
@@ -65,8 +73,15 @@ def league_table(scored):
     for pts, svc in scored:
         pub = svc["publication"]
         purposes = svc["purposes"]
-        kind = (pub.get("changeSignal") or {}).get("kind")
+        signal = pub.get("changeSignal") or {}
+        kind = signal.get("kind")
         sig = {"vendor": "vendor", "docs-repo": "docs repo"}.get(kind, "none")
+        # Every claim about a vendor links to the vendor page that states it.
+        if kind:
+            sig = cite(sig, signal.get("evidence"), signal.get("detail"))
+        notice = pub.get("notice")
+        notice_cell = (cite(notice, pub.get("noticeEvidence"), "vendor documentation")
+                       if notice else "none")
         one_set = len(purposes) == 1 and purposes[0]["key"] == "all"
         v6 = sum(p["ipv6Count"] for p in purposes)
         rows.append(
@@ -75,7 +90,7 @@ def league_table(scored):
             f'<td>{e(FORMAT_LABEL[pub["documentType"]])}</td>'
             f'<td>{e(POLL_LABEL[pub["pollMode"]])}</td>'
             f'<td>{"one set" if one_set else len(purposes)}</td>'
-            f'<td>{e(pub.get("notice") or "none")}</td>'
+            f"<td>{notice_cell}</td>"
             f"<td>{sig}</td>"
             f'<td>{"yes" if v6 else "no"}</td></tr>')
     return ('<div class="lt-scroll">\n    <table>\n'
