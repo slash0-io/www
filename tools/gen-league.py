@@ -25,8 +25,10 @@ FEED = "https://feed.slash0.io/v1/index.json"
 PAGE = "vendor-ip-allowlists/index.html"
 
 FORMAT_LABEL = {"json": "JSON", "csv": "CSV", "text": "text", "html": "docs page"}
-POLL_LABEL = {"cond-get": "conditional GET", "hash": "full refetch",
-              "docs-page": "scrape page"}
+# Cells state what a vendor publishes or supports, never a characterisation of
+# the vendor. Facts are defensible; adjectives get quoted.
+POLL_LABEL = {"cond-get": "conditional GET", "hash": "full download",
+              "docs-page": "page extraction"}
 
 
 def fetch(src):
@@ -146,7 +148,7 @@ def findings(scored, index):
            f"subscribe to</strong> ({', '.join(vendor_sig)}). Another {docs_repo} are "
            "trackable only because their documentation happens to live in a public "
            "git repository, so the commit feed stands in for a notification the "
-           "vendor never built."),
+           "vendor does not offer."),
         li(f"<strong>{scrape} of {n} have no machine-readable endpoint at all.</strong> "
            "Their ranges exist only inside a documentation page, so every consumer "
            "writes a scraper and every consumer breaks when the page is restyled."),
