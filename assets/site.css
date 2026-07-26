@@ -31,6 +31,16 @@
   nav a { color: var(--dim); margin-left: 22px; font-size: 14px; }
   nav a:hover { color: var(--text); text-decoration: none; }
 
+  /* The header is a non-wrapping flex row, so on a narrow screen the logo
+     plus the nav links exceeded the viewport and pushed the whole document
+     wider, clipping every page. Let the nav drop below the logo instead. */
+  @media (max-width: 700px) {
+    header { padding: 20px 0; }
+    header .wrap { flex-wrap: wrap; row-gap: 10px; }
+    header nav { display: flex; flex-wrap: wrap; column-gap: 18px; row-gap: 4px; }
+    nav a { margin-left: 0; }
+  }
+
   .hero { padding: 88px 0 64px; }
   .hero h1 {
     font-family: var(--mono);
@@ -94,6 +104,11 @@
 
   footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--dim); font-size: 14px; }
   footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  /* The link row is emitted without whitespace between the tags, so as inline
+     content it has no break opportunities and sets a min-content floor for the
+     whole page. Lay it out as a wrapping flex row so it can break anywhere. */
+  footer .wrap > div:first-child { display: flex; flex-wrap: wrap; column-gap: 18px; row-gap: 6px; }
+  footer .wrap > div:first-child a { margin-right: 0; }
   footer a { color: var(--dim); margin-right: 18px; }
   footer a:hover { color: var(--text); }
 
@@ -160,7 +175,13 @@
 .doc article p strong, .doc article li strong { color: var(--text); }
 .doc article ul, .doc article ol { padding-left: 22px; margin: 10px 0; }
 .doc article li { margin: 6px 0; }
-.doc article code { color: var(--text); font-size: 13.5px; background: var(--panel); padding: 1px 5px; border-radius: 4px; }
+/* Source URLs are long unbreakable tokens; without this they set a
+   min-content floor wider than a phone. `anywhere` (not `break-word`) is
+   what actually lowers min-content. */
+.doc article code { color: var(--text); font-size: 13.5px; background: var(--panel); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+/* Provenance links are printed as full URLs, sometimes bare rather than in a
+   code element. Only breaks when the token would otherwise overflow. */
+.doc article a { overflow-wrap: anywhere; }
 .doc pre {
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
   padding: 18px 20px; font-family: var(--mono); font-size: 13px; line-height: 1.75;
@@ -172,6 +193,13 @@
 .doc th, .doc td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; color: var(--dim); }
 .doc th { color: var(--text); font-family: var(--mono); font-size: 13px; }
 .doc article p + p { margin-top: 12px; }
+/* Data tables set a min-content floor that pushes narrow pages sideways.
+   Let them scroll inside themselves instead; the report table already has
+   its own .lt-scroll wrapper and keeps it. */
+@media (max-width: 700px) {
+  .doc table { display: block; overflow-x: auto; white-space: nowrap; }
+  .lt-scroll table { display: table; white-space: normal; }
+}
 /* Vendor allowlist report: a wide table that scrolls inside itself rather
    than forcing the page sideways on a phone. On a wide viewport it breaks
    out past the 760px prose column so the whole row is readable. */
