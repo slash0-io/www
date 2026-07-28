@@ -46,7 +46,15 @@ def fetch(path):
         return json.load(r)
 
 
-def head(title, description, extra=""):
+def head(title, description, path, extra=""):
+    """path is the site-absolute URL path, with its trailing slash.
+
+    The canonical tag matters because every other host and path form of a page
+    (www, http, no trailing slash) 301s to this one, and without it Search
+    Console reports the redirecting variants as unindexed rather than folding
+    them into the canonical.
+    """
+    assert path.startswith("/") and path.endswith("/"), path
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -54,6 +62,7 @@ def head(title, description, extra=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(description)}">
+<link rel="canonical" href="{SITE}{path}">
 <link rel="icon" href="{FAVICON}">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/site.css">
@@ -132,7 +141,8 @@ def service_page(entry, doc):
                    f"publication. Live data, Terraform examples, AWS managed "
                    f"prefix lists.")
 
-    out = [head(title, description, '<script src="/assets/live.js" defer></script>\n')]
+    out = [head(title, description, f"/services/{slug}/",
+                '<script src="/assets/live.js" defer></script>\n')]
     out.append(f'<div class="doc" id="service-page" data-slug="{html.escape(slug)}">\n')
     out.append(f'<span class="crumb"><a href="/services/">services</a> / {html.escape(slug)}</span>\n')
     out.append(f"<h1>{html.escape(name)} IP ranges</h1>\n")
@@ -202,7 +212,7 @@ def directory_page(services):
                    f"services, per purpose, IPv4 and IPv6, rebuilt continuously "
                    f"from each vendor's own publication. Signed feed, Terraform "
                    f"provider, AWS managed prefix lists.")
-    out = [head(title, description)]
+    out = [head(title, description, "/services/")]
     out.append('<div class="doc">\n<h1>service IP ranges</h1>\n')
     out.append(f'<p class="tagline">Official IP ranges for {len(services)} '
                f"services, one page per service, straight from each vendor's "
