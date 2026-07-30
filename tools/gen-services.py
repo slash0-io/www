@@ -241,8 +241,8 @@ def sitemap(services):
     urls = ["/", "/changelog/", "/services/", "/calculator/",
             "/vendor-ip-allowlists/",
             "/docs/", "/docs/quickstart/", "/docs/how-it-works/",
-            "/docs/security/", "/docs/faq/", "/docs/contact/",
-            "/docs/onboarding/"]
+            "/docs/coverage/", "/docs/security/", "/docs/faq/",
+            "/docs/contact/", "/docs/onboarding/"]
     urls += [f"/services/{s['slug']}/" for s in sorted(services, key=lambda x: x["slug"])]
     out = ['<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n']

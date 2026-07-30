@@ -49,6 +49,25 @@
       .catch(function () {});
   }
 
+  // Coverage page: how many services fall into each classification. Rendered
+  // live so the page can never understate or overstate what is pinnable.
+  var cov = document.getElementById("cov-dedicated");
+  if (cov) {
+    getJSON("index.json")
+      .then(function (index) {
+        var counts = { dedicated: 0, mixed: 0, "cdn-shared": 0 };
+        index.services.forEach(function (s) {
+          if (counts[s.classification] !== undefined) counts[s.classification]++;
+        });
+        document.getElementById("cov-dedicated").textContent = counts.dedicated;
+        document.getElementById("cov-mixed").textContent = counts.mixed;
+        document.getElementById("cov-cdn").textContent = counts["cdn-shared"];
+        document.getElementById("cov-nonpub").textContent =
+          (index.nonPublishers || []).length;
+      })
+      .catch(function () {});
+  }
+
   // Service pages: live ranges, counts, and last-changed per purpose.
   var svc = document.getElementById("service-page");
   if (svc) {

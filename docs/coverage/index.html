@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>coverage · slash0 docs</title>
+<meta name="description" content="Which third-party services can be pinned to IP ranges, which cannot, and how to build an egress posture that works either way.">
+<link rel="canonical" href="https://slash0.io/docs/coverage/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/live.js" defer></script>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+
+<div class="doc">
+  <span class="crumb"><a href="/docs/">docs</a> / coverage</span>
+  <h1>coverage</h1>
+  <p class="tagline">What can be pinned to IP ranges, what cannot, and how to build a posture that works either way.</p>
+
+  <article>
+    <h2>the short version</h2>
+    <p>IP allowlisting works when a vendor operates dedicated address space and publishes
+    it. Most do. Some sit behind a shared CDN, where pinning the addresses would allowlist
+    every other site behind that CDN as well, and a few state outright that their addresses
+    are not stable enough to pin.</p>
+
+    <p>The catalog classifies every service so this is visible before you build rather than
+    after. Current counts, read live from the feed:</p>
+
+    <div class="lt-scroll">
+    <table>
+      <tr><th>Classification</th><th>Count</th><th>What it means for an egress rule</th></tr>
+      <tr><td><code>dedicated</code></td><td><b id="cov-dedicated">·</b></td>
+        <td>Vendor-owned space. Pin it.</td></tr>
+      <tr><td><code>mixed</code></td><td><b id="cov-mixed">·</b></td>
+        <td>Mostly dedicated, with some shared or dynamic parts. Pin it, and read the service page for which purposes are which.</td></tr>
+      <tr><td><code>cdn-shared</code></td><td><b id="cov-cdn">·</b></td>
+        <td>Shared CDN ranges. Pinning would allowlist the whole CDN, so don't pin it.</td></tr>
+      <tr><td>not published</td><td><b id="cov-nonpub">·</b></td>
+        <td>The vendor states IP allowlisting is unsupported for the service and recommends something else.</td></tr>
+    </table>
+    </div>
+
+    <p>The set that cannot be pinned cleanly is small. You can check any
+    specific vendor on the <a href="/services/">services pages</a> or in the
+    <a href="https://feed.slash0.io/">catalog</a> before you commit to anything.</p>
+
+    <h2>why a CDN-fronted service cannot be pinned</h2>
+    <p>When a vendor puts its API behind a shared CDN, the addresses answering for that
+    vendor are the CDN's, and the same addresses answer for every other customer of that
+    CDN. An egress rule allowing them permits your workload to reach all of those other
+    sites too. The rule does not provide the same precision as IP ranges owned directly
+    by a specific vendor.</p>
+
+    <h2>recommended posture: scope by workload, not by account</h2>
+    <p>The common mistake is treating egress as one decision for the whole environment. It
+    is not. Security groups are free and attach per workload, so the service that talks to
+    Stripe does not need the same rules as the one that talks to a CDN-fronted API.</p>
+
+    <p>Give each workload a security group carrying only what it actually needs:</p>
+
+<pre><code>resource "aws_security_group" "billing" {
+  name   = "billing"
+  vpc_id = var.vpc_id
+}
+
+# This workload talks to Stripe and nothing else on the internet.
+resource "aws_vpc_security_group_egress_rule" "billing_stripe" {
+  security_group_id = aws_security_group.billing.id
+  ip_protocol       = "tcp"
+  from_port         = 443
+  to_port           = 443
+  prefix_list_id    = "pl-0f47b5ca566486dec"  # slash0.stripe.api.v4
+  description       = "Stripe API"
+}</code></pre>
+
+    <p>A workload that needs a service you cannot pin gets its own group, and only that
+    group carries the broader rule. Nothing else in the account inherits it:</p>
+
+<pre><code>resource "aws_security_group" "notifications" {
+  name   = "notifications"
+  vpc_id = var.vpc_id
+}
+
+# This workload calls a CDN-fronted API, so the rule cannot be narrowed by
+# address. It is isolated here rather than applied environment-wide, and it
+# is the one path worth putting behind a proxy or DNS filtering.
+resource "aws_vpc_security_group_egress_rule" "notifications_https" {
+  security_group_id = aws_security_group.notifications.id
+  ip_protocol       = "tcp"
+  from_port         = 443
+  to_port           = 443
+  cidr_ipv4         = "0.0.0.0/0"
+  description       = "CDN-fronted vendor, see /docs/coverage"
+}</code></pre>
+
+    <p>The result is that the unpinnable dependency costs you one workload's blast radius
+    instead of the whole environment's. An attacker with a foothold in the billing service
+    still cannot reach anything but Stripe. That is the part that matters to an auditor
+    reading req. 1.3.2, and it is achievable today for every dependency in the catalog that
+    publishes ranges.</p>
+
+    <h2>for the services that publish nothing</h2>
+    <p>Where a vendor states that IP allowlisting is unsupported, they almost always
+    recommend a control that is stronger than an address check would have been. The catalog
+    records the vendor's own position and their recommended alternative for each one, with
+    a link to the page saying it.</p>
+
+    <p>The three that come up most often:</p>
+    <ul>
+      <li><b>Signed webhooks.</b> Several vendors do not publish webhook source addresses
+      because they expect signature verification instead. That verifies the message rather
+      than the sender's current IP, which survives their infrastructure changing.</li>
+      <li><b>Hostname allowlisting.</b> Some vendors publish a stable domain and ask you to
+      allow that. This needs a control that resolves names, which a security group cannot
+      do, so it belongs in a proxy, a DNS firewall, or a network firewall rule group.</li>
+      <li><b>Per-account allowlists.</b> A few vendors generate addresses per customer and
+      expose them through an authenticated API rather than a public list.</li>
+    </ul>
+
+    <p>None of these are served by IP ranges from the terraform provider or managed prefix
+    lists from slash0.</p>
+
+    <h2>what is coming</h2>
+    <p>A later phase adds hostname-aware egress enforcement that runs inside your VPC and
+    is built on this same catalog, which is what extends the model to the services that
+    cannot be pinned by address. The classifications above are what that phase is designed
+    around, so nothing you build now is wasted.</p>
+  </article>
+</div>
+
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>

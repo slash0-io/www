@@ -67,8 +67,12 @@
     <p>IP pinning does not work for them. Pinning a shared CDN range allowlists the
     entire CDN, including unrelated sites behind it. The catalog classifies every
     service (<code>dedicated</code>, <code>mixed</code>, <code>cdn-shared</code>) so
-    this is visible before you build. A later phase addresses these services with
-    hostname-aware enforcement running in your VPC.</p>
+    this is visible before you build. It is a small set, and it does not have to
+    compromise the rest of your posture: scoping security groups per workload keeps an
+    unpinnable dependency contained to the one service that needs it.
+    <a href="/docs/coverage/">Coverage</a> has the current counts and a worked example.
+    A later phase addresses these services with hostname-aware enforcement running in
+    your VPC.</p>
 
     <h2>who runs slash0?</h2>
     <p>slash0 is independently built and operated. The delivery mechanism is AWS

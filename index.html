@@ -115,9 +115,11 @@
     </div>
     <p class="note">Note: IP pinning only works for services with dedicated,
     published ranges. The catalog classifies every service and tells you plainly when a
-    CDN-fronted service can't be pinned safely. Those services aren't out of reach;
-    a later phase adds hostname-aware egress enforcement that runs entirely in your
-    VPC, built on this same catalog.</p>
+    CDN-fronted service can't be pinned safely. It's a small set, and one unpinnable
+    dependency doesn't cost you the rest: <a href="/docs/coverage/">scope security groups
+    per workload</a> and it stays contained to the one service that needs it. Those
+    services aren't out of reach either; a later phase adds hostname-aware egress
+    enforcement that runs entirely in your VPC, built on this same catalog.</p>
   </div>
 </section>
 
