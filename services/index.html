@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SaaS and cloud service IP ranges · slash0</title>
-<meta name="description" content="Official IP ranges for 45 SaaS and cloud services, per purpose, IPv4 and IPv6, rebuilt continuously from each vendor&#x27;s own publication. Signed feed, Terraform provider, AWS managed prefix lists.">
+<meta name="description" content="Official IP ranges for 47 SaaS and cloud services, per purpose, IPv4 and IPv6, rebuilt continuously from each vendor&#x27;s own publication. Signed feed, Terraform provider, AWS managed prefix lists.">
 <link rel="canonical" href="https://slash0.io/services/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -17,7 +17,7 @@
 </div></header>
 <div class="doc">
 <h1>service IP ranges</h1>
-<p class="tagline">Official IP ranges for 45 services, one page per service, straight from each vendor's own publication. Ranges render live from the <a href="https://feed.slash0.io/v1/index.json">signed feed</a>; changes land in the <a href="/changelog/">changelog</a>. Services that do not publish ranges are listed in the <a href="https://feed.slash0.io/">catalog</a>.</p>
+<p class="tagline">Official IP ranges for 47 services, one page per service, straight from each vendor's own publication. Ranges render live from the <a href="https://feed.slash0.io/v1/index.json">signed feed</a>; changes land in the <a href="/changelog/">changelog</a>. Services that do not publish ranges are listed in the <a href="https://feed.slash0.io/">catalog</a>.</p>
 <article>
 <h2>AI</h2>
 <a class="cardlink" href="/services/anthropic/"><b>Anthropic (Claude API)</b><span>api, outbound</span></a>
@@ -25,6 +25,7 @@
 <h2>Business SaaS</h2>
 <a class="cardlink" href="/services/atlassian/"><b>Atlassian Cloud</b><span>all, bitbucket, egress</span></a>
 <a class="cardlink" href="/services/docusign/"><b>DocuSign</b><span>connect-webhooks, email</span></a>
+<a class="cardlink" href="/services/hubspot/"><b>HubSpot</b><span>api, crawlers, dns, email</span></a>
 <a class="cardlink" href="/services/microsoft-365/"><b>Microsoft 365</b><span>common, exchange, sharepoint, teams</span></a>
 <a class="cardlink" href="/services/salesforce/"><b>Salesforce</b><span>all</span></a>
 <a class="cardlink" href="/services/zendesk/"><b>Zendesk</b><span>api, webhooks</span></a>
@@ -42,6 +43,7 @@
 <a class="cardlink" href="/services/oracle-cloud/"><b>Oracle Cloud Infrastructure</b><span>all, object-storage</span></a>
 <a class="cardlink" href="/services/vultr/"><b>Vultr (Constant, AS20473)</b><span>all</span></a>
 <h2>Communications</h2>
+<a class="cardlink" href="/services/braze/"><b>Braze</b><span>connected-content</span></a>
 <a class="cardlink" href="/services/intercom/"><b>Intercom</b><span>all, all-eu, outbound-webhooks</span></a>
 <a class="cardlink" href="/services/klaviyo/"><b>Klaviyo</b><span>integrations</span></a>
 <a class="cardlink" href="/services/pagerduty/"><b>PagerDuty</b><span>webhooks, webhooks-eu</span></a>
@@ -75,6 +77,22 @@
 <a class="cardlink" href="/services/rapid7/"><b>Rapid7 (InsightAppSec cloud engines)</b><span>appsec-engines</span></a>
 <a class="cardlink" href="/services/tenable/"><b>Tenable (Vulnerability Management)</b><span>scanners</span></a>
 <a class="cardlink" href="/services/zscaler/"><b>Zscaler (zscaler.net cloud)</b><span>enforcement-nodes</span></a>
+<h2>Does not publish ranges</h2>
+<p>These vendors state that IP allowlisting is not the supported way to secure the integration. Each page carries their position, the page stating it, and what to use instead.</p>
+<a class="cardlink" href="/services/adyen/"><b>Adyen</b><span>not published</span></a>
+<a class="cardlink" href="/services/akamai/"><b>Akamai (CDN)</b><span>not published</span></a>
+<a class="cardlink" href="/services/box/"><b>Box</b><span>not published</span></a>
+<a class="cardlink" href="/services/mongodb-atlas/"><b>MongoDB Atlas (data plane)</b><span>not published</span></a>
+<a class="cardlink" href="/services/netlify/"><b>Netlify (function egress)</b><span>not published</span></a>
+<a class="cardlink" href="/services/openai-api/"><b>OpenAI API (api.openai.com)</b><span>not published</span></a>
+<a class="cardlink" href="/services/sendgrid/"><b>SendGrid (webhooks/parse)</b><span>not published</span></a>
+<a class="cardlink" href="/services/shopify/"><b>Shopify (webhooks)</b><span>not published</span></a>
+<a class="cardlink" href="/services/slack/"><b>Slack</b><span>not published</span></a>
+<a class="cardlink" href="/services/snowflake/"><b>Snowflake</b><span>not published</span></a>
+<a class="cardlink" href="/services/square/"><b>Square (webhooks)</b><span>not published</span></a>
+<a class="cardlink" href="/services/sumo-logic/"><b>Sumo Logic</b><span>not published</span></a>
+<a class="cardlink" href="/services/twilio/"><b>Twilio (REST API + webhooks)</b><span>not published</span></a>
+<a class="cardlink" href="/services/vercel/"><b>Vercel (function egress)</b><span>not published</span></a>
 </article>
 </div>
 <footer><div class="wrap">

@@ -19,6 +19,7 @@
   <url><loc>https://slash0.io/services/aws/</loc></url>
   <url><loc>https://slash0.io/services/azure/</loc></url>
   <url><loc>https://slash0.io/services/braintree/</loc></url>
+  <url><loc>https://slash0.io/services/braze/</loc></url>
   <url><loc>https://slash0.io/services/buildkite/</loc></url>
   <url><loc>https://slash0.io/services/circleci/</loc></url>
   <url><loc>https://slash0.io/services/cloudflare/</loc></url>
@@ -33,6 +34,7 @@
   <url><loc>https://slash0.io/services/google/</loc></url>
   <url><loc>https://slash0.io/services/google-cloud/</loc></url>
   <url><loc>https://slash0.io/services/grafana-cloud/</loc></url>
+  <url><loc>https://slash0.io/services/hubspot/</loc></url>
   <url><loc>https://slash0.io/services/ibm-cloud/</loc></url>
   <url><loc>https://slash0.io/services/intercom/</loc></url>
   <url><loc>https://slash0.io/services/klaviyo/</loc></url>
@@ -58,4 +60,18 @@
   <url><loc>https://slash0.io/services/zendesk/</loc></url>
   <url><loc>https://slash0.io/services/zoom/</loc></url>
   <url><loc>https://slash0.io/services/zscaler/</loc></url>
+  <url><loc>https://slash0.io/services/adyen/</loc></url>
+  <url><loc>https://slash0.io/services/akamai/</loc></url>
+  <url><loc>https://slash0.io/services/box/</loc></url>
+  <url><loc>https://slash0.io/services/mongodb-atlas/</loc></url>
+  <url><loc>https://slash0.io/services/netlify/</loc></url>
+  <url><loc>https://slash0.io/services/openai-api/</loc></url>
+  <url><loc>https://slash0.io/services/sendgrid/</loc></url>
+  <url><loc>https://slash0.io/services/shopify/</loc></url>
+  <url><loc>https://slash0.io/services/slack/</loc></url>
+  <url><loc>https://slash0.io/services/snowflake/</loc></url>
+  <url><loc>https://slash0.io/services/square/</loc></url>
+  <url><loc>https://slash0.io/services/sumo-logic/</loc></url>
+  <url><loc>https://slash0.io/services/twilio/</loc></url>
+  <url><loc>https://slash0.io/services/vercel/</loc></url>
 </urlset>
