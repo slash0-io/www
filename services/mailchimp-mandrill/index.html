@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mailchimp Transactional (Mandrill) webhooks IP ranges: not published · slash0</title>
+<meta name="description" content="Mailchimp Transactional (Mandrill) webhooks does not publish IP ranges for allowlisting. The vendor&#x27;s stated position, the page saying it, and what to use instead.">
+<link rel="canonical" href="https://slash0.io/services/mailchimp-mandrill/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><a href="/" style="color:inherit;text-decoration:none"><b>/0</b> slash0</a></div>
+  <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
+</div></header>
+<div class="doc">
+<span class="crumb"><a href="/services/">services</a> / mailchimp-mandrill</span>
+<h1>Mailchimp Transactional (Mandrill) webhooks IP ranges</h1>
+<p class="tagline">Not published. This vendor states that IP allowlisting is not the supported way to secure this integration.</p>
+<article>
+<h2>what the vendor says</h2>
+<blockquote><p>Directs users to authenticate that a webhook originated from Mailchimp&#x27;s servers using the documented request-signature flow. The /ips/ API returns your own dedicated sending addresses, which is a different thing from webhook sources.</p></blockquote>
+<p>Source: <a href="https://mailchimp.com/developer/transactional/docs/webhooks/">https://mailchimp.com/developer/transactional/docs/webhooks/</a>. That page is where this entry comes from, so you can check it rather than take our word for it.</p>
+<h2>what to do instead</h2>
+<p>Pick the control the vendor actually supports, and keep it scoped to the one workload that needs it:</p>
+<ul>
+<li><b>Verify the message, not the sender.</b> Where a vendor signs its webhooks, checking the signature is stronger than an address check would have been, and it survives their infrastructure changing.</li>
+<li><b>Allow the hostname.</b> Where a vendor publishes a stable domain, that needs something which resolves names: a proxy, a DNS firewall, or a network firewall rule group. A security group cannot do it.</li>
+<li><b>Contain the blast radius.</b> Give that workload its own security group so the broad rule lives there and nothing else in the account inherits it. <a href="/docs/coverage/">Coverage</a> has a worked example.</li>
+</ul>
+<h2>the rest of your stack</h2>
+<p>One unpinnable dependency does not stop you pinning the others. The <a href="/services/">catalog</a> covers the vendors that do publish official ranges, and the <a href="/vendor-ip-allowlists/">vendor report</a> scores how well each one publishes.</p>
+</article>
+</div>
+<footer><div class="wrap">
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div>© 2026 slash0</div>
+</div></footer>
+</body>
+</html>

@@ -14,6 +14,7 @@
   <url><loc>https://slash0.io/docs/contact/</loc></url>
   <url><loc>https://slash0.io/docs/onboarding/</loc></url>
   <url><loc>https://slash0.io/services/anthropic/</loc></url>
+  <url><loc>https://slash0.io/services/appdynamics/</loc></url>
   <url><loc>https://slash0.io/services/atlassian/</loc></url>
   <url><loc>https://slash0.io/services/auth0/</loc></url>
   <url><loc>https://slash0.io/services/aws/</loc></url>
@@ -21,6 +22,7 @@
   <url><loc>https://slash0.io/services/braintree/</loc></url>
   <url><loc>https://slash0.io/services/braze/</loc></url>
   <url><loc>https://slash0.io/services/buildkite/</loc></url>
+  <url><loc>https://slash0.io/services/checkout-com/</loc></url>
   <url><loc>https://slash0.io/services/circleci/</loc></url>
   <url><loc>https://slash0.io/services/cloudflare/</loc></url>
   <url><loc>https://slash0.io/services/databricks/</loc></url>
@@ -42,6 +44,7 @@
   <url><loc>https://slash0.io/services/microsoft-365/</loc></url>
   <url><loc>https://slash0.io/services/neon/</loc></url>
   <url><loc>https://slash0.io/services/netskope/</loc></url>
+  <url><loc>https://slash0.io/services/netsuite-connector/</loc></url>
   <url><loc>https://slash0.io/services/new-relic/</loc></url>
   <url><loc>https://slash0.io/services/okta/</loc></url>
   <url><loc>https://slash0.io/services/openai/</loc></url>
@@ -57,21 +60,35 @@
   <url><loc>https://slash0.io/services/tenable/</loc></url>
   <url><loc>https://slash0.io/services/twilio-sip/</loc></url>
   <url><loc>https://slash0.io/services/vultr/</loc></url>
+  <url><loc>https://slash0.io/services/wise/</loc></url>
   <url><loc>https://slash0.io/services/zendesk/</loc></url>
   <url><loc>https://slash0.io/services/zoom/</loc></url>
   <url><loc>https://slash0.io/services/zscaler/</loc></url>
   <url><loc>https://slash0.io/services/adyen/</loc></url>
+  <url><loc>https://slash0.io/services/aiven/</loc></url>
   <url><loc>https://slash0.io/services/akamai/</loc></url>
+  <url><loc>https://slash0.io/services/alibaba-cloud/</loc></url>
   <url><loc>https://slash0.io/services/box/</loc></url>
+  <url><loc>https://slash0.io/services/cockroachdb/</loc></url>
+  <url><loc>https://slash0.io/services/confluent/</loc></url>
+  <url><loc>https://slash0.io/services/docker-hub/</loc></url>
+  <url><loc>https://slash0.io/services/honeycomb/</loc></url>
+  <url><loc>https://slash0.io/services/mailchimp-mandrill/</loc></url>
   <url><loc>https://slash0.io/services/mongodb-atlas/</loc></url>
   <url><loc>https://slash0.io/services/netlify/</loc></url>
+  <url><loc>https://slash0.io/services/netsuite/</loc></url>
   <url><loc>https://slash0.io/services/openai-api/</loc></url>
+  <url><loc>https://slash0.io/services/palo-alto/</loc></url>
+  <url><loc>https://slash0.io/services/planetscale/</loc></url>
+  <url><loc>https://slash0.io/services/redis-cloud/</loc></url>
   <url><loc>https://slash0.io/services/sendgrid/</loc></url>
   <url><loc>https://slash0.io/services/shopify/</loc></url>
   <url><loc>https://slash0.io/services/slack/</loc></url>
   <url><loc>https://slash0.io/services/snowflake/</loc></url>
+  <url><loc>https://slash0.io/services/splunk-cloud/</loc></url>
   <url><loc>https://slash0.io/services/square/</loc></url>
   <url><loc>https://slash0.io/services/sumo-logic/</loc></url>
+  <url><loc>https://slash0.io/services/supabase/</loc></url>
   <url><loc>https://slash0.io/services/twilio/</loc></url>
   <url><loc>https://slash0.io/services/vercel/</loc></url>
 </urlset>

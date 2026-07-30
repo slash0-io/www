@@ -212,11 +212,13 @@ def service_page(entry, doc):
 # vendor's own words, the page stating them, and what to do instead.
 #
 # RELATED maps a non-publisher to a catalog service that IS pinnable, for the
-# vendors where the honest answer is "not this, but that". Both entries are
-# the same company publishing one side and not the other.
+# vendors where the answer is "not this, but that". Both entries are the same
+# company publishing one side and not the other.
 RELATED = {
     "twilio": ("twilio-sip", "Elastic SIP Trunking", "signaling and media ranges"),
     "openai-api": ("openai", "OpenAI egress", "the addresses OpenAI connects to you from"),
+    "netsuite": ("netsuite-connector", "NetSuite Connector",
+                 "the addresses the Connector reaches your systems from"),
 }
 
 
