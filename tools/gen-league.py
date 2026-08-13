@@ -21,18 +21,39 @@ import os
 import re
 import urllib.request
 
-FEED = "https://feed.slash0.io/v1/index.json"
+# SLASH0_FEED overrides the feed root, matching gen-services.py, so a catalog
+# change can be rendered from a local dist/v1 before it is published.
+FEED = os.environ.get("SLASH0_FEED", "https://feed.slash0.io/v1/") + "index.json"
 PAGE = "vendor-ip-allowlists/index.html"
 
-FORMAT_LABEL = {"json": "JSON", "csv": "CSV", "text": "text", "html": "docs page"}
+FORMAT_LABEL = {"json": "JSON", "xml": "XML", "csv": "CSV", "text": "text",
+                "html": "docs page"}
 # Cells state what a vendor publishes or supports, never a characterisation of
 # the vendor. Facts are defensible; adjectives get quoted.
 POLL_LABEL = {"cond-get": "conditional GET", "hash": "full download",
               "docs-page": "page extraction"}
 
 
+def label(table, key, table_name):
+    """Look up a feed enum, failing with the fix rather than a bare KeyError.
+
+    These tables mirror enums the feed repo owns, so a new document type or
+    poll mode lands here as a crash during regeneration. Stopping is right:
+    a missing label must never render as a blank cell, which would read as a
+    claim that the vendor publishes nothing. Say which table to extend.
+    """
+    try:
+        return table[key]
+    except KeyError:
+        raise SystemExit(
+            f"gen-league: the feed carries {key!r}, which {table_name} in "
+            f"tools/gen-league.py does not know. Add it there: the feed repo "
+            f"has introduced a value this table has not learned yet."
+        ) from None
+
+
 def fetch(src):
-    if src.startswith(("http://", "https://")):
+    if src.startswith(("http://", "https://", "file://")):
         with urllib.request.urlopen(src) as r:
             return json.load(r)
     with open(src, encoding="utf-8") as f:
@@ -89,8 +110,8 @@ def league_table(scored):
         rows.append(
             f'      <tr><td><a href="/services/{e(svc["slug"])}/">{e(svc["name"])}</a></td>'
             f'<td class="lt-n">{pts}</td>'
-            f'<td>{e(FORMAT_LABEL[pub["documentType"]])}</td>'
-            f'<td>{e(POLL_LABEL[pub["pollMode"]])}</td>'
+            f'<td>{e(label(FORMAT_LABEL, pub["documentType"], "FORMAT_LABEL"))}</td>'
+            f'<td>{e(label(POLL_LABEL, pub["pollMode"], "POLL_LABEL"))}</td>'
             f'<td>{"one set" if one_set else len(purposes)}</td>'
             f"<td>{notice_cell}</td>"
             f"<td>{sig}</td>"

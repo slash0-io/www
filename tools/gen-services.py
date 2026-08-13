@@ -17,7 +17,12 @@ import os
 import sys
 import urllib.request
 
-FEED = "https://feed.slash0.io/v1/"
+# SLASH0_FEED points the generator at a local dist/v1 (a file:// URL works) so
+# a catalog change can be rendered and read before it is live. Pages committed
+# to the site must always come from the published feed: they name services that
+# assets/live.js then looks up, and a page for a service the feed does not carry
+# yet renders with no ranges at all.
+FEED = os.environ.get("SLASH0_FEED", "https://feed.slash0.io/v1/")
 SITE = "https://slash0.io"
 
 CATEGORY_NAMES = {
@@ -221,6 +226,13 @@ RELATED = {
                  "the addresses the Connector reaches your systems from"),
 }
 
+# DELEGATED is the other shape of "not this, but that": the traffic is sent by a
+# different company, whose ranges are published and pinnable. Kept separate from
+# RELATED because that copy says "the same company", which would be false here.
+DELEGATED = {
+    "stytch": ("svix", "Svix", "Stytch's webhooks are delivered by Svix"),
+}
+
 
 def non_publisher_page(np, service_slugs):
     slug, name = np["slug"], np["name"]
@@ -252,6 +264,18 @@ def non_publisher_page(np, service_slugs):
                    f'<a href="/services/{rslug}/">{html.escape(rname)}</a>, which '
                    f"is in the catalog and can be pinned. The gap above applies to "
                    f"this product, not to everything they run.</p>\n")
+
+    dele = DELEGATED.get(slug)
+    if dele and dele[0] in service_slugs:
+        dslug, dname, dwhat = dele
+        out.append("<h2>who sends this traffic</h2>\n")
+        out.append(f'<p>{html.escape(dwhat)}, and '
+                   f'<a href="/services/{dslug}/">{html.escape(dname)}</a> publishes the '
+                   f"addresses it sends from. Those ranges are in the catalog, so the "
+                   f"delivery side can be pinned even though this vendor lists nothing "
+                   f"itself. They belong to the delivery provider, which means "
+                   f"they cover every product built on it rather than this vendor "
+                   f"alone.</p>\n")
 
     out.append("<h2>what to do instead</h2>\n")
     out.append("<p>Pick the control the vendor actually supports, and keep it "
