@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OpenAI (ChatGPT egress) IP ranges (agents, connectors) · slash0</title>
-<meta name="description" content="Official OpenAI (ChatGPT egress) IP ranges for allowlisting: agents, connectors, IPv4 and IPv6, from the vendor&#x27;s own publication. Live data, Terraform examples, AWS managed prefix lists.">
+<title>OpenAI IP ranges (adsbot, agents, chatgpt-user, connectors, gptbot, searchbot) · slash0</title>
+<meta name="description" content="Official OpenAI IP ranges for allowlisting: adsbot, agents, chatgpt-user, connectors, gptbot, searchbot, IPv4 and IPv6, from the vendor&#x27;s own publication. Live data, Terraform examples, AWS managed prefix lists.">
 <link rel="canonical" href="https://slash0.io/services/openai/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -18,16 +18,38 @@
 </div></header>
 <div class="doc" id="service-page" data-slug="openai">
 <span class="crumb"><a href="/services/">services</a> / openai</span>
-<h1>OpenAI (ChatGPT egress) IP ranges</h1>
-<p class="tagline">Official OpenAI (ChatGPT egress) ranges from the vendor's publication, split by purpose: agents, connectors. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/openai.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
-<p class="note">The feed classifies this service as <strong>mixed</strong>: not every purpose runs on vendor-dedicated infrastructure. Review a purpose before treating its ranges as exclusively OpenAI (ChatGPT egress).</p>
+<h1>OpenAI IP ranges</h1>
+<p class="tagline">Official OpenAI ranges from the vendor's publication, split by purpose: adsbot, agents, chatgpt-user, connectors, gptbot, searchbot. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/openai.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<p class="note">The feed classifies this service as <strong>mixed</strong>: not every purpose runs on vendor-dedicated infrastructure. Review a purpose before treating its ranges as exclusively OpenAI.</p>
 <article>
 <table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
+<tr><td><a href="#adsbot"><code>openai/adsbot</code></a></td><td>ingress</td><td id="count4-adsbot">·</td><td id="count6-adsbot">·</td></tr>
 <tr><td><a href="#agents"><code>openai/agents</code></a></td><td>ingress</td><td id="count4-agents">·</td><td id="count6-agents">·</td></tr>
+<tr><td><a href="#chatgpt-user"><code>openai/chatgpt-user</code></a></td><td>ingress</td><td id="count4-chatgpt-user">·</td><td id="count6-chatgpt-user">·</td></tr>
 <tr><td><a href="#connectors"><code>openai/connectors</code></a></td><td>ingress</td><td id="count4-connectors">·</td><td id="count6-connectors">·</td></tr>
+<tr><td><a href="#gptbot"><code>openai/gptbot</code></a></td><td>ingress</td><td id="count4-gptbot">·</td><td id="count6-gptbot">·</td></tr>
+<tr><td><a href="#searchbot"><code>openai/searchbot</code></a></td><td>ingress</td><td id="count4-searchbot">·</td><td id="count6-searchbot">·</td></tr>
 </table>
+<h2 id="adsbot">openai/adsbot</h2>
+<p>Direction: ingress. Ranges OpenAI connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-adsbot">loading ranges from the feed…</pre>
+<p class="note" id="quota-adsbot" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;openai_adsbot&quot; {
+  service = &quot;openai&quot;
+  purpose = &quot;adsbot&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;openai_adsbot&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.openai_adsbot.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
 <h2 id="agents">openai/agents</h2>
-<p>Direction: ingress. Ranges OpenAI (ChatGPT egress) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<p>Direction: ingress. Ranges OpenAI connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
 <pre class="ranges" id="ranges-agents">loading ranges from the feed…</pre>
 <p class="note" id="quota-agents" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
@@ -44,8 +66,26 @@ resource &quot;aws_security_group_rule&quot; &quot;openai_agents&quot; {
   cidr_blocks       = data.egress_ranges.openai_agents.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
+<h2 id="chatgpt-user">openai/chatgpt-user</h2>
+<p>Direction: ingress. Ranges OpenAI connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-chatgpt-user">loading ranges from the feed…</pre>
+<p class="note" id="quota-chatgpt-user" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;openai_chatgpt_user&quot; {
+  service = &quot;openai&quot;
+  purpose = &quot;chatgpt-user&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;openai_chatgpt_user&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.openai_chatgpt_user.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
 <h2 id="connectors">openai/connectors</h2>
-<p>Direction: ingress. Ranges OpenAI (ChatGPT egress) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<p>Direction: ingress. Ranges OpenAI connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
 <pre class="ranges" id="ranges-connectors">loading ranges from the feed…</pre>
 <p class="note" id="quota-connectors" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
@@ -62,13 +102,53 @@ resource &quot;aws_security_group_rule&quot; &quot;openai_connectors&quot; {
   cidr_blocks       = data.egress_ranges.openai_connectors.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
+<h2 id="gptbot">openai/gptbot</h2>
+<p>Direction: ingress. Ranges OpenAI connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-gptbot">loading ranges from the feed…</pre>
+<p class="note" id="quota-gptbot" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;openai_gptbot&quot; {
+  service = &quot;openai&quot;
+  purpose = &quot;gptbot&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;openai_gptbot&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.openai_gptbot.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="searchbot">openai/searchbot</h2>
+<p>Direction: ingress. Ranges OpenAI connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-searchbot">loading ranges from the feed…</pre>
+<p class="note" id="quota-searchbot" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;egress_ranges&quot; &quot;openai_searchbot&quot; {
+  service = &quot;openai&quot;
+  purpose = &quot;searchbot&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;openai_searchbot&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.egress_ranges.openai_searchbot.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
 <h2>keep rules current automatically</h2>
-<p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data via AWS managed prefix lists (<code>slash0.openai.agents.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
+<p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data via AWS managed prefix lists (<code>slash0.openai.adsbot.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
 <h2>provenance</h2>
-<p>Ranges come from OpenAI (ChatGPT egress)'s official publication: <a href="https://developers.openai.com/api/docs/guides/ip-addresses">https://developers.openai.com/api/docs/guides/ip-addresses</a>. Fetched sources:</p>
+<p>Ranges come from OpenAI's official publication: <a href="https://developers.openai.com/api/docs/guides/ip-addresses">https://developers.openai.com/api/docs/guides/ip-addresses</a>. Fetched sources:</p>
 <ul>
 <li><code><a href="https://openai.com/chatgpt-connectors.json">https://openai.com/chatgpt-connectors.json</a></code></li>
 <li><code><a href="https://openai.com/chatgpt-agents.json">https://openai.com/chatgpt-agents.json</a></code></li>
+<li><code><a href="https://openai.com/gptbot.json">https://openai.com/gptbot.json</a></code></li>
+<li><code><a href="https://openai.com/searchbot.json">https://openai.com/searchbot.json</a></code></li>
+<li><code><a href="https://openai.com/chatgpt-user.json">https://openai.com/chatgpt-user.json</a></code></li>
+<li><code><a href="https://openai.com/adsbot.json">https://openai.com/adsbot.json</a></code></li>
 </ul>
 <p>Every publish is signed (ECDSA P-256 over the feed index, each service document hash-chained to it) and every range change is recorded in the <a href="/changelog/">changelog</a>. Verification steps: <a href="/docs/security/">security</a>. Provider setup: <a href="/docs/quickstart/">quickstart</a>.</p>
 </article>

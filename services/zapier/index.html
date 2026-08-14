@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sumo Logic IP ranges: not published · slash0</title>
-<meta name="description" content="Sumo Logic does not publish IP ranges for allowlisting. The vendor&#x27;s stated position, the page saying it, and what to use instead.">
-<link rel="canonical" href="https://slash0.io/services/sumo-logic/">
+<title>Zapier IP ranges: not published · slash0</title>
+<meta name="description" content="Zapier does not publish IP ranges for allowlisting. The vendor&#x27;s stated position, the page saying it, and what to use instead.">
+<link rel="canonical" href="https://slash0.io/services/zapier/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/site.css">
@@ -16,13 +16,13 @@
   <nav><a href="/docs/">docs</a><a href="/services/">services</a><a href="https://feed.slash0.io/">catalog</a><a href="/#access">early access</a></nav>
 </div></header>
 <div class="doc">
-<span class="crumb"><a href="/services/">services</a> / sumo-logic</span>
-<h1>Sumo Logic IP ranges</h1>
+<span class="crumb"><a href="/services/">services</a> / zapier</span>
+<h1>Zapier IP ranges</h1>
 <p class="tagline">Not published. This vendor states that IP allowlisting is not the supported way to secure this integration.</p>
 <article>
 <h2>what the vendor says</h2>
-<blockquote><p>No own ranges; directs users to download the AWS IP ranges JSON and use the prefixes for the AWS region their deployment sits in, which the aws service already covers. States plainly that &#x27;the list of IP ranges is shared infrastructure. It is not limited to Sumo Logic nodes and is subject to change over time.&#x27;</p></blockquote>
-<p>Source: <a href="https://help.sumologic.com/docs/api/getting-started/">https://help.sumologic.com/docs/api/getting-started/</a>. That page is where this entry comes from, so you can check it rather than take our word for it.</p>
+<blockquote><p>States that Zapier &#x27;uses Amazon (AWS)&#x27;s us-east-1 region, where it dynamically provisions instances as needed&#x27;, so there is no fixed set. They suggest matching the User-Agent: Zapier header instead, or the static IP feature available on paid plans.</p></blockquote>
+<p>Source: <a href="https://help.zapier.com/hc/en-us/articles/8496216020877-Zapier-IP-addresses-and-allowlisting">https://help.zapier.com/hc/en-us/articles/8496216020877-Zapier-IP-addresses-and-allowlisting</a>. That page is where this entry comes from, so you can check it rather than take our word for it.</p>
 <h2>what to do instead</h2>
 <p>Pick the control the vendor actually supports, and keep it scoped to the one workload that needs it:</p>
 <ul>

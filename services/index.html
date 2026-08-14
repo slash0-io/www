@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SaaS and cloud service IP ranges · slash0</title>
-<meta name="description" content="Official IP ranges for 58 SaaS and cloud services, per purpose, IPv4 and IPv6, rebuilt continuously from each vendor&#x27;s own publication. Signed feed, Terraform provider, AWS managed prefix lists.">
+<meta name="description" content="Official IP ranges for 66 SaaS and cloud services, per purpose, IPv4 and IPv6, rebuilt continuously from each vendor&#x27;s own publication. Signed feed, Terraform provider, AWS managed prefix lists.">
 <link rel="canonical" href="https://slash0.io/services/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -17,18 +17,20 @@
 </div></header>
 <div class="doc">
 <h1>service IP ranges</h1>
-<p class="tagline">Official IP ranges for 58 services, one page per service, straight from each vendor's own publication. Ranges render live from the <a href="https://feed.slash0.io/v1/index.json">signed feed</a>; changes land in the <a href="/changelog/">changelog</a>. Services that do not publish ranges are listed in the <a href="https://feed.slash0.io/">catalog</a>.</p>
+<p class="tagline">Official IP ranges for 66 services, one page per service, straight from each vendor's own publication. Ranges render live from the <a href="https://feed.slash0.io/v1/index.json">signed feed</a>; changes land in the <a href="/changelog/">changelog</a>. Services that do not publish ranges are listed in the <a href="https://feed.slash0.io/">catalog</a>.</p>
 <article>
 <h2>AI</h2>
-<a class="cardlink" href="/services/anthropic/"><b>Anthropic (Claude API)</b><span>api, outbound</span></a>
-<a class="cardlink" href="/services/openai/"><b>OpenAI (ChatGPT egress)</b><span>agents, connectors</span></a>
+<a class="cardlink" href="/services/anthropic/"><b>Anthropic (Claude API)</b><span>api, crawlers, outbound</span></a>
+<a class="cardlink" href="/services/openai/"><b>OpenAI</b><span>adsbot, agents, chatgpt-user, connectors, gptbot, searchbot</span></a>
 <h2>Business SaaS</h2>
 <a class="cardlink" href="/services/atlassian/"><b>Atlassian Cloud</b><span>all, bitbucket, egress</span></a>
 <a class="cardlink" href="/services/docusign/"><b>DocuSign</b><span>connect-webhooks, email</span></a>
 <a class="cardlink" href="/services/hubspot/"><b>HubSpot</b><span>api, crawlers, dns, email</span></a>
+<a class="cardlink" href="/services/make/"><b>Make</b><span>platform</span></a>
 <a class="cardlink" href="/services/microsoft-365/"><b>Microsoft 365</b><span>common, exchange, sharepoint, teams</span></a>
 <a class="cardlink" href="/services/netsuite-connector/"><b>Oracle NetSuite Connector</b><span>connector</span></a>
 <a class="cardlink" href="/services/salesforce/"><b>Salesforce</b><span>all</span></a>
+<a class="cardlink" href="/services/workato/"><b>Workato</b><span>on-prem-agent, platform</span></a>
 <a class="cardlink" href="/services/zendesk/"><b>Zendesk</b><span>api, webhooks</span></a>
 <h2>CDN</h2>
 <a class="cardlink" href="/services/cloudflare/"><b>Cloudflare</b><span>edge</span></a>
@@ -65,15 +67,21 @@
 <a class="cardlink" href="/services/github/"><b>GitHub</b><span>actions, api, git, hooks, packages, pages, web</span></a>
 <a class="cardlink" href="/services/gitlab/"><b>GitLab.com</b><span>web-api, webhooks</span></a>
 <a class="cardlink" href="/services/launchdarkly/"><b>LaunchDarkly</b><span>service, webhooks</span></a>
+<a class="cardlink" href="/services/retool/"><b>Retool</b><span>default-region</span></a>
+<a class="cardlink" href="/services/svix/"><b>Svix</b><span>webhooks</span></a>
 <h2>Identity</h2>
 <a class="cardlink" href="/services/auth0/"><b>Auth0 (Okta CIC)</b><span>all</span></a>
 <a class="cardlink" href="/services/duo/"><b>Cisco Duo</b><span>mfa</span></a>
 <a class="cardlink" href="/services/okta/"><b>Okta</b><span>all</span></a>
+<a class="cardlink" href="/services/onelogin/"><b>OneLogin</b><span>agents, agents-eu, email</span></a>
+<a class="cardlink" href="/services/workos/"><b>WorkOS</b><span>webhooks</span></a>
 <h2>Observability</h2>
 <a class="cardlink" href="/services/appdynamics/"><b>Splunk AppDynamics SaaS</b><span>platform-sources, synthetic-agents</span></a>
+<a class="cardlink" href="/services/checkly/"><b>Checkly</b><span>probes</span></a>
 <a class="cardlink" href="/services/datadog/"><b>Datadog</b><span>agents, agents-eu, api, api-eu, apm, logs, synthetics, webhooks</span></a>
 <a class="cardlink" href="/services/grafana-cloud/"><b>Grafana Cloud</b><span>alerts, logs, metrics</span></a>
 <a class="cardlink" href="/services/new-relic/"><b>New Relic</b><span>agents, synthetics</span></a>
+<a class="cardlink" href="/services/pingdom/"><b>Pingdom</b><span>probes</span></a>
 <a class="cardlink" href="/services/sentry/"><b>Sentry (hosted)</b><span>ingest, uptime, webhooks</span></a>
 <a class="cardlink" href="/services/uptimerobot/"><b>UptimeRobot</b><span>probes</span></a>
 <h2>Payments</h2>
@@ -101,6 +109,7 @@
 <a class="cardlink" href="/services/docker-hub/"><b>Docker Hub / Docker Desktop</b><span>not published</span></a>
 <a class="cardlink" href="/services/dynatrace/"><b>Dynatrace (Synthetic Monitoring)</b><span>not published</span></a>
 <a class="cardlink" href="/services/honeycomb/"><b>Honeycomb</b><span>not published</span></a>
+<a class="cardlink" href="/services/jumpcloud/"><b>JumpCloud</b><span>not published</span></a>
 <a class="cardlink" href="/services/mailchimp-mandrill/"><b>Mailchimp Transactional (Mandrill) webhooks</b><span>not published</span></a>
 <a class="cardlink" href="/services/mailgun/"><b>Mailgun</b><span>not published</span></a>
 <a class="cardlink" href="/services/maven-central/"><b>Maven Central (repo1.maven.org)</b><span>not published</span></a>
@@ -118,12 +127,15 @@
 <a class="cardlink" href="/services/shopify/"><b>Shopify (webhooks)</b><span>not published</span></a>
 <a class="cardlink" href="/services/slack/"><b>Slack</b><span>not published</span></a>
 <a class="cardlink" href="/services/snowflake/"><b>Snowflake</b><span>not published</span></a>
+<a class="cardlink" href="/services/snyk/"><b>Snyk</b><span>not published</span></a>
 <a class="cardlink" href="/services/splunk-cloud/"><b>Splunk Cloud Platform</b><span>not published</span></a>
 <a class="cardlink" href="/services/square/"><b>Square (webhooks)</b><span>not published</span></a>
+<a class="cardlink" href="/services/stytch/"><b>Stytch (webhooks)</b><span>not published</span></a>
 <a class="cardlink" href="/services/sumo-logic/"><b>Sumo Logic</b><span>not published</span></a>
 <a class="cardlink" href="/services/supabase/"><b>Supabase</b><span>not published</span></a>
 <a class="cardlink" href="/services/twilio/"><b>Twilio (REST API + webhooks)</b><span>not published</span></a>
 <a class="cardlink" href="/services/vercel/"><b>Vercel (function egress)</b><span>not published</span></a>
+<a class="cardlink" href="/services/zapier/"><b>Zapier</b><span>not published</span></a>
 </article>
 </div>
 <footer><div class="wrap">

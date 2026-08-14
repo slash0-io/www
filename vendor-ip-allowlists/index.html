@@ -64,14 +64,14 @@
 
   <!-- GEN:findings -->
   <ul>
-    <li><strong>58 services publish official ranges. 34 state that you should not pin them at all.</strong> Between them the 58 publish 26,712 CIDRs, rebuilt continuously and republished as a signed feed.</li>
-    <li><strong>1 of 58 scores five out of five.</strong> Only Elastic Cloud does everything on this list.</li>
-    <li><strong>9 of 58 commit to any advance notice</strong> before newly published ranges start carrying traffic: Auth0 (Okta CIC), Buildkite, CircleCI, Databricks, Elastic Cloud, LaunchDarkly, Microsoft 365, Microsoft Azure (Service Tags), Stripe. For everyone else, a range can go live the moment it appears.</li>
-    <li><strong>8 of 58 operate a change signal you can subscribe to</strong> (Amazon Web Services, Atlassian Cloud, CircleCI, Elastic Cloud, Fastly, LaunchDarkly, Microsoft 365, Stripe). Another 4 are trackable only because their documentation happens to live in a public git repository, so the commit feed stands in for a notification the vendor does not offer.</li>
-    <li><strong>23 of 58 have no machine-readable endpoint at all.</strong> Their ranges exist only inside a documentation page, so every consumer writes a scraper and every consumer breaks when the page is restyled.</li>
-    <li><strong>19 of 58 honor conditional requests.</strong> The rest have no cache validators, so checking for a change means downloading the whole list again.</li>
-    <li><strong>14 of 58 publish one undifferentiated set.</strong> Allowlisting the API also allowlists everything else the vendor runs, including infrastructure that has nothing to do with your integration.</li>
-    <li><strong>38 of 58 publish no IPv6 ranges.</strong> Reported in the table but left out of the score, since a vendor with no IPv6 footprint has nothing to publish.</li>
+    <li><strong>66 services publish official ranges. 38 state that you should not pin them at all.</strong> Between them the 66 publish 27,512 CIDRs, rebuilt continuously and republished as a signed feed.</li>
+    <li><strong>1 of 66 scores five out of five.</strong> Only Elastic Cloud does everything on this list.</li>
+    <li><strong>9 of 66 commit to any advance notice</strong> before newly published ranges start carrying traffic: Auth0 (Okta CIC), Buildkite, CircleCI, Databricks, Elastic Cloud, LaunchDarkly, Microsoft 365, Microsoft Azure (Service Tags), Stripe. For everyone else, a range can go live the moment it appears.</li>
+    <li><strong>8 of 66 operate a change signal you can subscribe to</strong> (Amazon Web Services, Atlassian Cloud, CircleCI, Elastic Cloud, Fastly, LaunchDarkly, Microsoft 365, Stripe). Another 4 are trackable only because their documentation happens to live in a public git repository, so the commit feed stands in for a notification the vendor does not offer.</li>
+    <li><strong>28 of 66 have no machine-readable endpoint at all.</strong> Their ranges exist only inside a documentation page, so every consumer writes a scraper and every consumer breaks when the page is restyled.</li>
+    <li><strong>20 of 66 honor conditional requests.</strong> The rest have no cache validators, so checking for a change means downloading the whole list again.</li>
+    <li><strong>14 of 66 publish one undifferentiated set.</strong> Allowlisting the API also allowlists everything else the vendor runs, including infrastructure that has nothing to do with your integration.</li>
+    <li><strong>43 of 66 publish no IPv6 ranges.</strong> Reported in the table but left out of the score, since a vendor with no IPv6 footprint has nothing to publish.</li>
   </ul>
   <!-- /GEN:findings -->
 
@@ -104,10 +104,12 @@
       <tr><td><a href="/services/azure/">Microsoft Azure (Service Tags)</a></td><td class="lt-n">3</td><td>JSON</td><td>page extraction</td><td>3</td><td><a href="https://learn.microsoft.com/en-us/azure/virtual-network/service-tags-overview" title="vendor documentation">1 week before new IPs are used</a></td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/oracle-cloud/">Oracle Cloud Infrastructure</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/pagerduty/">PagerDuty</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/svix/">Svix</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/tenable/">Tenable (Vulnerability Management)</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/zscaler/">Zscaler (zscaler.net cloud)</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/linode/">Akamai Connected Cloud (Linode)</a></td><td class="lt-n">2</td><td>CSV</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/braintree/">Braintree (PayPal)</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/checkly/">Checkly</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/databricks/">Databricks</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>one set</td><td><a href="https://docs.databricks.com/aws/en/resources/ip-domain-region" title="vendor documentation">60 days before updated IPs activate</a></td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/docusign/">DocuSign</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/google/">Google (all services)</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
@@ -116,11 +118,12 @@
       <tr><td><a href="/services/hubspot/">HubSpot</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>4</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/klaviyo/">Klaviyo</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/okta/">Okta</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
-      <tr><td><a href="/services/openai/">OpenAI (ChatGPT egress)</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/openai/">OpenAI</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>6</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/pingdom/">Pingdom</a></td><td class="lt-n">2</td><td>XML</td><td>full download</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/salesforce/">Salesforce</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/zendesk/">Zendesk</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/zoom/">Zoom</a></td><td class="lt-n">2</td><td>text</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
-      <tr><td><a href="/services/anthropic/">Anthropic (Claude API)</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/anthropic/">Anthropic (Claude API)</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>3</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/braze/">Braze</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/checkout-com/">Checkout.com</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/duo/">Cisco Duo</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
@@ -128,19 +131,24 @@
       <tr><td><a href="/services/fivetran/">Fivetran</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/gitlab/">GitLab.com</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td><a href="https://gitlab.com/gitlab-org/gitlab/-/raw/master/doc/user/gitlab_com/_index.md" title="gitlab.com/gitlab-org/gitlab commits atom feed for doc/user/gitlab_com/_index.md">docs repo</a></td><td>no</td></tr>
       <tr><td><a href="/services/ibm-cloud/">IBM Cloud (Classic infrastructure)</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/make/">Make</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/neon/">Neon (Serverless Postgres)</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td><a href="https://github.com/neondatabase/website/blob/main/content/docs/introduction/regions.md" title="github.com/neondatabase/website commits feed for content/docs/introduction/regions.md">docs repo</a></td><td>no</td></tr>
       <tr><td><a href="/services/netskope/">Netskope (NewEdge)</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/new-relic/">New Relic</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td><a href="https://github.com/newrelic/docs-website/blob/develop/src/content/docs/new-relic-solutions/get-started/networks.mdx" title="github.com/newrelic/docs-website commits feed for networks.mdx">docs repo</a></td><td>yes</td></tr>
+      <tr><td><a href="/services/onelogin/">OneLogin</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>3</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/netsuite-connector/">Oracle NetSuite Connector</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/plaid/">Plaid</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/postmark/">Postmark</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/rapid7/">Rapid7 (InsightAppSec cloud engines)</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/retool/">Retool</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/sentry/">Sentry (hosted)</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>3</td><td>none</td><td><a href="https://github.com/getsentry/sentry-docs/blob/master/docs/security-legal-pii/security/ip-ranges.mdx" title="github.com/getsentry/sentry-docs commits feed for the ip-ranges page source">docs repo</a></td><td>yes</td></tr>
       <tr><td><a href="/services/appdynamics/">Splunk AppDynamics SaaS</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/twilio-sip/">Twilio Elastic SIP Trunking</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/uptimerobot/">UptimeRobot</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/vultr/">Vultr (Constant, AS20473)</a></td><td class="lt-n">1</td><td>CSV</td><td>full download</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/wise/">Wise</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/workato/">Workato</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
+      <tr><td><a href="/services/workos/">WorkOS</a></td><td class="lt-n">1</td><td>docs page</td><td>page extraction</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/airbyte/">Airbyte Cloud</a></td><td class="lt-n">0</td><td>docs page</td><td>page extraction</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/dbt-cloud/">dbt Cloud</a></td><td class="lt-n">0</td><td>docs page</td><td>page extraction</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/hightouch/">Hightouch</a></td><td class="lt-n">0</td><td>docs page</td><td>page extraction</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
@@ -179,6 +187,7 @@
       <tr><td>Docker Hub / Docker Desktop</td><td>Publishes an allowlist of domain URLs rather than addresses; the page lists hostnames only. Reproducible on the data plane: registry-1.docker.io resolves into rotating AWS us-east-1 EC2 addresses, a different set on each query (verified 2026-07-30).</td></tr>
       <tr><td>Dynatrace (Synthetic Monitoring)</td><td>Public Synthetic location addresses are read per environment, either from the Frequency and locations page in the web UI (&#x27;Copy IPs to clipboard or Download IPs&#x27;) or from the Synthetic locations API, which &#x27;returns all the locations available for your Environment along with their IP addresses&#x27;. No global list is published.</td></tr>
       <tr><td>Honeycomb</td><td>Offers AWS PrivateLink to the Honeycomb API for Enterprise customers on AWS. No range list is published in the docs.</td></tr>
+      <tr><td>JumpCloud</td><td>States for the agent, LDAP-as-a-Service and AD Integration alike: &#x27;Due to the elastic nature of the JumpCloud infrastructure, we currently do not publish lists of IP addresses for allow lists&#x27;. Directs users to FQDNs instead. Their separate data-centre page does list six regional RADIUS anycast addresses, which is a single narrow endpoint rather than a service range set.</td></tr>
       <tr><td>Mailchimp Transactional (Mandrill) webhooks</td><td>Directs users to authenticate that a webhook originated from Mailchimp&#x27;s servers using the documented request-signature flow. The /ips/ API returns your own dedicated sending addresses, which is a different thing from webhook sources.</td></tr>
       <tr><td>Mailgun</td><td>Their IP Allowlist API &#x27;lets you view and manage allowlisted IP addresses to which API key and SMTP credential usage is restricted&#x27;, which controls your own callers rather than publishing Mailgun&#x27;s addresses. Outbound sending addresses are per-account dedicated IPs grouped into pools, read through the authenticated /v3/ips API.</td></tr>
       <tr><td>Maven Central (repo1.maven.org)</td><td>repo1.maven.org resolves into Cloudflare&#x27;s published ranges (verified 2026-07-30: 104.18.18.12 and 104.18.19.12, both inside 104.16.0.0/13), so pinning it would allowlist the whole CDN rather than Maven Central.</td></tr>
@@ -195,12 +204,15 @@
       <tr><td>Shopify (webhooks)</td><td>Documents HMAC-SHA256 signature verification as the way to authenticate a webhook. The page does not mention source IPs, and no official range list was found as of the verified date.</td></tr>
       <tr><td>Slack</td><td>No published egress IPs; their allowlisting feature restricts YOUR IPs calling THEM.</td></tr>
       <tr><td>Snowflake</td><td>Deployment-specific hostnames/IPs per account; no global list.</td></tr>
+      <tr><td>Snyk</td><td>The Broker Client opens the outbound WebSocket and Snyk rides it back, so in their words &#x27;you do not need to allow a Snyk IP address. Instead, you can allow the Broker Client IP/port.&#x27; Requests to Snyk go through a CDN that rotates addresses and whole ranges, and they direct users to allow *.snyk.io.</td></tr>
       <tr><td>Splunk Cloud Platform</td><td>The documented control is an IP allow list restricting which addresses on your own network reach each Splunk feature, managed through the Admin Config Service API. Splunk publishes no ranges of its own for the stack.</td></tr>
       <tr><td>Square (webhooks)</td><td>No webhook source-IP list published; validate notifications via the documented HMAC-SHA256 signature flow.</td></tr>
-      <tr><td>Sumo Logic</td><td>No own ranges; officially delegates to AWS ip-ranges.json (&#x27;Amazon&#x27;/&#x27;EC2&#x27; services for your deployment region), covered by the aws service.</td></tr>
+      <tr><td>Stytch (webhooks)</td><td>Publishes no source-IP list of its own; states &#x27;Stytch&#x27;s webhooks are powered through Svix&#x27;. A receiving endpoint allowlists the svix service in this feed instead. Their own IP feature runs the other way: up to 10 customer IPs that may call the Stytch API, arranged over email with support.</td></tr>
+      <tr><td>Sumo Logic</td><td>No own ranges; directs users to download the AWS IP ranges JSON and use the prefixes for the AWS region their deployment sits in, which the aws service already covers. States plainly that &#x27;the list of IP ranges is shared infrastructure. It is not limited to Sumo Logic nodes and is subject to change over time.&#x27;</td></tr>
       <tr><td>Supabase</td><td>States that &#x27;IPv4 addresses are guaranteed to be static for ingress traffic&#x27; through a per-project paid add-on, while &#x27;the outbound IP address is not static and cannot be guaranteed&#x27;.</td></tr>
-      <tr><td>Twilio (REST API + webhooks)</td><td>IPs &#x27;highly dynamic, span a large range&#x27;; allow *.twilio.com instead. SIP trunking IS pinnable, see the twilio-sip service.</td></tr>
+      <tr><td>Twilio (REST API + webhooks)</td><td>IPs &#x27;highly dynamic, and span a large range, so it&#x27;s impractical to list each of them&#x27;; they recommend allowing outbound HTTPS to any *.twilio.com subdomain instead. SIP trunking IS pinnable, see the twilio-sip service.</td></tr>
       <tr><td>Vercel (function egress)</td><td>Dynamic by default; static IPs are a paid per-customer feature, not a public range.</td></tr>
+      <tr><td>Zapier</td><td>States that Zapier &#x27;uses Amazon (AWS)&#x27;s us-east-1 region, where it dynamically provisions instances as needed&#x27;, so there is no fixed set. They suggest matching the User-Agent: Zapier header instead, or the static IP feature available on paid plans.</td></tr>
       <tr><td>crates.io</td><td>crates.io resolves into Fastly&#x27;s published ranges (verified 2026-07-30: 151.101.130.137 and 151.101.194.137, inside 151.101.0.0/16), so pinning it would allowlist the whole CDN rather than crates.io.</td></tr>
       <tr><td>npm registry (registry.npmjs.org)</td><td>registry.npmjs.org resolves into Cloudflare&#x27;s published ranges (verified 2026-07-30: 104.16.0.34 and 104.16.1.34, both inside 104.16.0.0/13), so pinning it would allowlist the whole CDN rather than npm.</td></tr>
       </tbody>

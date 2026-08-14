@@ -46,7 +46,7 @@ resource &quot;aws_security_group_rule&quot; &quot;google_cloud_all&quot; {
 <h2>keep rules current automatically</h2>
 <p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data via AWS managed prefix lists (<code>slash0.google-cloud.all.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
 <h2>provenance</h2>
-<p>Ranges come from Google Cloud Platform's official publication: <a href="https://support.google.com/a/answer/10026322">https://support.google.com/a/answer/10026322</a>. Fetched sources:</p>
+<p>Ranges come from Google Cloud Platform's official publication: <a href="https://knowledge.workspace.google.com/admin/security/obtain-google-ip-address-ranges">https://knowledge.workspace.google.com/admin/security/obtain-google-ip-address-ranges</a>. Fetched sources:</p>
 <ul>
 <li><code><a href="https://www.gstatic.com/ipranges/cloud.json">https://www.gstatic.com/ipranges/cloud.json</a></code></li>
 </ul>
