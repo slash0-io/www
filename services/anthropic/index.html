@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Anthropic (Claude API) IP ranges (api, crawlers, outbound) · slash0</title>
-<meta name="description" content="Official Anthropic (Claude API) IP ranges for allowlisting: api, crawlers, outbound, IPv4 and IPv6, from the vendor&#x27;s own publication. Live data, Terraform examples, AWS managed prefix lists.">
+<title>Anthropic IP ranges · slash0</title>
+<meta name="description" content="Official Anthropic IP ranges for allowlisting: api, crawlers, outbound, IPv4 and IPv6, from the vendor&#x27;s own publication.">
 <link rel="canonical" href="https://slash0.io/services/anthropic/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -18,8 +18,8 @@
 </div></header>
 <div class="doc" id="service-page" data-slug="anthropic">
 <span class="crumb"><a href="/services/">services</a> / anthropic</span>
-<h1>Anthropic (Claude API) IP ranges</h1>
-<p class="tagline">Official Anthropic (Claude API) ranges from the vendor's publication, split by purpose: api, crawlers, outbound. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/anthropic.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<h1>Anthropic IP ranges</h1>
+<p class="tagline">Official Anthropic ranges from the vendor's publication, split by purpose: api, crawlers, outbound. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/anthropic.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
 <article>
 <table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
 <tr><td><a href="#api"><code>anthropic/api</code></a></td><td>egress</td><td id="count4-api">·</td><td id="count6-api">·</td></tr>
@@ -46,7 +46,7 @@ resource &quot;aws_security_group_rule&quot; &quot;anthropic_api&quot; {
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="crawlers">anthropic/crawlers</h2>
-<p>Direction: ingress. Ranges Anthropic (Claude API) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<p>Direction: ingress. Ranges Anthropic connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
 <pre class="ranges" id="ranges-crawlers">loading ranges from the feed…</pre>
 <p class="note" id="quota-crawlers" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
@@ -64,7 +64,7 @@ resource &quot;aws_security_group_rule&quot; &quot;anthropic_crawlers&quot; {
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="outbound">anthropic/outbound</h2>
-<p>Direction: ingress. Ranges Anthropic (Claude API) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<p>Direction: ingress. Ranges Anthropic connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
 <pre class="ranges" id="ranges-outbound">loading ranges from the feed…</pre>
 <p class="note" id="quota-outbound" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
@@ -84,7 +84,7 @@ resource &quot;aws_security_group_rule&quot; &quot;anthropic_outbound&quot; {
 <h2>keep rules current automatically</h2>
 <p>Terraform data sources refresh only when you run an apply. The hosted tier publishes the same data via AWS managed prefix lists (<code>slash0.anthropic.api.v4</code> and so on), shared into your account via AWS RAM: rules reference one <code>pl-…</code> id and update within a minute of a vendor change, with removals held through a 72 hour grace window. <a href="/#access">Request early access</a> or read <a href="/docs/how-it-works/">how it works</a>.</p>
 <h2>provenance</h2>
-<p>Ranges come from Anthropic (Claude API)'s official publication: <a href="https://platform.claude.com/docs/en/api/ip-addresses">https://platform.claude.com/docs/en/api/ip-addresses</a>. Fetched sources:</p>
+<p>Ranges come from Anthropic's official publication: <a href="https://platform.claude.com/docs/en/api/ip-addresses">https://platform.claude.com/docs/en/api/ip-addresses</a>. Fetched sources:</p>
 <ul>
 <li><code><a href="https://platform.claude.com/docs/en/api/ip-addresses">https://platform.claude.com/docs/en/api/ip-addresses</a></code></li>
 <li><code><a href="https://claude.com/crawling/bots.json">https://claude.com/crawling/bots.json</a></code></li>

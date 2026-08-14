@@ -140,11 +140,15 @@ def service_page(entry, doc):
     slug, name = entry["slug"], entry["name"]
     purposes = entry["purposes"]
     keys = [p["key"] for p in purposes]
-    title = f"{name} IP ranges ({', '.join(keys)}) · slash0"
+    # The purpose keys stay out of the title. They are internal slugs
+    # (route53-healthchecks, agents-eu), they pushed 16 of 66 titles past the
+    # ~60 characters a search result shows, and a single-purpose service got a
+    # meaningless "(all)". Nothing is lost by dropping them: they are still in
+    # the description below, the tagline, and a heading per purpose.
+    title = f"{name} IP ranges · slash0"
     description = (f"Official {name} IP ranges for allowlisting: "
                    f"{', '.join(keys)}, IPv4 and IPv6, from the vendor's own "
-                   f"publication. Live data, Terraform examples, AWS managed "
-                   f"prefix lists.")
+                   f"publication.")
 
     out = [head(title, description, f"/services/{slug}/",
                 '<script src="/assets/live.js" defer></script>\n')]
