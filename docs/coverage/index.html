@@ -33,7 +33,7 @@
 
     <div class="lt-scroll">
     <table>
-      <tr><th>Classification</th><th>Count</th><th>What it means for an egress rule</th></tr>
+      <tr><th>Classification</th><th>Count</th><th>What it means for a rule</th></tr>
       <tr><td><code>dedicated</code></td><td><b id="cov-dedicated">·</b></td>
         <td>Vendor-owned space. Pin it.</td></tr>
       <tr><td><code>mixed</code></td><td><b id="cov-mixed">·</b></td>
@@ -52,14 +52,16 @@
     <h2>why a CDN-fronted service cannot be pinned</h2>
     <p>When a vendor puts its API behind a shared CDN, the addresses answering for that
     vendor are the CDN's, and the same addresses answer for every other customer of that
-    CDN. An egress rule allowing them permits your workload to reach all of those other
-    sites too. The rule does not provide the same precision as IP ranges owned directly
-    by a specific vendor.</p>
+    CDN. The imprecision cuts both ways. Outbound, a rule allowing them lets your workload
+    reach all of those other sites too. Inbound, it lets anyone who can put traffic through
+    that CDN reach your endpoint, which is a wider opening than it looks. Neither rule has
+    the precision of IP ranges owned directly by a specific vendor.</p>
 
     <h2>recommended posture: scope by workload, not by account</h2>
-    <p>The common mistake is treating egress as one decision for the whole environment. It
+    <p>The common mistake is treating this as one decision for the whole environment. It
     is not. Security groups are free and attach per workload, so the service that talks to
-    Stripe does not need the same rules as the one that talks to a CDN-fronted API.</p>
+    Stripe does not need the same rules as the one that talks to a CDN-fronted API, and the
+    endpoint that receives webhooks does not need the rules of the one that does not.</p>
 
     <p>Give each workload a security group carrying only what it actually needs:</p>
 

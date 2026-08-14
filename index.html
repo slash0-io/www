@@ -35,24 +35,34 @@
 
 <div class="hero">
   <div class="wrap">
-    <h1>Delete your <span class="strike">0.0.0.0/0</span><br>egress rule.</h1>
-    <p class="sub">Managed AWS prefix lists for the third-party services your workloads
-    depend on: Stripe, Datadog, GitHub, and dozens more, <strong>kept current in your
-    account</strong>. Reference <code>pl-…</code> in a security group rule and you're done.
-    No agent, no proxy, nothing of ours in your data path.</p>
+    <h1>Delete your <span class="strike">0.0.0.0/0</span><br>rules.</h1>
+    <p class="sub">Managed AWS prefix lists for the third-party services in your traffic:
+    the ones your workloads call out to, and the ones that call in. Stripe, Datadog,
+    GitHub and dozens more, <strong>kept current in your account</strong>. Reference
+    <code>pl-…</code> in a security group rule and you're done. No agent, no proxy,
+    nothing of ours in your data path.</p>
     <div class="cta-row">
       <a class="btn primary" href="https://github.com/slash0-io/terraform-provider-egress/issues/new?template=early-access.yml">request early access</a>
       <a class="btn ghost" href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform provider →</a>
     </div>
 
-    <div class="term"><span class="c"># the egress rule your auditor wants to see</span>
-<span class="t">resource</span> <span class="g">"aws_security_group_rule"</span> <span class="g">"stripe"</span> {
-  type              = <span class="g">"egress"</span>
+    <div class="term"><span class="c"># both rules your auditor wants to see</span>
+<span class="t">resource</span> <span class="g">"aws_security_group_rule"</span> <span class="g">"stripe_api"</span> {
+  type              = <span class="g">"egress"</span>   <span class="c"># your workloads call Stripe</span>
   from_port         = <span class="t">443</span>
   to_port           = <span class="t">443</span>
   protocol          = <span class="g">"tcp"</span>
-  <span class="t">prefix_list_ids   = [</span><span class="g">"pl-0f47b5ca566486dec"</span><span class="t">]</span>  <span class="c"># Stripe API, managed by slash0</span>
+  <span class="t">prefix_list_ids   = [</span><span class="g">"pl-0f47b5ca566486dec"</span><span class="t">]</span>  <span class="c"># slash0.stripe.api.v4</span>
   security_group_id = aws_security_group.app.id
+}
+
+<span class="t">resource</span> <span class="g">"aws_security_group_rule"</span> <span class="g">"stripe_webhooks"</span> {
+  type              = <span class="g">"ingress"</span>  <span class="c"># Stripe calls your endpoint</span>
+  from_port         = <span class="t">443</span>
+  to_port           = <span class="t">443</span>
+  protocol          = <span class="g">"tcp"</span>
+  <span class="t">prefix_list_ids   = [</span><span class="g">"pl-07e667e7ed0154632"</span><span class="t">]</span>  <span class="c"># slash0.stripe.webhooks.v4</span>
+  security_group_id = aws_security_group.web.id
 }</div>
 
     <div class="live" id="live-stats" hidden>
@@ -70,14 +80,15 @@
 <section id="why">
   <div class="wrap">
     <h2>why this exists</h2>
-    <p class="lead">Locking down VPC egress is a solved problem right up until the first
+    <p class="lead">Locking down a VPC is a solved problem right up until the first
     third-party dependency. Vendor IP ranges live in a dozen inconsistent formats and
     churn without notice, and we
     <a href="/vendor-ip-allowlists/">measured exactly how badly, vendor by vendor</a>.
     So most teams punch <strong><code>0.0.0.0/0:443</code></strong>
-    into the egress rules and quietly give up the entire posture. An attacker with a
-    foothold can exfiltrate to anywhere on port 443. PCI DSS 4.0 (req. 1.3.2) and your
-    SOC 2 auditor both have opinions about that.</p>
+    into both sides and quietly give up the entire posture. Outbound, an attacker with a
+    foothold can exfiltrate anywhere on port 443. Inbound, your webhook endpoint takes a
+    POST from anyone who can reach it. PCI DSS 4.0 (req. 1.3.2) and your SOC 2 auditor
+    have opinions about both.</p>
     <div class="cols">
       <div class="card"><h3>precise</h3><p>Every range comes from the vendor's official
       publication, with a provenance chain. Never widened, never summarized across gaps.

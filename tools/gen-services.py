@@ -310,6 +310,25 @@ def non_publisher_page(np, service_slugs):
     return "".join(out)
 
 
+# Direction leads the purpose summary rather than trailing it. A reader
+# scanning the directory is answering one of two questions, "what must my
+# workload reach" or "who must reach my workload", and the purpose key alone
+# does not say which. Vendor vocabulary actively misleads here: Anthropic's
+# "outbound" purpose is traffic arriving at you, so it belongs under inbound.
+DIRECTION_LABEL = {"egress": "outbound", "ingress": "inbound", "both": "both ways"}
+
+
+def purpose_summary(purposes):
+    grouped = {}
+    for p in purposes:
+        grouped.setdefault(p["direction"], []).append(p["key"])
+    parts = []
+    for d in ("egress", "ingress", "both"):
+        if d in grouped:
+            parts.append(f"{DIRECTION_LABEL[d]}: {', '.join(sorted(grouped[d]))}")
+    return " · ".join(parts)
+
+
 def directory_page(services, non_publishers=()):
     title = "SaaS and cloud service IP ranges · slash0"
     description = (f"Official IP ranges for {len(services)} SaaS and cloud "
@@ -325,6 +344,16 @@ def directory_page(services, non_publishers=()):
                f'changes land in the <a href="/changelog/">changelog</a>. '
                f'Services that do not publish ranges are listed in the '
                f'<a href="https://feed.slash0.io/">catalog</a>.</p>\n')
+    n_out = sum(1 for s in services
+                if any(p["direction"] in ("egress", "both") for p in s["purposes"]))
+    n_in = sum(1 for s in services
+               if any(p["direction"] in ("ingress", "both") for p in s["purposes"]))
+    # Plain <p>, not another .tagline: that class carries a 36px bottom margin
+    # and every other page uses it exactly once.
+    out.append(f"<p>A service can publish addresses for either direction, and many "
+               f"publish both. {n_out} publish the addresses your workloads connect "
+               f"out to. {n_in} publish the addresses that connect in to yours, which "
+               f"is what a webhook receiver or a monitoring probe needs.</p>\n")
     out.append("<article>\n")
     by_cat = {}
     for s in services:
@@ -332,10 +361,9 @@ def directory_page(services, non_publishers=()):
     for cat in sorted(by_cat, key=lambda c: CATEGORY_NAMES.get(c, c)):
         out.append(f"<h2>{html.escape(CATEGORY_NAMES.get(cat, cat.title()))}</h2>\n")
         for s in sorted(by_cat[cat], key=lambda x: x["slug"]):
-            keys = ", ".join(p["key"] for p in s["purposes"])
             out.append(f'<a class="cardlink" href="/services/{html.escape(s["slug"])}/">'
                        f'<b>{html.escape(s["name"])}</b>'
-                       f'<span>{html.escape(keys)}</span></a>\n')
+                       f'<span>{html.escape(purpose_summary(s["purposes"]))}</span></a>\n')
     if non_publishers:
         out.append("<h2>Does not publish ranges</h2>\n")
         out.append("<p>These vendors state that IP allowlisting is not the "

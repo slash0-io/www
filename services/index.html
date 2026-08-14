@@ -18,84 +18,85 @@
 <div class="doc">
 <h1>service IP ranges</h1>
 <p class="tagline">Official IP ranges for 66 services, one page per service, straight from each vendor's own publication. Ranges render live from the <a href="https://feed.slash0.io/v1/index.json">signed feed</a>; changes land in the <a href="/changelog/">changelog</a>. Services that do not publish ranges are listed in the <a href="https://feed.slash0.io/">catalog</a>.</p>
+<p>A service can publish addresses for either direction, and many publish both. 39 publish the addresses your workloads connect out to. 53 publish the addresses that connect in to yours, which is what a webhook receiver or a monitoring probe needs.</p>
 <article>
 <h2>AI</h2>
-<a class="cardlink" href="/services/anthropic/"><b>Anthropic</b><span>api, crawlers, outbound</span></a>
-<a class="cardlink" href="/services/openai/"><b>OpenAI</b><span>adsbot, agents, chatgpt-user, connectors, gptbot, searchbot</span></a>
+<a class="cardlink" href="/services/anthropic/"><b>Anthropic</b><span>outbound: api · inbound: crawlers, outbound</span></a>
+<a class="cardlink" href="/services/openai/"><b>OpenAI</b><span>inbound: adsbot, agents, chatgpt-user, connectors, gptbot, searchbot</span></a>
 <h2>Business SaaS</h2>
-<a class="cardlink" href="/services/atlassian/"><b>Atlassian Cloud</b><span>all, bitbucket, egress</span></a>
-<a class="cardlink" href="/services/docusign/"><b>DocuSign</b><span>connect-webhooks, email</span></a>
-<a class="cardlink" href="/services/hubspot/"><b>HubSpot</b><span>api, crawlers, dns, email</span></a>
-<a class="cardlink" href="/services/make/"><b>Make</b><span>platform</span></a>
-<a class="cardlink" href="/services/microsoft-365/"><b>Microsoft 365</b><span>common, exchange, sharepoint, teams</span></a>
-<a class="cardlink" href="/services/netsuite-connector/"><b>Oracle NetSuite Connector</b><span>connector</span></a>
-<a class="cardlink" href="/services/salesforce/"><b>Salesforce</b><span>all</span></a>
-<a class="cardlink" href="/services/workato/"><b>Workato</b><span>on-prem-agent, platform</span></a>
-<a class="cardlink" href="/services/zendesk/"><b>Zendesk</b><span>api, webhooks</span></a>
+<a class="cardlink" href="/services/atlassian/"><b>Atlassian Cloud</b><span>inbound: egress · both ways: all, bitbucket</span></a>
+<a class="cardlink" href="/services/docusign/"><b>DocuSign</b><span>inbound: connect-webhooks, email</span></a>
+<a class="cardlink" href="/services/hubspot/"><b>HubSpot</b><span>inbound: api, crawlers, dns, email</span></a>
+<a class="cardlink" href="/services/make/"><b>Make</b><span>inbound: platform</span></a>
+<a class="cardlink" href="/services/microsoft-365/"><b>Microsoft 365</b><span>outbound: common, exchange, sharepoint, teams</span></a>
+<a class="cardlink" href="/services/netsuite-connector/"><b>Oracle NetSuite Connector</b><span>inbound: connector</span></a>
+<a class="cardlink" href="/services/salesforce/"><b>Salesforce</b><span>both ways: all</span></a>
+<a class="cardlink" href="/services/workato/"><b>Workato</b><span>outbound: on-prem-agent · inbound: platform</span></a>
+<a class="cardlink" href="/services/zendesk/"><b>Zendesk</b><span>outbound: api · inbound: webhooks</span></a>
 <h2>CDN</h2>
-<a class="cardlink" href="/services/cloudflare/"><b>Cloudflare</b><span>edge</span></a>
-<a class="cardlink" href="/services/fastly/"><b>Fastly</b><span>edge</span></a>
+<a class="cardlink" href="/services/cloudflare/"><b>Cloudflare</b><span>both ways: edge</span></a>
+<a class="cardlink" href="/services/fastly/"><b>Fastly</b><span>both ways: edge</span></a>
 <h2>Cloud</h2>
-<a class="cardlink" href="/services/aws/"><b>Amazon Web Services</b><span>all, cloudfront, dynamodb, route53-healthchecks, s3</span></a>
-<a class="cardlink" href="/services/azure/"><b>Microsoft Azure (Service Tags)</b><span>all, sql, storage</span></a>
-<a class="cardlink" href="/services/digitalocean/"><b>DigitalOcean</b><span>all</span></a>
-<a class="cardlink" href="/services/google/"><b>Google (all services)</b><span>all</span></a>
-<a class="cardlink" href="/services/google-cloud/"><b>Google Cloud Platform</b><span>all</span></a>
-<a class="cardlink" href="/services/ibm-cloud/"><b>IBM Cloud (Classic infrastructure)</b><span>frontend, load-balancers</span></a>
-<a class="cardlink" href="/services/linode/"><b>Akamai Connected Cloud (Linode)</b><span>all</span></a>
-<a class="cardlink" href="/services/oracle-cloud/"><b>Oracle Cloud Infrastructure</b><span>all, object-storage</span></a>
-<a class="cardlink" href="/services/vultr/"><b>Vultr (Constant, AS20473)</b><span>all</span></a>
+<a class="cardlink" href="/services/aws/"><b>Amazon Web Services</b><span>outbound: all, cloudfront, dynamodb, s3 · inbound: route53-healthchecks</span></a>
+<a class="cardlink" href="/services/azure/"><b>Microsoft Azure (Service Tags)</b><span>outbound: all, sql, storage</span></a>
+<a class="cardlink" href="/services/digitalocean/"><b>DigitalOcean</b><span>outbound: all</span></a>
+<a class="cardlink" href="/services/google/"><b>Google (all services)</b><span>outbound: all</span></a>
+<a class="cardlink" href="/services/google-cloud/"><b>Google Cloud Platform</b><span>outbound: all</span></a>
+<a class="cardlink" href="/services/ibm-cloud/"><b>IBM Cloud (Classic infrastructure)</b><span>outbound: frontend, load-balancers</span></a>
+<a class="cardlink" href="/services/linode/"><b>Akamai Connected Cloud (Linode)</b><span>outbound: all</span></a>
+<a class="cardlink" href="/services/oracle-cloud/"><b>Oracle Cloud Infrastructure</b><span>outbound: all, object-storage</span></a>
+<a class="cardlink" href="/services/vultr/"><b>Vultr (Constant, AS20473)</b><span>outbound: all</span></a>
 <h2>Communications</h2>
-<a class="cardlink" href="/services/braze/"><b>Braze</b><span>connected-content</span></a>
-<a class="cardlink" href="/services/intercom/"><b>Intercom</b><span>all, all-eu, outbound-webhooks</span></a>
-<a class="cardlink" href="/services/klaviyo/"><b>Klaviyo</b><span>integrations</span></a>
-<a class="cardlink" href="/services/pagerduty/"><b>PagerDuty</b><span>webhooks, webhooks-eu</span></a>
-<a class="cardlink" href="/services/postmark/"><b>Postmark</b><span>smtp, webhooks</span></a>
-<a class="cardlink" href="/services/twilio-sip/"><b>Twilio Elastic SIP Trunking</b><span>sip-media, sip-signaling</span></a>
-<a class="cardlink" href="/services/zoom/"><b>Zoom</b><span>all</span></a>
+<a class="cardlink" href="/services/braze/"><b>Braze</b><span>inbound: connected-content</span></a>
+<a class="cardlink" href="/services/intercom/"><b>Intercom</b><span>inbound: outbound-webhooks · both ways: all, all-eu</span></a>
+<a class="cardlink" href="/services/klaviyo/"><b>Klaviyo</b><span>inbound: integrations</span></a>
+<a class="cardlink" href="/services/pagerduty/"><b>PagerDuty</b><span>inbound: webhooks, webhooks-eu</span></a>
+<a class="cardlink" href="/services/postmark/"><b>Postmark</b><span>outbound: smtp · inbound: webhooks</span></a>
+<a class="cardlink" href="/services/twilio-sip/"><b>Twilio Elastic SIP Trunking</b><span>both ways: sip-media, sip-signaling</span></a>
+<a class="cardlink" href="/services/zoom/"><b>Zoom</b><span>outbound: all</span></a>
 <h2>Data platforms</h2>
-<a class="cardlink" href="/services/airbyte/"><b>Airbyte Cloud</b><span>all</span></a>
-<a class="cardlink" href="/services/databricks/"><b>Databricks</b><span>all</span></a>
-<a class="cardlink" href="/services/dbt-cloud/"><b>dbt Cloud</b><span>all</span></a>
-<a class="cardlink" href="/services/elastic-cloud/"><b>Elastic Cloud</b><span>api, outbound</span></a>
-<a class="cardlink" href="/services/fivetran/"><b>Fivetran</b><span>sync, webhooks</span></a>
-<a class="cardlink" href="/services/hightouch/"><b>Hightouch</b><span>all</span></a>
-<a class="cardlink" href="/services/neon/"><b>Neon (Serverless Postgres)</b><span>outbound</span></a>
+<a class="cardlink" href="/services/airbyte/"><b>Airbyte Cloud</b><span>inbound: all</span></a>
+<a class="cardlink" href="/services/databricks/"><b>Databricks</b><span>both ways: all</span></a>
+<a class="cardlink" href="/services/dbt-cloud/"><b>dbt Cloud</b><span>inbound: all</span></a>
+<a class="cardlink" href="/services/elastic-cloud/"><b>Elastic Cloud</b><span>outbound: api · inbound: outbound</span></a>
+<a class="cardlink" href="/services/fivetran/"><b>Fivetran</b><span>inbound: sync, webhooks</span></a>
+<a class="cardlink" href="/services/hightouch/"><b>Hightouch</b><span>inbound: all</span></a>
+<a class="cardlink" href="/services/neon/"><b>Neon (Serverless Postgres)</b><span>inbound: outbound</span></a>
 <h2>Developer tools</h2>
-<a class="cardlink" href="/services/buildkite/"><b>Buildkite</b><span>webhooks</span></a>
-<a class="cardlink" href="/services/circleci/"><b>CircleCI</b><span>core, jobs</span></a>
-<a class="cardlink" href="/services/github/"><b>GitHub</b><span>actions, api, git, hooks, packages, pages, web</span></a>
-<a class="cardlink" href="/services/gitlab/"><b>GitLab.com</b><span>web-api, webhooks</span></a>
-<a class="cardlink" href="/services/launchdarkly/"><b>LaunchDarkly</b><span>service, webhooks</span></a>
-<a class="cardlink" href="/services/retool/"><b>Retool</b><span>default-region</span></a>
-<a class="cardlink" href="/services/svix/"><b>Svix</b><span>webhooks</span></a>
+<a class="cardlink" href="/services/buildkite/"><b>Buildkite</b><span>inbound: webhooks</span></a>
+<a class="cardlink" href="/services/circleci/"><b>CircleCI</b><span>outbound: core · inbound: jobs</span></a>
+<a class="cardlink" href="/services/github/"><b>GitHub</b><span>outbound: api, git, packages, pages, web · inbound: actions, hooks</span></a>
+<a class="cardlink" href="/services/gitlab/"><b>GitLab.com</b><span>outbound: web-api · inbound: webhooks</span></a>
+<a class="cardlink" href="/services/launchdarkly/"><b>LaunchDarkly</b><span>outbound: service · inbound: webhooks</span></a>
+<a class="cardlink" href="/services/retool/"><b>Retool</b><span>inbound: default-region</span></a>
+<a class="cardlink" href="/services/svix/"><b>Svix</b><span>inbound: webhooks</span></a>
 <h2>Identity</h2>
-<a class="cardlink" href="/services/auth0/"><b>Auth0 (Okta CIC)</b><span>all</span></a>
-<a class="cardlink" href="/services/duo/"><b>Cisco Duo</b><span>mfa</span></a>
-<a class="cardlink" href="/services/okta/"><b>Okta</b><span>all</span></a>
-<a class="cardlink" href="/services/onelogin/"><b>OneLogin</b><span>agents, agents-eu, email</span></a>
-<a class="cardlink" href="/services/workos/"><b>WorkOS</b><span>webhooks</span></a>
+<a class="cardlink" href="/services/auth0/"><b>Auth0 (Okta CIC)</b><span>both ways: all</span></a>
+<a class="cardlink" href="/services/duo/"><b>Cisco Duo</b><span>outbound: mfa</span></a>
+<a class="cardlink" href="/services/okta/"><b>Okta</b><span>both ways: all</span></a>
+<a class="cardlink" href="/services/onelogin/"><b>OneLogin</b><span>outbound: agents, agents-eu · inbound: email</span></a>
+<a class="cardlink" href="/services/workos/"><b>WorkOS</b><span>inbound: webhooks</span></a>
 <h2>Observability</h2>
-<a class="cardlink" href="/services/appdynamics/"><b>Splunk AppDynamics SaaS</b><span>platform-sources, synthetic-agents</span></a>
-<a class="cardlink" href="/services/checkly/"><b>Checkly</b><span>probes</span></a>
-<a class="cardlink" href="/services/datadog/"><b>Datadog</b><span>agents, agents-eu, api, api-eu, apm, logs, synthetics, webhooks</span></a>
-<a class="cardlink" href="/services/grafana-cloud/"><b>Grafana Cloud</b><span>alerts, logs, metrics</span></a>
-<a class="cardlink" href="/services/new-relic/"><b>New Relic</b><span>agents, synthetics</span></a>
-<a class="cardlink" href="/services/pingdom/"><b>Pingdom</b><span>probes</span></a>
-<a class="cardlink" href="/services/sentry/"><b>Sentry (hosted)</b><span>ingest, uptime, webhooks</span></a>
-<a class="cardlink" href="/services/uptimerobot/"><b>UptimeRobot</b><span>probes</span></a>
+<a class="cardlink" href="/services/appdynamics/"><b>Splunk AppDynamics SaaS</b><span>inbound: platform-sources, synthetic-agents</span></a>
+<a class="cardlink" href="/services/checkly/"><b>Checkly</b><span>inbound: probes</span></a>
+<a class="cardlink" href="/services/datadog/"><b>Datadog</b><span>outbound: agents, agents-eu, api, api-eu, apm, logs · inbound: synthetics, webhooks</span></a>
+<a class="cardlink" href="/services/grafana-cloud/"><b>Grafana Cloud</b><span>inbound: alerts, logs, metrics</span></a>
+<a class="cardlink" href="/services/new-relic/"><b>New Relic</b><span>outbound: agents · inbound: synthetics</span></a>
+<a class="cardlink" href="/services/pingdom/"><b>Pingdom</b><span>inbound: probes</span></a>
+<a class="cardlink" href="/services/sentry/"><b>Sentry (hosted)</b><span>outbound: ingest · inbound: uptime, webhooks</span></a>
+<a class="cardlink" href="/services/uptimerobot/"><b>UptimeRobot</b><span>inbound: probes</span></a>
 <h2>Payments</h2>
-<a class="cardlink" href="/services/braintree/"><b>Braintree (PayPal)</b><span>api, sandbox</span></a>
-<a class="cardlink" href="/services/checkout-com/"><b>Checkout.com</b><span>webhooks</span></a>
-<a class="cardlink" href="/services/paypal/"><b>PayPal</b><span>all</span></a>
-<a class="cardlink" href="/services/plaid/"><b>Plaid</b><span>webhooks</span></a>
-<a class="cardlink" href="/services/stripe/"><b>Stripe</b><span>api, terminal, webhooks</span></a>
-<a class="cardlink" href="/services/wise/"><b>Wise</b><span>webhooks, webhooks-sandbox</span></a>
+<a class="cardlink" href="/services/braintree/"><b>Braintree (PayPal)</b><span>outbound: api, sandbox</span></a>
+<a class="cardlink" href="/services/checkout-com/"><b>Checkout.com</b><span>inbound: webhooks</span></a>
+<a class="cardlink" href="/services/paypal/"><b>PayPal</b><span>both ways: all</span></a>
+<a class="cardlink" href="/services/plaid/"><b>Plaid</b><span>inbound: webhooks</span></a>
+<a class="cardlink" href="/services/stripe/"><b>Stripe</b><span>outbound: api, terminal · inbound: webhooks</span></a>
+<a class="cardlink" href="/services/wise/"><b>Wise</b><span>inbound: webhooks, webhooks-sandbox</span></a>
 <h2>Security</h2>
-<a class="cardlink" href="/services/netskope/"><b>Netskope (NewEdge)</b><span>dataplane</span></a>
-<a class="cardlink" href="/services/rapid7/"><b>Rapid7 (InsightAppSec cloud engines)</b><span>appsec-engines</span></a>
-<a class="cardlink" href="/services/tenable/"><b>Tenable (Vulnerability Management)</b><span>scanners</span></a>
-<a class="cardlink" href="/services/zscaler/"><b>Zscaler (zscaler.net cloud)</b><span>enforcement-nodes</span></a>
+<a class="cardlink" href="/services/netskope/"><b>Netskope (NewEdge)</b><span>both ways: dataplane</span></a>
+<a class="cardlink" href="/services/rapid7/"><b>Rapid7 (InsightAppSec cloud engines)</b><span>inbound: appsec-engines</span></a>
+<a class="cardlink" href="/services/tenable/"><b>Tenable (Vulnerability Management)</b><span>inbound: scanners</span></a>
+<a class="cardlink" href="/services/zscaler/"><b>Zscaler (zscaler.net cloud)</b><span>outbound: enforcement-nodes</span></a>
 <h2>Does not publish ranges</h2>
 <p>These vendors state that IP allowlisting is not the supported way to secure the integration. Each page carries their position, the page stating it, and what to use instead.</p>
 <a class="cardlink" href="/services/adyen/"><b>Adyen</b><span>not published</span></a>
