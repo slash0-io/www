@@ -30,7 +30,7 @@
 <pre class="ranges" id="ranges-core">loading ranges from the feed…</pre>
 <p class="note" id="quota-core" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;circleci_core&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;circleci_core&quot; {
   service = &quot;circleci&quot;
   purpose = &quot;core&quot;
 }
@@ -40,7 +40,7 @@ resource &quot;aws_security_group_rule&quot; &quot;circleci_core&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.circleci_core.ipv4_cidrs
+  cidr_blocks       = data.ipranges_egress.circleci_core.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="jobs">circleci/jobs</h2>
@@ -48,7 +48,7 @@ resource &quot;aws_security_group_rule&quot; &quot;circleci_core&quot; {
 <pre class="ranges" id="ranges-jobs">loading ranges from the feed…</pre>
 <p class="note" id="quota-jobs" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;circleci_jobs&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;circleci_jobs&quot; {
   service = &quot;circleci&quot;
   purpose = &quot;jobs&quot;
 }
@@ -58,7 +58,7 @@ resource &quot;aws_security_group_rule&quot; &quot;circleci_jobs&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.circleci_jobs.ipv4_cidrs
+  cidr_blocks       = data.ipranges_ingress.circleci_jobs.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
@@ -72,7 +72,7 @@ resource &quot;aws_security_group_rule&quot; &quot;circleci_jobs&quot; {
 </article>
 </div>
 <footer><div class="wrap">
-  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/ipranges/latest">terraform</a></div>
   <div>© 2026 slash0</div>
 </div></footer>
 </body>

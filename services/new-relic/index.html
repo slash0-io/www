@@ -30,7 +30,7 @@
 <pre class="ranges" id="ranges-agents">loading ranges from the feed…</pre>
 <p class="note" id="quota-agents" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;new_relic_agents&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;new_relic_agents&quot; {
   service = &quot;new-relic&quot;
   purpose = &quot;agents&quot;
 }
@@ -40,8 +40,8 @@ resource &quot;aws_security_group_rule&quot; &quot;new_relic_agents&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.new_relic_agents.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.new_relic_agents.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.new_relic_agents.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.new_relic_agents.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="synthetics">new-relic/synthetics</h2>
@@ -49,7 +49,7 @@ resource &quot;aws_security_group_rule&quot; &quot;new_relic_agents&quot; {
 <pre class="ranges" id="ranges-synthetics">loading ranges from the feed…</pre>
 <p class="note" id="quota-synthetics" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;new_relic_synthetics&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;new_relic_synthetics&quot; {
   service = &quot;new-relic&quot;
   purpose = &quot;synthetics&quot;
 }
@@ -59,7 +59,7 @@ resource &quot;aws_security_group_rule&quot; &quot;new_relic_synthetics&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.new_relic_synthetics.ipv4_cidrs
+  cidr_blocks       = data.ipranges_ingress.new_relic_synthetics.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
@@ -74,7 +74,7 @@ resource &quot;aws_security_group_rule&quot; &quot;new_relic_synthetics&quot; {
 </article>
 </div>
 <footer><div class="wrap">
-  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/ipranges/latest">terraform</a></div>
   <div>© 2026 slash0</div>
 </div></footer>
 </body>

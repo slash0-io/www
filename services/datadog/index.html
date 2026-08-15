@@ -36,7 +36,7 @@
 <pre class="ranges" id="ranges-agents">loading ranges from the feed…</pre>
 <p class="note" id="quota-agents" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_agents&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;datadog_agents&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;agents&quot;
 }
@@ -46,8 +46,8 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_agents&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_agents.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.datadog_agents.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.datadog_agents.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.datadog_agents.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="agents-eu">datadog/agents-eu</h2>
@@ -55,7 +55,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_agents&quot; {
 <pre class="ranges" id="ranges-agents-eu">loading ranges from the feed…</pre>
 <p class="note" id="quota-agents-eu" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_agents_eu&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;datadog_agents_eu&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;agents-eu&quot;
 }
@@ -65,8 +65,8 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_agents_eu&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_agents_eu.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.datadog_agents_eu.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.datadog_agents_eu.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.datadog_agents_eu.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="api">datadog/api</h2>
@@ -74,7 +74,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_agents_eu&quot; {
 <pre class="ranges" id="ranges-api">loading ranges from the feed…</pre>
 <p class="note" id="quota-api" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_api&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;datadog_api&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;api&quot;
 }
@@ -84,8 +84,8 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_api&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_api.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.datadog_api.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.datadog_api.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.datadog_api.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="api-eu">datadog/api-eu</h2>
@@ -93,7 +93,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_api&quot; {
 <pre class="ranges" id="ranges-api-eu">loading ranges from the feed…</pre>
 <p class="note" id="quota-api-eu" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_api_eu&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;datadog_api_eu&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;api-eu&quot;
 }
@@ -103,8 +103,8 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_api_eu&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_api_eu.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.datadog_api_eu.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.datadog_api_eu.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.datadog_api_eu.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="apm">datadog/apm</h2>
@@ -112,7 +112,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_api_eu&quot; {
 <pre class="ranges" id="ranges-apm">loading ranges from the feed…</pre>
 <p class="note" id="quota-apm" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_apm&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;datadog_apm&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;apm&quot;
 }
@@ -122,8 +122,8 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_apm&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_apm.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.datadog_apm.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.datadog_apm.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.datadog_apm.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="logs">datadog/logs</h2>
@@ -131,7 +131,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_apm&quot; {
 <pre class="ranges" id="ranges-logs">loading ranges from the feed…</pre>
 <p class="note" id="quota-logs" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_logs&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;datadog_logs&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;logs&quot;
 }
@@ -141,8 +141,8 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_logs&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_logs.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.datadog_logs.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.datadog_logs.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.datadog_logs.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="synthetics">datadog/synthetics</h2>
@@ -150,7 +150,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_logs&quot; {
 <pre class="ranges" id="ranges-synthetics">loading ranges from the feed…</pre>
 <p class="note" id="quota-synthetics" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_synthetics&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;datadog_synthetics&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;synthetics&quot;
 }
@@ -160,7 +160,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_synthetics&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_synthetics.ipv4_cidrs
+  cidr_blocks       = data.ipranges_ingress.datadog_synthetics.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="webhooks">datadog/webhooks</h2>
@@ -168,7 +168,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_synthetics&quot; {
 <pre class="ranges" id="ranges-webhooks">loading ranges from the feed…</pre>
 <p class="note" id="quota-webhooks" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;datadog_webhooks&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;datadog_webhooks&quot; {
   service = &quot;datadog&quot;
   purpose = &quot;webhooks&quot;
 }
@@ -178,7 +178,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_webhooks&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.datadog_webhooks.ipv4_cidrs
+  cidr_blocks       = data.ipranges_ingress.datadog_webhooks.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
@@ -193,7 +193,7 @@ resource &quot;aws_security_group_rule&quot; &quot;datadog_webhooks&quot; {
 </article>
 </div>
 <footer><div class="wrap">
-  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/ipranges/latest">terraform</a></div>
   <div>© 2026 slash0</div>
 </div></footer>
 </body>

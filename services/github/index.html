@@ -35,7 +35,7 @@
 <pre class="ranges" id="ranges-actions">loading ranges from the feed…</pre>
 <p class="note" id="quota-actions" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;github_actions&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;github_actions&quot; {
   service = &quot;github&quot;
   purpose = &quot;actions&quot;
 }
@@ -45,8 +45,8 @@ resource &quot;aws_security_group_rule&quot; &quot;github_actions&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.github_actions.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.github_actions.ipv6_cidrs
+  cidr_blocks       = data.ipranges_ingress.github_actions.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_ingress.github_actions.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="api">github/api</h2>
@@ -54,7 +54,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_actions&quot; {
 <pre class="ranges" id="ranges-api">loading ranges from the feed…</pre>
 <p class="note" id="quota-api" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;github_api&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;github_api&quot; {
   service = &quot;github&quot;
   purpose = &quot;api&quot;
 }
@@ -64,8 +64,8 @@ resource &quot;aws_security_group_rule&quot; &quot;github_api&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.github_api.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.github_api.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.github_api.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.github_api.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="git">github/git</h2>
@@ -73,7 +73,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_api&quot; {
 <pre class="ranges" id="ranges-git">loading ranges from the feed…</pre>
 <p class="note" id="quota-git" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;github_git&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;github_git&quot; {
   service = &quot;github&quot;
   purpose = &quot;git&quot;
 }
@@ -83,8 +83,8 @@ resource &quot;aws_security_group_rule&quot; &quot;github_git&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.github_git.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.github_git.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.github_git.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.github_git.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="hooks">github/hooks</h2>
@@ -92,7 +92,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_git&quot; {
 <pre class="ranges" id="ranges-hooks">loading ranges from the feed…</pre>
 <p class="note" id="quota-hooks" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;github_hooks&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;github_hooks&quot; {
   service = &quot;github&quot;
   purpose = &quot;hooks&quot;
 }
@@ -102,8 +102,8 @@ resource &quot;aws_security_group_rule&quot; &quot;github_hooks&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.github_hooks.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.github_hooks.ipv6_cidrs
+  cidr_blocks       = data.ipranges_ingress.github_hooks.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_ingress.github_hooks.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="packages">github/packages</h2>
@@ -111,7 +111,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_hooks&quot; {
 <pre class="ranges" id="ranges-packages">loading ranges from the feed…</pre>
 <p class="note" id="quota-packages" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;github_packages&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;github_packages&quot; {
   service = &quot;github&quot;
   purpose = &quot;packages&quot;
 }
@@ -121,7 +121,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_packages&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.github_packages.ipv4_cidrs
+  cidr_blocks       = data.ipranges_egress.github_packages.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="pages">github/pages</h2>
@@ -129,7 +129,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_packages&quot; {
 <pre class="ranges" id="ranges-pages">loading ranges from the feed…</pre>
 <p class="note" id="quota-pages" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;github_pages&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;github_pages&quot; {
   service = &quot;github&quot;
   purpose = &quot;pages&quot;
 }
@@ -139,8 +139,8 @@ resource &quot;aws_security_group_rule&quot; &quot;github_pages&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.github_pages.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.github_pages.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.github_pages.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.github_pages.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="web">github/web</h2>
@@ -148,7 +148,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_pages&quot; {
 <pre class="ranges" id="ranges-web">loading ranges from the feed…</pre>
 <p class="note" id="quota-web" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;github_web&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;github_web&quot; {
   service = &quot;github&quot;
   purpose = &quot;web&quot;
 }
@@ -158,8 +158,8 @@ resource &quot;aws_security_group_rule&quot; &quot;github_web&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.github_web.ipv4_cidrs
-  ipv6_cidr_blocks  = data.egress_ranges.github_web.ipv6_cidrs
+  cidr_blocks       = data.ipranges_egress.github_web.ipv4_cidrs
+  ipv6_cidr_blocks  = data.ipranges_egress.github_web.ipv6_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
@@ -173,7 +173,7 @@ resource &quot;aws_security_group_rule&quot; &quot;github_web&quot; {
 </article>
 </div>
 <footer><div class="wrap">
-  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/ipranges/latest">terraform</a></div>
   <div>© 2026 slash0</div>
 </div></footer>
 </body>

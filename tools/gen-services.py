@@ -81,7 +81,7 @@ def head(title, description, path, extra=""):
 
 
 FOOTER = """<footer><div class="wrap">
-  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/ipranges/latest">terraform</a></div>
   <div>© 2026 slash0</div>
 </div></footer>
 </body>
@@ -104,11 +104,15 @@ def tf_ident(slug, key):
 
 def tf_snippet(slug, key, direction, has_v6):
     ident = tf_ident(slug, key)
+    # One data source per direction, so the same value names both the data
+    # source and the rule type. A "both" purpose is accepted by either, and
+    # falls to egress here to match the rule this snippet writes.
     rule_type = "ingress" if direction == "ingress" else "egress"
+    ds = f"ipranges_{rule_type}"
     v6line = ""
     if has_v6:
-        v6line = f"\n  ipv6_cidr_blocks  = data.egress_ranges.{ident}.ipv6_cidrs"
-    return f"""data "egress_ranges" "{ident}" {{
+        v6line = f"\n  ipv6_cidr_blocks  = data.{ds}.{ident}.ipv6_cidrs"
+    return f"""data "{ds}" "{ident}" {{
   service = "{slug}"
   purpose = "{key}"
 }}
@@ -118,7 +122,7 @@ resource "aws_security_group_rule" "{ident}" {{
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = data.egress_ranges.{ident}.ipv4_cidrs{v6line}
+  cidr_blocks       = data.{ds}.{ident}.ipv4_cidrs{v6line}
   security_group_id = aws_security_group.app.id
 }}"""
 

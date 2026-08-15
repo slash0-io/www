@@ -31,7 +31,7 @@
 <pre class="ranges" id="ranges-all">loading ranges from the feed…</pre>
 <p class="note" id="quota-all" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;intercom_all&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;intercom_all&quot; {
   service = &quot;intercom&quot;
   purpose = &quot;all&quot;
 }
@@ -41,7 +41,7 @@ resource &quot;aws_security_group_rule&quot; &quot;intercom_all&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.intercom_all.ipv4_cidrs
+  cidr_blocks       = data.ipranges_egress.intercom_all.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="all-eu">intercom/all-eu</h2>
@@ -49,7 +49,7 @@ resource &quot;aws_security_group_rule&quot; &quot;intercom_all&quot; {
 <pre class="ranges" id="ranges-all-eu">loading ranges from the feed…</pre>
 <p class="note" id="quota-all-eu" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;intercom_all_eu&quot; {
+<pre>data &quot;ipranges_egress&quot; &quot;intercom_all_eu&quot; {
   service = &quot;intercom&quot;
   purpose = &quot;all-eu&quot;
 }
@@ -59,7 +59,7 @@ resource &quot;aws_security_group_rule&quot; &quot;intercom_all_eu&quot; {
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.intercom_all_eu.ipv4_cidrs
+  cidr_blocks       = data.ipranges_egress.intercom_all_eu.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2 id="outbound-webhooks">intercom/outbound-webhooks</h2>
@@ -67,7 +67,7 @@ resource &quot;aws_security_group_rule&quot; &quot;intercom_all_eu&quot; {
 <pre class="ranges" id="ranges-outbound-webhooks">loading ranges from the feed…</pre>
 <p class="note" id="quota-outbound-webhooks" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;egress_ranges&quot; &quot;intercom_outbound_webhooks&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;intercom_outbound_webhooks&quot; {
   service = &quot;intercom&quot;
   purpose = &quot;outbound-webhooks&quot;
 }
@@ -77,7 +77,7 @@ resource &quot;aws_security_group_rule&quot; &quot;intercom_outbound_webhooks&qu
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.egress_ranges.intercom_outbound_webhooks.ipv4_cidrs
+  cidr_blocks       = data.ipranges_ingress.intercom_outbound_webhooks.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
@@ -92,7 +92,7 @@ resource &quot;aws_security_group_rule&quot; &quot;intercom_outbound_webhooks&qu
 </article>
 </div>
 <footer><div class="wrap">
-  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/egress/latest">terraform</a></div>
+  <div><a href="https://github.com/slash0-io">github</a><a href="/services/">services</a><a href="/vendor-ip-allowlists/">vendor report</a><a href="/calculator/">calculator</a><a href="/changelog/">changelog</a><a href="https://feed.slash0.io/">catalog</a><a href="https://registry.terraform.io/providers/slash0-io/ipranges/latest">terraform</a></div>
   <div>© 2026 slash0</div>
 </div></footer>
 </body>
