@@ -2,6 +2,10 @@
   "use strict";
   var TEMPLATE_URL = "https://slash0-templates.s3.amazonaws.com/slash0-onboard.yaml";
   var PUBLISHER_ACCOUNT = "762528398113";
+  // Prefix lists are regional, so the stack works each of these rather than
+  // only the region the console happens to open in. Keep in step with the
+  // regions the publisher actually serves.
+  var REGIONS = "us-east-1,us-east-2,us-west-2";
 
   var btn = document.getElementById("quick-create");
   if (!btn) return;
@@ -25,5 +29,6 @@
     "?templateURL=" + encodeURIComponent(TEMPLATE_URL) +
     "&stackName=slash0-onboard" +
     "&param_PublisherAccountIds=" + PUBLISHER_ACCOUNT +
+    "&param_Regions=" + encodeURIComponent(REGIONS) +
     "&param_DesiredRulesPerSG=" + rules;
 })();

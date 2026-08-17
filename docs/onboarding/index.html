@@ -62,6 +62,13 @@ has confirmed the lists are shared with your account ID.</p>
   large increases can need a support case.</li>
 </ul>
 
+<p>Both run once per region named in <code>Regions</code>. Prefix lists are
+regional and a security group can only reference one in its own region, so a
+region left out of that list cannot use slash0. Naming a region you do not use
+costs nothing: with no invitation pending there is nothing to accept, and the
+quota is requested only where a slash0 share is live. A region your account has
+not enabled is reported in the stack output and skipped.</p>
+
 <p>It creates an IAM role and a Lambda-backed custom resource to do that work.
 It does not create security groups, VPC resources, or anything that carries
 traffic. Deleting the stack removes the role and the function and changes
@@ -85,6 +92,10 @@ parameters and confirm. Use the
 <a href="/calculator/">quota calculator</a> to work out the
 <code>DesiredRulesPerSG</code> value for the services you plan to reference.</p>
 
+<p>Whichever region the console opens in is where the role and function are
+created. It does not limit which regions are onboarded: that is the
+<code>Regions</code> parameter, and one stack covers all of them.</p>
+
 <h2>parameters</h2>
 
 <table>
@@ -92,8 +103,12 @@ parameters and confirm. Use the
   <tr><td><code>PublisherAccountIds</code></td><td>Comma-separated slash0 publisher
   account IDs whose invitations may be accepted. Invitations from anyone else are
   ignored.</td></tr>
-  <tr><td><code>DesiredRulesPerSG</code></td><td>Quota to request. <code>0</code>
-  skips the request entirely.</td></tr>
+  <tr><td><code>Regions</code></td><td>Regions to onboard, comma-separated.
+  Defaults to the regions slash0 serves. A region left out cannot reference the
+  prefix lists.</td></tr>
+  <tr><td><code>DesiredRulesPerSG</code></td><td>Quota to request, in every
+  region where a slash0 share is live. <code>0</code> skips the request
+  entirely.</td></tr>
   <tr><td><code>RunCounter</code></td><td>Bump it and update the stack to re-run
   acceptance and the quota request, for example after a new subscription adds
   lists.</td></tr>
