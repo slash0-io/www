@@ -2,10 +2,11 @@
   "use strict";
   var TEMPLATE_URL = "https://slash0-templates.s3.amazonaws.com/slash0-onboard.yaml";
   var PUBLISHER_ACCOUNT = "762528398113";
-  // Prefix lists are regional, so the stack works each of these rather than
-  // only the region the console happens to open in. Keep in step with the
-  // regions the publisher actually serves.
-  var REGIONS = "us-east-1,us-east-2,us-west-2";
+  // Regions are deliberately NOT passed. The template's own Regions default is
+  // the single public statement of which regions slash0 serves, and the
+  // quick-create form shows it to the visitor before they confirm. Passing a
+  // copy from here would be a second place to update, which is how the two
+  // would drift apart.
 
   var btn = document.getElementById("quick-create");
   if (!btn) return;
@@ -29,6 +30,5 @@
     "?templateURL=" + encodeURIComponent(TEMPLATE_URL) +
     "&stackName=slash0-onboard" +
     "&param_PublisherAccountIds=" + PUBLISHER_ACCOUNT +
-    "&param_Regions=" + encodeURIComponent(REGIONS) +
     "&param_DesiredRulesPerSG=" + rules;
 })();
