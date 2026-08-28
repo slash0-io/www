@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Auth0 (Okta CIC) IP ranges · slash0</title>
-<meta name="description" content="Official Auth0 (Okta CIC) IP ranges for allowlisting: all, IPv4 and IPv6, from the vendor&#x27;s own publication.">
+<meta name="description" content="Official Auth0 (Okta CIC) IP ranges for allowlisting: all, australia, canada, europe, japan, united-kingdom, united-states, IPv4 and IPv6, from the vendor&#x27;s own publication.">
 <link rel="canonical" href="https://slash0.io/services/auth0/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -19,27 +19,141 @@
 <div class="doc" id="service-page" data-slug="auth0">
 <span class="crumb"><a href="/services/">services</a> / auth0</span>
 <h1>Auth0 (Okta CIC) IP ranges</h1>
-<p class="tagline">Official Auth0 (Okta CIC) ranges from the vendor's publication, split by purpose: all. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/auth0.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<p class="tagline">Official Auth0 (Okta CIC) ranges from the vendor's publication, split by purpose: all, australia, canada, europe, japan, united-kingdom, united-states. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/auth0.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
 <article>
 <table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
-<tr><td><a href="#all"><code>auth0/all</code></a></td><td>both</td><td id="count4-all">·</td><td id="count6-all">·</td></tr>
+<tr><td><a href="#all"><code>auth0/all</code></a></td><td>ingress</td><td id="count4-all">·</td><td id="count6-all">·</td></tr>
+<tr><td><a href="#australia"><code>auth0/australia</code></a></td><td>ingress</td><td id="count4-australia">·</td><td id="count6-australia">·</td></tr>
+<tr><td><a href="#canada"><code>auth0/canada</code></a></td><td>ingress</td><td id="count4-canada">·</td><td id="count6-canada">·</td></tr>
+<tr><td><a href="#europe"><code>auth0/europe</code></a></td><td>ingress</td><td id="count4-europe">·</td><td id="count6-europe">·</td></tr>
+<tr><td><a href="#japan"><code>auth0/japan</code></a></td><td>ingress</td><td id="count4-japan">·</td><td id="count6-japan">·</td></tr>
+<tr><td><a href="#united-kingdom"><code>auth0/united-kingdom</code></a></td><td>ingress</td><td id="count4-united-kingdom">·</td><td id="count6-united-kingdom">·</td></tr>
+<tr><td><a href="#united-states"><code>auth0/united-states</code></a></td><td>ingress</td><td id="count4-united-states">·</td><td id="count6-united-states">·</td></tr>
 </table>
 <h2 id="all">auth0/all</h2>
-<p>Direction: both. Auth0 (Okta CIC) publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<p>Direction: ingress. Ranges Auth0 (Okta CIC) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
 <pre class="ranges" id="ranges-all">loading ranges from the feed…</pre>
 <p class="note" id="quota-all" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
 <h3>Terraform</h3>
-<pre>data &quot;ipranges_egress&quot; &quot;auth0_all&quot; {
+<pre>data &quot;ipranges_ingress&quot; &quot;auth0_all&quot; {
   service = &quot;auth0&quot;
   purpose = &quot;all&quot;
 }
 
 resource &quot;aws_security_group_rule&quot; &quot;auth0_all&quot; {
-  type              = &quot;egress&quot;
+  type              = &quot;ingress&quot;
   from_port         = 443
   to_port           = 443
   protocol          = &quot;tcp&quot;
-  cidr_blocks       = data.ipranges_egress.auth0_all.ipv4_cidrs
+  cidr_blocks       = data.ipranges_ingress.auth0_all.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="australia">auth0/australia</h2>
+<p>Direction: ingress. Ranges Auth0 (Okta CIC) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-australia">loading ranges from the feed…</pre>
+<p class="note" id="quota-australia" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;auth0_australia&quot; {
+  service = &quot;auth0&quot;
+  purpose = &quot;australia&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;auth0_australia&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.auth0_australia.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="canada">auth0/canada</h2>
+<p>Direction: ingress. Ranges Auth0 (Okta CIC) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-canada">loading ranges from the feed…</pre>
+<p class="note" id="quota-canada" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;auth0_canada&quot; {
+  service = &quot;auth0&quot;
+  purpose = &quot;canada&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;auth0_canada&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.auth0_canada.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="europe">auth0/europe</h2>
+<p>Direction: ingress. Ranges Auth0 (Okta CIC) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-europe">loading ranges from the feed…</pre>
+<p class="note" id="quota-europe" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;auth0_europe&quot; {
+  service = &quot;auth0&quot;
+  purpose = &quot;europe&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;auth0_europe&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.auth0_europe.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="japan">auth0/japan</h2>
+<p>Direction: ingress. Ranges Auth0 (Okta CIC) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-japan">loading ranges from the feed…</pre>
+<p class="note" id="quota-japan" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;auth0_japan&quot; {
+  service = &quot;auth0&quot;
+  purpose = &quot;japan&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;auth0_japan&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.auth0_japan.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="united-kingdom">auth0/united-kingdom</h2>
+<p>Direction: ingress. Ranges Auth0 (Okta CIC) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-united-kingdom">loading ranges from the feed…</pre>
+<p class="note" id="quota-united-kingdom" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;auth0_united_kingdom&quot; {
+  service = &quot;auth0&quot;
+  purpose = &quot;united-kingdom&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;auth0_united_kingdom&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.auth0_united_kingdom.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="united-states">auth0/united-states</h2>
+<p>Direction: ingress. Ranges Auth0 (Okta CIC) connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-united-states">loading ranges from the feed…</pre>
+<p class="note" id="quota-united-states" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;auth0_united_states&quot; {
+  service = &quot;auth0&quot;
+  purpose = &quot;united-states&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;auth0_united_states&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.auth0_united_states.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
