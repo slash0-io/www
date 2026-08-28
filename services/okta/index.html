@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Okta IP ranges · slash0</title>
-<meta name="description" content="Official Okta IP ranges for allowlisting: all, IPv4 and IPv6, from the vendor&#x27;s own publication.">
+<meta name="description" content="Official Okta IP ranges for allowlisting: all, pam-emea, pam-us, preview-emea, preview-pam, preview-us, production-australia, production-canada, production-germany, production-hipaa, production-india, production-ireland, production-japan, production-us, us-cell-20, us-cell-22, IPv4 and IPv6, from the vendor&#x27;s own publication.">
 <link rel="canonical" href="https://slash0.io/services/okta/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -19,10 +19,25 @@
 <div class="doc" id="service-page" data-slug="okta">
 <span class="crumb"><a href="/services/">services</a> / okta</span>
 <h1>Okta IP ranges</h1>
-<p class="tagline">Official Okta ranges from the vendor's publication, split by purpose: all. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/okta.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<p class="tagline">Official Okta ranges from the vendor's publication, split by purpose: all, pam-emea, pam-us, preview-emea, preview-pam, preview-us, production-australia, production-canada, production-germany, production-hipaa, production-india, production-ireland, production-japan, production-us, us-cell-20, us-cell-22. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/okta.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
 <article>
 <table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
 <tr><td><a href="#all"><code>okta/all</code></a></td><td>both</td><td id="count4-all">·</td><td id="count6-all">·</td></tr>
+<tr><td><a href="#pam-emea"><code>okta/pam-emea</code></a></td><td>both</td><td id="count4-pam-emea">·</td><td id="count6-pam-emea">·</td></tr>
+<tr><td><a href="#pam-us"><code>okta/pam-us</code></a></td><td>both</td><td id="count4-pam-us">·</td><td id="count6-pam-us">·</td></tr>
+<tr><td><a href="#preview-emea"><code>okta/preview-emea</code></a></td><td>both</td><td id="count4-preview-emea">·</td><td id="count6-preview-emea">·</td></tr>
+<tr><td><a href="#preview-pam"><code>okta/preview-pam</code></a></td><td>both</td><td id="count4-preview-pam">·</td><td id="count6-preview-pam">·</td></tr>
+<tr><td><a href="#preview-us"><code>okta/preview-us</code></a></td><td>both</td><td id="count4-preview-us">·</td><td id="count6-preview-us">·</td></tr>
+<tr><td><a href="#production-australia"><code>okta/production-australia</code></a></td><td>both</td><td id="count4-production-australia">·</td><td id="count6-production-australia">·</td></tr>
+<tr><td><a href="#production-canada"><code>okta/production-canada</code></a></td><td>both</td><td id="count4-production-canada">·</td><td id="count6-production-canada">·</td></tr>
+<tr><td><a href="#production-germany"><code>okta/production-germany</code></a></td><td>both</td><td id="count4-production-germany">·</td><td id="count6-production-germany">·</td></tr>
+<tr><td><a href="#production-hipaa"><code>okta/production-hipaa</code></a></td><td>both</td><td id="count4-production-hipaa">·</td><td id="count6-production-hipaa">·</td></tr>
+<tr><td><a href="#production-india"><code>okta/production-india</code></a></td><td>both</td><td id="count4-production-india">·</td><td id="count6-production-india">·</td></tr>
+<tr><td><a href="#production-ireland"><code>okta/production-ireland</code></a></td><td>both</td><td id="count4-production-ireland">·</td><td id="count6-production-ireland">·</td></tr>
+<tr><td><a href="#production-japan"><code>okta/production-japan</code></a></td><td>both</td><td id="count4-production-japan">·</td><td id="count6-production-japan">·</td></tr>
+<tr><td><a href="#production-us"><code>okta/production-us</code></a></td><td>both</td><td id="count4-production-us">·</td><td id="count6-production-us">·</td></tr>
+<tr><td><a href="#us-cell-20"><code>okta/us-cell-20</code></a></td><td>both</td><td id="count4-us-cell-20">·</td><td id="count6-us-cell-20">·</td></tr>
+<tr><td><a href="#us-cell-22"><code>okta/us-cell-22</code></a></td><td>both</td><td id="count4-us-cell-22">·</td><td id="count6-us-cell-22">·</td></tr>
 </table>
 <h2 id="all">okta/all</h2>
 <p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
@@ -40,6 +55,276 @@ resource &quot;aws_security_group_rule&quot; &quot;okta_all&quot; {
   to_port           = 443
   protocol          = &quot;tcp&quot;
   cidr_blocks       = data.ipranges_egress.okta_all.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="pam-emea">okta/pam-emea</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-pam-emea">loading ranges from the feed…</pre>
+<p class="note" id="quota-pam-emea" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_pam_emea&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;pam-emea&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_pam_emea&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_pam_emea.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="pam-us">okta/pam-us</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-pam-us">loading ranges from the feed…</pre>
+<p class="note" id="quota-pam-us" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_pam_us&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;pam-us&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_pam_us&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_pam_us.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="preview-emea">okta/preview-emea</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-preview-emea">loading ranges from the feed…</pre>
+<p class="note" id="quota-preview-emea" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_preview_emea&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;preview-emea&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_preview_emea&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_preview_emea.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="preview-pam">okta/preview-pam</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-preview-pam">loading ranges from the feed…</pre>
+<p class="note" id="quota-preview-pam" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_preview_pam&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;preview-pam&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_preview_pam&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_preview_pam.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="preview-us">okta/preview-us</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-preview-us">loading ranges from the feed…</pre>
+<p class="note" id="quota-preview-us" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_preview_us&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;preview-us&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_preview_us&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_preview_us.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-australia">okta/production-australia</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-australia">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-australia" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_australia&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-australia&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_australia&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_australia.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-canada">okta/production-canada</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-canada">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-canada" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_canada&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-canada&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_canada&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_canada.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-germany">okta/production-germany</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-germany">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-germany" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_germany&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-germany&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_germany&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_germany.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-hipaa">okta/production-hipaa</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-hipaa">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-hipaa" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_hipaa&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-hipaa&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_hipaa&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_hipaa.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-india">okta/production-india</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-india">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-india" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_india&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-india&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_india&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_india.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-ireland">okta/production-ireland</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-ireland">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-ireland" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_ireland&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-ireland&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_ireland&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_ireland.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-japan">okta/production-japan</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-japan">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-japan" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_japan&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-japan&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_japan&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_japan.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="production-us">okta/production-us</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-production-us">loading ranges from the feed…</pre>
+<p class="note" id="quota-production-us" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_production_us&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;production-us&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_production_us&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_production_us.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="us-cell-20">okta/us-cell-20</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-us-cell-20">loading ranges from the feed…</pre>
+<p class="note" id="quota-us-cell-20" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_us_cell_20&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;us-cell-20&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_us_cell_20&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_us_cell_20.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="us-cell-22">okta/us-cell-22</h2>
+<p>Direction: both. Okta publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
+<pre class="ranges" id="ranges-us-cell-22">loading ranges from the feed…</pre>
+<p class="note" id="quota-us-cell-22" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;okta_us_cell_22&quot; {
+  service = &quot;okta&quot;
+  purpose = &quot;us-cell-22&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;okta_us_cell_22&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.okta_us_cell_22.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>

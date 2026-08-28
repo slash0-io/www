@@ -64,13 +64,13 @@
 
   <!-- GEN:findings -->
   <ul>
-    <li><strong>66 services publish official ranges. 38 state that you should not pin them at all.</strong> Between them the 66 publish 27,513 CIDRs, rebuilt continuously and republished as a signed feed.</li>
+    <li><strong>66 services publish official ranges. 38 state that you should not pin them at all.</strong> Between them the 66 publish 28,860 CIDRs, rebuilt continuously and republished as a signed feed.</li>
     <li><strong>1 of 66 scores five out of five.</strong> Only Elastic Cloud does everything on this list.</li>
     <li><strong>9 of 66 commit to any advance notice</strong> before newly published ranges start carrying traffic: Auth0 (Okta CIC), Buildkite, CircleCI, Databricks, Elastic Cloud, LaunchDarkly, Microsoft 365, Microsoft Azure (Service Tags), Stripe. For everyone else, a range can go live the moment it appears.</li>
     <li><strong>8 of 66 operate a change signal you can subscribe to</strong> (Amazon Web Services, Atlassian Cloud, CircleCI, Elastic Cloud, Fastly, LaunchDarkly, Microsoft 365, Stripe). Another 4 are trackable only because their documentation happens to live in a public git repository, so the commit feed stands in for a notification the vendor does not offer.</li>
     <li><strong>28 of 66 have no machine-readable endpoint at all.</strong> Their ranges exist only inside a documentation page, so every consumer writes a scraper and every consumer breaks when the page is restyled.</li>
     <li><strong>20 of 66 honor conditional requests.</strong> The rest have no cache validators, so checking for a change means downloading the whole list again.</li>
-    <li><strong>14 of 66 publish one undifferentiated set.</strong> Allowlisting the API also allowlists everything else the vendor runs, including infrastructure that has nothing to do with your integration.</li>
+    <li><strong>12 of 66 publish one undifferentiated set.</strong> Allowlisting the API also allowlists everything else the vendor runs, including infrastructure that has nothing to do with your integration.</li>
     <li><strong>43 of 66 publish no IPv6 ranges.</strong> Reported in the table but left out of the score, since a vendor with no IPv6 footprint has nothing to publish.</li>
   </ul>
   <!-- /GEN:findings -->
@@ -97,11 +97,13 @@
       <tr><td><a href="/services/stripe/">Stripe</a></td><td class="lt-n">4</td><td>JSON</td><td>full download</td><td>3</td><td><a href="https://docs.stripe.com/ips" title="vendor documentation">7 days, by mailing list</a></td><td><a href="https://docs.stripe.com/ips" title="stripe.com/ips mailing list (seven days notice before changes)">vendor</a></td><td>no</td></tr>
       <tr><td><a href="/services/auth0/">Auth0 (Okta CIC)</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>one set</td><td><a href="https://auth0.com/docs/secure/security-guidance/data-security/allowlist" title="vendor documentation">several months, by email</a></td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/cloudflare/">Cloudflare</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/databricks/">Databricks</a></td><td class="lt-n">3</td><td>JSON</td><td>full download</td><td>7</td><td><a href="https://docs.databricks.com/aws/en/resources/ip-domain-region" title="vendor documentation">60 days before updated IPs activate</a></td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/datadog/">Datadog</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>8</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/fastly/">Fastly</a></td><td class="lt-n">3</td><td>JSON</td><td>full download</td><td>1</td><td>none</td><td><a href="https://www.fastly.com/documentation/reference/api/utils/public-ip-list/" title="fastlystatus.com subscription (&#x27;IP address announcement&#x27; category)">vendor</a></td><td>yes</td></tr>
       <tr><td><a href="/services/github/">GitHub</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>7</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/intercom/">Intercom</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>3</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/azure/">Microsoft Azure (Service Tags)</a></td><td class="lt-n">3</td><td>JSON</td><td>page extraction</td><td>3</td><td><a href="https://learn.microsoft.com/en-us/azure/virtual-network/service-tags-overview" title="vendor documentation">1 week before new IPs are used</a></td><td>none</td><td>yes</td></tr>
+      <tr><td><a href="/services/okta/">Okta</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>16</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/oracle-cloud/">Oracle Cloud Infrastructure</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/pagerduty/">PagerDuty</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/svix/">Svix</a></td><td class="lt-n">3</td><td>JSON</td><td>conditional GET</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
@@ -110,14 +112,12 @@
       <tr><td><a href="/services/linode/">Akamai Connected Cloud (Linode)</a></td><td class="lt-n">2</td><td>CSV</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/braintree/">Braintree (PayPal)</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/checkly/">Checkly</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
-      <tr><td><a href="/services/databricks/">Databricks</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>one set</td><td><a href="https://docs.databricks.com/aws/en/resources/ip-domain-region" title="vendor documentation">60 days before updated IPs activate</a></td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/docusign/">DocuSign</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>2</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/google/">Google (all services)</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/google-cloud/">Google Cloud Platform</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/grafana-cloud/">Grafana Cloud</a></td><td class="lt-n">2</td><td>text</td><td>full download</td><td>3</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/hubspot/">HubSpot</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>4</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/klaviyo/">Klaviyo</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>1</td><td>none</td><td>none</td><td>no</td></tr>
-      <tr><td><a href="/services/okta/">Okta</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/openai/">OpenAI</a></td><td class="lt-n">2</td><td>JSON</td><td>full download</td><td>6</td><td>none</td><td>none</td><td>no</td></tr>
       <tr><td><a href="/services/pingdom/">Pingdom</a></td><td class="lt-n">2</td><td>XML</td><td>full download</td><td>1</td><td>none</td><td>none</td><td>yes</td></tr>
       <tr><td><a href="/services/salesforce/">Salesforce</a></td><td class="lt-n">2</td><td>JSON</td><td>conditional GET</td><td>one set</td><td>none</td><td>none</td><td>yes</td></tr>

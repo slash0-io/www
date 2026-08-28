@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Databricks IP ranges · slash0</title>
-<meta name="description" content="Official Databricks IP ranges for allowlisting: all, IPv4 and IPv6, from the vendor&#x27;s own publication.">
+<meta name="description" content="Official Databricks IP ranges for allowlisting: all, aws-egress, aws-ingress, azure-egress, azure-ingress, gcp-egress, gcp-ingress, IPv4 and IPv6, from the vendor&#x27;s own publication.">
 <link rel="canonical" href="https://slash0.io/services/databricks/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -19,10 +19,16 @@
 <div class="doc" id="service-page" data-slug="databricks">
 <span class="crumb"><a href="/services/">services</a> / databricks</span>
 <h1>Databricks IP ranges</h1>
-<p class="tagline">Official Databricks ranges from the vendor's publication, split by purpose: all. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/databricks.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<p class="tagline">Official Databricks ranges from the vendor's publication, split by purpose: all, aws-egress, aws-ingress, azure-egress, azure-ingress, gcp-egress, gcp-ingress. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/databricks.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
 <article>
 <table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
 <tr><td><a href="#all"><code>databricks/all</code></a></td><td>both</td><td id="count4-all">·</td><td id="count6-all">·</td></tr>
+<tr><td><a href="#aws-egress"><code>databricks/aws-egress</code></a></td><td>egress</td><td id="count4-aws-egress">·</td><td id="count6-aws-egress">·</td></tr>
+<tr><td><a href="#aws-ingress"><code>databricks/aws-ingress</code></a></td><td>ingress</td><td id="count4-aws-ingress">·</td><td id="count6-aws-ingress">·</td></tr>
+<tr><td><a href="#azure-egress"><code>databricks/azure-egress</code></a></td><td>egress</td><td id="count4-azure-egress">·</td><td id="count6-azure-egress">·</td></tr>
+<tr><td><a href="#azure-ingress"><code>databricks/azure-ingress</code></a></td><td>ingress</td><td id="count4-azure-ingress">·</td><td id="count6-azure-ingress">·</td></tr>
+<tr><td><a href="#gcp-egress"><code>databricks/gcp-egress</code></a></td><td>egress</td><td id="count4-gcp-egress">·</td><td id="count6-gcp-egress">·</td></tr>
+<tr><td><a href="#gcp-ingress"><code>databricks/gcp-ingress</code></a></td><td>ingress</td><td id="count4-gcp-ingress">·</td><td id="count6-gcp-ingress">·</td></tr>
 </table>
 <h2 id="all">databricks/all</h2>
 <p>Direction: both. Databricks publishes these ranges for traffic in either direction; use them in the rule direction your integration needs. The example below shows egress.</p>
@@ -40,6 +46,114 @@ resource &quot;aws_security_group_rule&quot; &quot;databricks_all&quot; {
   to_port           = 443
   protocol          = &quot;tcp&quot;
   cidr_blocks       = data.ipranges_egress.databricks_all.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="aws-egress">databricks/aws-egress</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-aws-egress">loading ranges from the feed…</pre>
+<p class="note" id="quota-aws-egress" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;databricks_aws_egress&quot; {
+  service = &quot;databricks&quot;
+  purpose = &quot;aws-egress&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;databricks_aws_egress&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.databricks_aws_egress.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="aws-ingress">databricks/aws-ingress</h2>
+<p>Direction: ingress. Ranges Databricks connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-aws-ingress">loading ranges from the feed…</pre>
+<p class="note" id="quota-aws-ingress" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;databricks_aws_ingress&quot; {
+  service = &quot;databricks&quot;
+  purpose = &quot;aws-ingress&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;databricks_aws_ingress&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.databricks_aws_ingress.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="azure-egress">databricks/azure-egress</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-azure-egress">loading ranges from the feed…</pre>
+<p class="note" id="quota-azure-egress" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;databricks_azure_egress&quot; {
+  service = &quot;databricks&quot;
+  purpose = &quot;azure-egress&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;databricks_azure_egress&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.databricks_azure_egress.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="azure-ingress">databricks/azure-ingress</h2>
+<p>Direction: ingress. Ranges Databricks connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-azure-ingress">loading ranges from the feed…</pre>
+<p class="note" id="quota-azure-ingress" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;databricks_azure_ingress&quot; {
+  service = &quot;databricks&quot;
+  purpose = &quot;azure-ingress&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;databricks_azure_ingress&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.databricks_azure_ingress.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="gcp-egress">databricks/gcp-egress</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-gcp-egress">loading ranges from the feed…</pre>
+<p class="note" id="quota-gcp-egress" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;databricks_gcp_egress&quot; {
+  service = &quot;databricks&quot;
+  purpose = &quot;gcp-egress&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;databricks_gcp_egress&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.databricks_gcp_egress.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="gcp-ingress">databricks/gcp-ingress</h2>
+<p>Direction: ingress. Ranges Databricks connects from (webhook delivery); use them in security group ingress rules on your receiving endpoints.</p>
+<pre class="ranges" id="ranges-gcp-ingress">loading ranges from the feed…</pre>
+<p class="note" id="quota-gcp-ingress" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_ingress&quot; &quot;databricks_gcp_ingress&quot; {
+  service = &quot;databricks&quot;
+  purpose = &quot;gcp-ingress&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;databricks_gcp_ingress&quot; {
+  type              = &quot;ingress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_ingress.databricks_gcp_ingress.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
