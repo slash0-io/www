@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cisco Duo IP ranges · slash0</title>
-<meta name="description" content="Official Cisco Duo IP ranges for allowlisting: mfa, IPv4 and IPv6, from the vendor&#x27;s own publication.">
+<meta name="description" content="Official Cisco Duo IP ranges for allowlisting: mfa, mfa-australia, mfa-canada, mfa-central-europe, mfa-eu, mfa-india, mfa-japan, mfa-southeast-asia, mfa-uae, mfa-uk, mfa-us, trusted-endpoints, IPv4 and IPv6, from the vendor&#x27;s own publication.">
 <link rel="canonical" href="https://slash0.io/services/duo/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%2358d68d' text-anchor='middle'%3E/0%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -19,10 +19,21 @@
 <div class="doc" id="service-page" data-slug="duo">
 <span class="crumb"><a href="/services/">services</a> / duo</span>
 <h1>Cisco Duo IP ranges</h1>
-<p class="tagline">Official Cisco Duo ranges from the vendor's publication, split by purpose: mfa. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/duo.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
+<p class="tagline">Official Cisco Duo ranges from the vendor's publication, split by purpose: mfa, mfa-australia, mfa-canada, mfa-central-europe, mfa-eu, mfa-india, mfa-japan, mfa-southeast-asia, mfa-uae, mfa-uk, mfa-us, trusted-endpoints. The ranges below render live from the <a href="https://feed.slash0.io/v1/services/duo.json">signed slash0 feed</a><span id="svc-updated" hidden>; last range change <b id="svc-updated-rel"></b></span>.</p>
 <article>
 <table><tr><th>purpose</th><th>direction</th><th>IPv4</th><th>IPv6</th></tr>
 <tr><td><a href="#mfa"><code>duo/mfa</code></a></td><td>egress</td><td id="count4-mfa">·</td><td id="count6-mfa">·</td></tr>
+<tr><td><a href="#mfa-australia"><code>duo/mfa-australia</code></a></td><td>egress</td><td id="count4-mfa-australia">·</td><td id="count6-mfa-australia">·</td></tr>
+<tr><td><a href="#mfa-canada"><code>duo/mfa-canada</code></a></td><td>egress</td><td id="count4-mfa-canada">·</td><td id="count6-mfa-canada">·</td></tr>
+<tr><td><a href="#mfa-central-europe"><code>duo/mfa-central-europe</code></a></td><td>egress</td><td id="count4-mfa-central-europe">·</td><td id="count6-mfa-central-europe">·</td></tr>
+<tr><td><a href="#mfa-eu"><code>duo/mfa-eu</code></a></td><td>egress</td><td id="count4-mfa-eu">·</td><td id="count6-mfa-eu">·</td></tr>
+<tr><td><a href="#mfa-india"><code>duo/mfa-india</code></a></td><td>egress</td><td id="count4-mfa-india">·</td><td id="count6-mfa-india">·</td></tr>
+<tr><td><a href="#mfa-japan"><code>duo/mfa-japan</code></a></td><td>egress</td><td id="count4-mfa-japan">·</td><td id="count6-mfa-japan">·</td></tr>
+<tr><td><a href="#mfa-southeast-asia"><code>duo/mfa-southeast-asia</code></a></td><td>egress</td><td id="count4-mfa-southeast-asia">·</td><td id="count6-mfa-southeast-asia">·</td></tr>
+<tr><td><a href="#mfa-uae"><code>duo/mfa-uae</code></a></td><td>egress</td><td id="count4-mfa-uae">·</td><td id="count6-mfa-uae">·</td></tr>
+<tr><td><a href="#mfa-uk"><code>duo/mfa-uk</code></a></td><td>egress</td><td id="count4-mfa-uk">·</td><td id="count6-mfa-uk">·</td></tr>
+<tr><td><a href="#mfa-us"><code>duo/mfa-us</code></a></td><td>egress</td><td id="count4-mfa-us">·</td><td id="count6-mfa-us">·</td></tr>
+<tr><td><a href="#trusted-endpoints"><code>duo/trusted-endpoints</code></a></td><td>egress</td><td id="count4-trusted-endpoints">·</td><td id="count6-trusted-endpoints">·</td></tr>
 </table>
 <h2 id="mfa">duo/mfa</h2>
 <p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
@@ -40,6 +51,204 @@ resource &quot;aws_security_group_rule&quot; &quot;duo_mfa&quot; {
   to_port           = 443
   protocol          = &quot;tcp&quot;
   cidr_blocks       = data.ipranges_egress.duo_mfa.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-australia">duo/mfa-australia</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-australia">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-australia" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_australia&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-australia&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_australia&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_australia.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-canada">duo/mfa-canada</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-canada">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-canada" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_canada&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-canada&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_canada&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_canada.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-central-europe">duo/mfa-central-europe</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-central-europe">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-central-europe" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_central_europe&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-central-europe&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_central_europe&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_central_europe.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-eu">duo/mfa-eu</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-eu">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-eu" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_eu&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-eu&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_eu&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_eu.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-india">duo/mfa-india</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-india">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-india" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_india&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-india&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_india&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_india.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-japan">duo/mfa-japan</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-japan">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-japan" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_japan&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-japan&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_japan&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_japan.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-southeast-asia">duo/mfa-southeast-asia</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-southeast-asia">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-southeast-asia" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_southeast_asia&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-southeast-asia&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_southeast_asia&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_southeast_asia.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-uae">duo/mfa-uae</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-uae">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-uae" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_uae&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-uae&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_uae&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_uae.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-uk">duo/mfa-uk</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-uk">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-uk" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_uk&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-uk&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_uk&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_uk.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="mfa-us">duo/mfa-us</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-mfa-us">loading ranges from the feed…</pre>
+<p class="note" id="quota-mfa-us" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_mfa_us&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;mfa-us&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_mfa_us&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_mfa_us.ipv4_cidrs
+  security_group_id = aws_security_group.app.id
+}</pre>
+<h2 id="trusted-endpoints">duo/trusted-endpoints</h2>
+<p>Direction: egress. Ranges your workloads connect out to; use them in security group egress rules.</p>
+<pre class="ranges" id="ranges-trusted-endpoints">loading ranges from the feed…</pre>
+<p class="note" id="quota-trusted-endpoints" hidden>This purpose currently publishes more IPv4 ranges than the default rules-per-SG quota (60). Each CIDR consumes one rule; the hosted prefix list spends quota once per list instead. Details in the <a href="/docs/faq/">FAQ</a>.</p>
+<h3>Terraform</h3>
+<pre>data &quot;ipranges_egress&quot; &quot;duo_trusted_endpoints&quot; {
+  service = &quot;duo&quot;
+  purpose = &quot;trusted-endpoints&quot;
+}
+
+resource &quot;aws_security_group_rule&quot; &quot;duo_trusted_endpoints&quot; {
+  type              = &quot;egress&quot;
+  from_port         = 443
+  to_port           = 443
+  protocol          = &quot;tcp&quot;
+  cidr_blocks       = data.ipranges_egress.duo_trusted_endpoints.ipv4_cidrs
   security_group_id = aws_security_group.app.id
 }</pre>
 <h2>keep rules current automatically</h2>
